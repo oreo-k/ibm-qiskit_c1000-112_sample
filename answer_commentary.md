@@ -120,6 +120,20 @@ $$
 
 つまり，選択肢の中で0より大きく$\frac{1}{4}$より小さい値となり，答えはCとなる。
 
+## bloch simulator 
+
+bloch　simulatorを使って，Y軸方向の$\frac{3 \pi}{4}$回転した状態を描画してみる。
+
+```python
+simulator = Aer.get_backend('statevector_simulator') # statevector simulator
+job = execute(qc, simulator) # run simulation
+result = job.result() # get results
+statevector = result.get_statevector(qc) # get state vector
+plot_bloch_multivector(statevector) # plot state vector
+```
+
+![](2023-06-07-21-08-22.png)
+
 ## Aer simulation
 この結果はAer Simulator を使って，ノイズフリーシミュレーションを実行できる。
 
@@ -139,16 +153,15 @@ probability_0 = counts["0"]/(counts["0"]+counts["1"])
 print("probabity to get '0' state is {}".format(round(probability_0,4)))
 plot_histogram(counts)
 ```
-![](2023-06-05-22-17-08.png)
-
-上記の通り，今回のシミュレートでは状態$\ket{0}$を得る確率は0.1387であることがわかる。
+![](2023-06-07-21-05-43.png)
+上記の通り，今回のシミュレートでは状態$\ket{0}$を得る確率は0.1406であることがわかり，選択肢[C]が最も近い答えであることがわかる。
 
 
 # Q3. 
 > Assuming the fragment below, which three code fragments would produce the circuit illustrated?
 
-![](2023-06-05-20-37-26.png)
- 
+
+
 ```python 
   inp_reg = QuantumRegister(2, name='inp')
   ancilla = QuantumRegister(1, name='anc')
@@ -344,8 +357,139 @@ bell.h(0)
 bell.h(0)
 
 
+## 答え
+[A]
 
+## 解説
 
 
 ## simulation
-![](2023-06-06-00-41-14.png)
+Aer Simulatorでそれぞれの測定確率をPlotしてみる。
+![](2023-06-07-20-33-50.png)
+
+上記の結果の通り，$\ket{q_{0}} \otimes \ket{q_{1}}$の直積状態で表されるのは, 
+選択肢の[A]のみである。
+
+ちなみに[B], [C]は$\left( \ket{1} \otimes \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}) \right)$, [D]は $\left( \ket{0} \otimes \ket{0} \right)$の直積で表される。[A]は直席では表すことができず，エンタングルしていると言える。
+
+```python
+## 量子回路とsubplotのaxを与えることで，ヒストグラムを描画する関数
+def plot_hist_states(qc, ax):
+    simulator = Aer.get_backend('aer_simulator')
+    circ = transpile(bell, simulator)
+    result = simulator.run(bell).result()
+
+    counts = result.get_counts()
+
+    return plot_histogram(counts, ax=ax)
+
+fig, axes = plt.subplots(2, 2, figsize=(10, 5))
+axax=axes.ravel()
+
+## 各選択肢ごとの量子回路を作成，その状態のヒストグラムを描画する
+#[A]
+bell = QuantumCircuit(2,2) # 1 qubit, 1 classical bit
+bell.h(0)
+bell.x(1)
+bell.cx(0,1)
+bell.measure([0,1],[0,1])
+plot_hist_states(bell, axax[0])
+axax[0].set_title("A")
+
+#[B]
+bell = QuantumCircuit(2, 2)
+bell.cx(0,1)
+bell.h(0)
+bell.x(1)
+bell.measure([0,1], [0,1])
+plot_hist_states(bell, axax[1])
+axax[1].set_title("B")
+
+#[C]
+bell = QuantumCircuit(2, 2)
+bell.h(0)
+bell.x(1)
+bell.cz(0,1)
+bell.measure([0,1], [0,1])
+plot_hist_states(bell, axax[2])
+axax[2].set_title("C")
+
+
+#[D]
+bell = QuantumCircuit(2, 2)
+bell.h(0)
+bell.h(0)
+bell.measure([0,1], [0,1])
+plot_hist_states(bell, axax[3])
+axax[3].set_title("D")
+
+fig.tight_layout()
+fig.show()
+```
+
+
+
+
+# Q6
+> Given this code, which two inserted code fragments result in the state vector represented by this Bloch sphere?
+```python
+  qc = QuantumCircuit(1,1)
+  # Insert code fragment here
+  simulator = Aer.get_backend('statevector_simulator')  
+  job = execute(qc, simulator)  
+  result = job.result()  
+  outputstate = result.get_statevector(qc)  
+  plot_bloch_multivector(outputstate)
+```
+![](2023-06-07-21-16-09.png)
+
+[A]  
+qc.h(0)  
+
+[B]  
+qc.rx(math.pi / 2, 0)  
+
+[C]  
+qc.ry(math.pi / 2, 0)  
+
+[D]  
+qc.rx(math.pi / 2, 0)  
+qc.rz(-math.pi / 2, 0)  
+
+[E]  
+qc.ry(math.pi, 0)
+
+
+## 答え
+[A], [C]
+
+## 解説
+与えられた操作後，X軸上倒れたベクトルになっている。
+初期状態は，$\ket{\Psi_{0}} = \ket{0}$であり，ブロッホ球は  
+![](2023-06-07-21-27-54.png)
+と描かれる。
+この初期状態をY軸方向に$\frac{\pi}{2}$回転させる，問題文で与えられた操作後の状態ベクトルになることがわかる。これは選択肢で言うと[C]に相当する。また，初期状態$\ket{0}$をアダマール変換された状態と同等であり，選択肢[A]に相当する。
+
+ちなみに，選択肢[C]は
+![](2023-06-07-21-35-59.png)
+となる。
+
+# Q7.
+
+> S-gate is a Qiskit phase gate with what value of the phase parameter?
+
+[A]  
+π/4  
+
+[B]  
+π/2  
+
+[C]  
+π/8  
+
+[D]  
+π
+
+## 答え
+[B]
+
