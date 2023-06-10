@@ -132,36 +132,17 @@ statevector = result.get_statevector(qc) # get state vector
 plot_bloch_multivector(statevector) # plot state vector
 ```
 
-![](2023-06-07-21-08-22.png)
+<img src="images/2023-06-07-21-08-22.png" width=200 height=200>
 
 ## Aer simulation
 この結果はAer Simulator を使って，ノイズフリーシミュレーションを実行できる。
-
-```python
-
-## from qiskit import Aer
-## from qiskit.visualization import plot_histogram
-
-#simulating a quantum circuit with Aer Simulator
-simulator = Aer.get_background("aer_simulator") ##
-circ = transpile(qc,simulator)
-result = simulator.run(circ).result()
-counts = result.get_counts(circ)
-
-#calculating and plotting the probability to get "0" state after measurering the states
-probability_0 = counts["0"]/(counts["0"]+counts["1"])
-print("probabity to get '0' state is {}".format(round(probability_0,4)))
-plot_histogram(counts)
-```
-![](2023-06-07-21-05-43.png)
+<img src="images/2023-06-07-21-05-43.png" width=500 heigh=500>
 上記の通り，今回のシミュレートでは状態$\ket{0}$を得る確率は0.1406であることがわかり，選択肢[C]が最も近い答えであることがわかる。
 
 
 # Q3. 
 > Assuming the fragment below, which three code fragments would produce the circuit illustrated?
-
-
-
+> 
 ```python 
   inp_reg = QuantumRegister(2, name='inp')
   ancilla = QuantumRegister(1, name='anc')
@@ -241,7 +222,7 @@ qc.h(inp_reg[0:1])  ##inp_regの0番目の量子ビットにアダマール変�
 qc.x(ancilla[0])   ## ancillaにNOT ゲートを施す
 ```
 これは，inp_regの1番目の量子ビットにアダマール変換が施されないため，題意を見足さないため不正解。
-![](2023-06-05-21-40-37.png)
+<img src="images/2023-06-05-21-40-37.png" width=300 height=300>
 
 
 
@@ -273,12 +254,12 @@ qc.draw()
 ```
 0~1番目の量子ビットに2回の
 アダマール変換が解かされており，題意に反する。
-![](2023-06-05-21-47-42.png)
+<img src="images/2023-06-05-21-47-42.png" width=300 height=300>
 
 # Q4.
 Given an empty QuantumCircuit object, qc, with three qubits and three classical bits, which one of these code fragments would create this circuit?
 
-![](2023-06-05-22-20-47.png)
+![](images/2023-06-05-22-20-47.png)
 
 [A]  
 qc.measure([0,1,2], [0,1,2])  
@@ -314,12 +295,12 @@ qc.measure_all()
 qc.measure_all()は，新たに測定用のcbitを追加して測定結果を保存する。
 また，qc.measre_all()は，測定前にBarrierを入れる仕様になっている。
 与えられた回路では，古典ビットは3つのため，追加された分古典ビットが多くなるため題意に沿わない。そのため不正解。
-![](2023-06-05-22-53-30.png)
+<img src="images/2023-06-05-22-53-30.png" width=300 height=300>
 
 ちなみに，qc.measure_all()はparameterで既存の古典ビットに測定を保存することができる。
 その場合，qc.measure_all(add_bits=False)とする。
 この場合，題意を満たすため正解となる。
-![](2023-06-05-22-57-14.png)
+<img src="images/2023-06-05-22-57-14.png" width=300 height=300>
 
 
 
@@ -365,69 +346,12 @@ bell.h(0)
 
 ## simulation
 Aer Simulatorでそれぞれの測定確率をPlotしてみる。
-![](2023-06-07-20-33-50.png)
+<img src="images/2023-06-07-20-33-50.png">
 
 上記の結果の通り，$\ket{q_{0}} \otimes \ket{q_{1}}$の直積状態で表されるのは, 
 選択肢の[A]のみである。
 
 ちなみに[B], [C]は$\left( \ket{1} \otimes \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}) \right)$, [D]は $\left( \ket{0} \otimes \ket{0} \right)$の直積で表される。[A]は直席では表すことができず，エンタングルしていると言える。
-
-```python
-## 量子回路とsubplotのaxを与えることで，ヒストグラムを描画する関数
-def plot_hist_states(qc, ax):
-    simulator = Aer.get_backend('aer_simulator')
-    circ = transpile(bell, simulator)
-    result = simulator.run(bell).result()
-
-    counts = result.get_counts()
-
-    return plot_histogram(counts, ax=ax)
-
-fig, axes = plt.subplots(2, 2, figsize=(10, 5))
-axax=axes.ravel()
-
-## 各選択肢ごとの量子回路を作成，その状態のヒストグラムを描画する
-#[A]
-bell = QuantumCircuit(2,2) # 1 qubit, 1 classical bit
-bell.h(0)
-bell.x(1)
-bell.cx(0,1)
-bell.measure([0,1],[0,1])
-plot_hist_states(bell, axax[0])
-axax[0].set_title("A")
-
-#[B]
-bell = QuantumCircuit(2, 2)
-bell.cx(0,1)
-bell.h(0)
-bell.x(1)
-bell.measure([0,1], [0,1])
-plot_hist_states(bell, axax[1])
-axax[1].set_title("B")
-
-#[C]
-bell = QuantumCircuit(2, 2)
-bell.h(0)
-bell.x(1)
-bell.cz(0,1)
-bell.measure([0,1], [0,1])
-plot_hist_states(bell, axax[2])
-axax[2].set_title("C")
-
-
-#[D]
-bell = QuantumCircuit(2, 2)
-bell.h(0)
-bell.h(0)
-bell.measure([0,1], [0,1])
-plot_hist_states(bell, axax[3])
-axax[3].set_title("D")
-
-fig.tight_layout()
-fig.show()
-```
-
-
 
 
 # Q6
@@ -441,7 +365,9 @@ fig.show()
   outputstate = result.get_statevector(qc)  
   plot_bloch_multivector(outputstate)
 ```
-![](2023-06-07-21-16-09.png)
+<img src="images/2023-06-07-21-16-09.png" width=270 height=300>
+
+
 
 [A]  
 qc.h(0)  
@@ -466,12 +392,12 @@ qc.ry(math.pi, 0)
 ## 解説
 与えられた操作後，X軸上倒れたベクトルになっている。
 初期状態は，$\ket{\Psi_{0}} = \ket{0}$であり，ブロッホ球は  
-![](2023-06-07-21-27-54.png)
+<img src="images/2023-06-07-21-27-54.png" width=300 height=300>
 と描かれる。
 この初期状態をY軸方向に$\frac{\pi}{2}$回転させる，問題文で与えられた操作後の状態ベクトルになることがわかる。これは選択肢で言うと[C]に相当する。また，初期状態$\ket{0}$をアダマール変換された状態と同等であり，選択肢[A]に相当する。
 
-ちなみに，選択肢[C]は
-![](2023-06-07-21-35-59.png)
+ちなみに，選択肢[C]は  
+<img src="images/2023-06-07-21-35-59.png" width=300 height=300>  
 となる。
 
 # Q7.
@@ -492,4 +418,218 @@ qc.ry(math.pi, 0)
 
 ## 答え
 [B]
+
+
+
+## Q8. 
+
+> Which two code fragments, when inserted into the code below, will produce the statevector shown in the output?
+  
+```python 
+from qiskit import QuantumCircuit, Aer, execute
+from math import sqrt
+qc = QuantumCircuit(2)  
+# Insert fragment here  
+simulator = Aer.get_backend('statevector_simulator')  
+result = execute(qc, simulator).result()  
+statevector = result.get_statevector()  
+print(statevector)
+```
+Output:
+[0.707+0.j  0.+0.j  0.+0.j  0.707+0.j]
+
+[A]  
+v = [1/sqrt(2), 0, 0, 1/sqrt(2)]　　
+qc.initialize(v,[0,1])
+
+[B]  
+qc.h(0)  
+qc.cx(0,1)  
+
+[C]  
+v1, v2 = [1,0], [0,1]  
+qc.initialize(v1,0)  
+qc.initialize(v2,1)  
+
+[D]　　
+qc.cx(0,1)  
+qc.measure_all()  
+
+[E]  
+qc.h(0)  
+qc.h(1)  
+qc.measure_all()
+
+## 答え
+[A], [B]
+
+## 解説
+qiskitを使位始めてから，何度も出てくるので覚えておいた方がいい数字が0.707。
+これは$\frac{1}{\sqrt{2}}$のことです。
+
+qc.initialize(v)では，vに複素数の振幅ベクトルを設定することができる。
+例えば，
+
+$$
+v = 
+\left(
+    \begin{matrix}
+      \frac{1}{\sqrt{2}}  \\
+      0 \\
+      0 \\
+      \frac{1}{\sqrt{2}} \\
+      0 \\
+      0 \\
+      0 \\
+      0 \\
+    \end{matrix}
+\right)
+$$
+とすると，  
+測定確率は下記のようになる。  
+<img src="images/2023-06-08-21-07-03.png" width=400 height=270>  
+
+初期ベクトルvは，$\ket{000}$と$\ket{011}$の振幅を$\frac{1}{\sqrt{2}}$に初期化するものであるから，状態ベクトルは
+$\ket{\Psi_{0}} = \frac{1}{\sqrt{2}} \left( \ket{000} + \ket{011} \right)$  
+と表すことができるためである。
+
+それぞれの量子ビットの状態を測定すると，下記のような結果になる。
+<img src="images/output00.png" width=400 height=150>
+
+
+[A]  
+これは $\ket{00}$ と$\ket{11}$の振幅を$\frac{1}{\sqrt{2}}$に設定しており，ベル状態となっている。これは，題意合致するため正解。
+
+
+[B]  
+これも，[A]と同様にベル状態を生成する。これも題意に合致しているため正解となる。
+
+
+[C]  
+この場合は，0番目のqubitは $\ket{q_{0}}=\ket{0}, \ket{q_{1}}=\ket{1}$で初期化されているため，$\ket{\Psi_{0}} = \ket{1} \otimes \ket{0} = \ket{10}$となる。  
+
+[D]　　
+これは，初期状態が$\ket{00}$ に対して，制御NOTで操作しても，状態は変わらない。
+
+[E]  
+q0, q1をそれぞれアダマール変換したものがテンソル積された状態が得られる。
+
+<img src="2023-06-08-22-23-54.png">
+
+
+
+
+# Q9. 
+
+> Which code fragment will produce a multi-qubit gate other than a CNOT ?
+
+[A]  
+qc.cx(0,1)  
+
+[B]  
+qc.cnot(0,1)  
+
+[C]  
+qc.mct([0],1)  
+
+[D]  
+qc.cz(0,1)
+
+## 答え  
+[D]
+
+## 解説
+methodで用意されている制御NOTのParametersは　qc.cx(control, target)の順で指定する。
+[A], [B]
+cx, cnot　methodは同じ使い方が可能。
+
+[C]
+また複数の制御ビットを持つNOT Gateを使いたい時は.mct methodも用意されている。
+第1因数としてリストを与えると，制御ビットとして用いるqubitを指定することができる。
+
+例えば，下記のように2つの制御ビットを持つ制御NOT(toffoli) Gateを作ることもできる。
+```python 
+qc = QuantumCircuit(3)
+qc.mct([0, 1], 2)
+qc.draw()
+```
+<img src="2023-06-09-22-52-00.png" width=150 height=200>
+
+
+
+
+
+
+# Q10
+> Which code fragment will produce a multi-qubit gate other than a Toffoli?
+
+[A]  
+qc.ccx(0,1,2)  
+
+[B]  
+qc.mct([0,1], 2)  
+
+[C]  
+from qiskit.circuit.library import CXGate  
+ccx = CXGate().control()  
+qc.append(ccx, [0,1,2])  
+
+[D]  
+qc.cry(0,1,2)  
+
+
+
+# Q11
+> Which two options would place a barrier across all qubits to the QuantumCircuit below?
+
+```
+  qc = QuantumCircuit(3,3)
+```
+
+[A]  
+qc.barrier(qc)  
+
+[B]  
+qc.barrier([0,1,2])  
+
+[C]  
+qc.barrier()  
+
+[D]  
+qc.barrier(3)  
+
+[E]  
+qc.barrier_all()  
+
+
+# Q12 
+> What code fragment codes the equivalent circuit if you remove the barrier in the following QuantumCircuit?
+![](2023-06-10-15-27-36.png)
+<img src="2023-06-10-">
+
+
+[A]  
+qc = QuantumCircuit(1,1)  
+qc.h(0)  
+qc.s(0)  
+qc.h(0)  
+qc.measure(0,0)  
+
+[B]  
+qc = QuantumCircuit(1,1)  
+qc.measure(0,0)  
+[C]  
+qc = QuantumCircuit(1,1)  
+qc.h(0)  
+qc.t(0)  
+qc.tdg(0)  
+qc.h(0)  
+qc.measure(0,0)  
+
+[D]  
+qc = QuantumCircuit(1,1)  
+qc.h(0)  
+qc.z(0)  
+qc.h(0)  
+qc.measure(0,0)  
 
