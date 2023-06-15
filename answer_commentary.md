@@ -277,7 +277,7 @@ qc.measure(0,1,2)
 ## 答え
 3つの量子ビットと3つの古典ビットを用意する。
 量子ビット[0,1,2]をそれぞれの順番で　古典ビット[0,1,2]で測定する回路を作成する。
-qc.measureはqc.cmeasure(qubit, cbit)のように，2つのパラメータを取る。
+qc.measureはqc.cme\hat{CX} &=asure(qubit, cbit)のように，2つのパラメータを取る。
 これを満たしているのは，[A]となる。
 
 [A]  
@@ -435,11 +435,12 @@ result = execute(qc, simulator).result()
 statevector = result.get_statevector()  
 print(statevector)
 ```
+
 Output:
 [0.707+0.j  0.+0.j  0.+0.j  0.707+0.j]
 
 [A]  
-v = [1/sqrt(2), 0, 0, 1/sqrt(2)]　　
+v = [1/sqrt(2), 0, 0, 1/sqrt(2)]  
 qc.initialize(v,[0,1])
 
 [B]  
@@ -464,7 +465,7 @@ qc.measure_all()
 [A], [B]
 
 ## 解説
-qiskitを使位始めてから，何度も出てくるので覚えておいた方がいい数字が0.707。
+何度も出てくるので覚えておいた方がいい数字が0.707。
 これは$\frac{1}{\sqrt{2}}$のことです。
 
 qc.initialize(v)では，vに複素数の振幅ベクトルを設定することができる。
@@ -478,23 +479,18 @@ v =
       0 \\
       0 \\
       \frac{1}{\sqrt{2}} \\
-      0 \\
-      0 \\
-      0 \\
-      0 \\
+
     \end{matrix}
 \right)
 $$
 とすると，  
 測定確率は下記のようになる。  
-<img src="images/2023-06-08-21-07-03.png" width=400 height=270>  
+<img src="images/2023-06-14-20-31-15.png" width=300 height=200>
 
-初期ベクトルvは，$\ket{000}$と$\ket{011}$の振幅を$\frac{1}{\sqrt{2}}$に初期化するものであるから，状態ベクトルは
+
+初期ベクトルvは，$\ket{00}$と$\ket{11}$の振幅を$\frac{1}{\sqrt{2}}$に初期化するものであるから，状態ベクトルは
 $\ket{\Psi_{0}} = \frac{1}{\sqrt{2}} \left( \ket{000} + \ket{011} \right)$  
 と表すことができるためである。
-
-それぞれの量子ビットの状態を測定すると，下記のような結果になる。
-<img src="images/output00.png" width=400 height=150>
 
 
 [A]  
@@ -508,13 +504,15 @@ $\ket{\Psi_{0}} = \frac{1}{\sqrt{2}} \left( \ket{000} + \ket{011} \right)$
 [C]  
 この場合は，0番目のqubitは $\ket{q_{0}}=\ket{0}, \ket{q_{1}}=\ket{1}$で初期化されているため，$\ket{\Psi_{0}} = \ket{1} \otimes \ket{0} = \ket{10}$となる。  
 
-[D]　　
-これは，初期状態が$\ket{00}$ に対して，制御NOTで操作しても，状態は変わらない。
+[D]  
+初期状態が$\ket{00}$ に対して，制御NOTで操作しても，状態は変わらないため，最終的な結果は$\ket{00}$となる。
 
 [E]  
 q0, q1をそれぞれアダマール変換したものがテンソル積された状態が得られる。
 
-<img src="2023-06-08-22-23-54.png">
+選択肢の[A]~[E]のそれぞれの量子状態を測定した際のヒストグラムは下記の通りになる。
+<img src="images/2023-06-14-20-25-26.png" width=400 height=300>
+
 
 
 
@@ -553,11 +551,89 @@ qc = QuantumCircuit(3)
 qc.mct([0, 1], 2)
 qc.draw()
 ```
-<img src="2023-06-09-22-52-00.png" width=150 height=200>
+<img src="images/2023-06-09-22-52-00.png" width=150 height=200>
+
+制御NOTゲートは
+$$
+
+\begin{align}
+
+\hat{CX} &= 
+  \left(
+      \begin{matrix}
+      1 & 0 & 0 & 0 \\
+      0 & 1 & 0 & 0 \\
+      0 & 0 & 0 & 1 \\
+      0 & 0 & 1 & 0 \\
+      \end{matrix}
+
+  \right) \\
+
+  &= \hat{I_t} \ket{0_c} \bra{0_c} + \Bigl( \ket{0}_t \bra{1}_t + \ket{1}_t \bra{0}_t \Bigr) \ket{1}_c \bra{1}_c \\
+
+\end{align}
+$$
+
+初期状態$\ket{{\Psi_0}}$として下記のように定義して，$\hat{CX}$を作用させると
+$$
+\begin{align}
+  \ket{\Psi_{0}}
+      &=
+  \left(
+    \begin{matrix}
+      \alpha \\
+      \beta \\
+      \gamma \\
+      \delta
+    \end{matrix}
+  \right) \\
+
+    & = \alpha \ket{0}_t \otimes  \ket{0}_c +
+    \beta \ket{0}_t \otimes \ket{1}_c + 
+    \gamma \ket{1}_t \otimes \ket{0}_c + \delta \ket{1}_t \otimes \ket{1}_c \\
+    & = \alpha \ket{00}+ \beta \ket{01} + \gamma \ket{10} + \delta \ket{11}\\ 
+\\
+\ket{\Psi'} &= \hat{CX} \ket{\Psi_0} \\
+&= \alpha \ket{00}+ \beta \ket{11} + \gamma \ket{10} + \delta \ket{01}\\ 
+
+\end{align} \\
+$$
+
+となり，$\ket{01}$と$\ket{11}$状態の振幅が入れ替わることを確認できる。
 
 
 
 
+[D]
+制御ZGateは，制御ビットが1, かつTargetビットが1の時，そのTarge ビットのいそうを反転させる。<br> 
+そのため，X-Gateのビット反転操作にはならず，題意に反するため不正解。
+制御ZGateの行列，ディラック表現は下記のようになる。
+$$
+\begin{align}
+  \hat{CZ} &= 
+  \left(
+    \begin{matrix} 
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & -1 \\
+    \end{matrix}
+  \right)\\
+
+  &= \hat{I}_t \ket{0}_c+ \Bigl( \ket{0}_t \bra{0}_t - \ket{1}_t \bra{1}_t \Bigr) \ket{1}_c \bra{1}_c 
+\end{align}
+$$
+
+$\hat{CX}$の時と同様に，ベクトル$\ket{\Psi_{0}}$に作用させると
+
+$$
+\begin{align}
+  \ket{\Psi'} &= \hat{CZ} \ket{\Psi_{0}}  \\
+  &= \alpha \ket{00}+ \beta \ket{01} + \gamma \ket{10} - \delta \ket{11}\\ 
+
+\end{align}  
+$$
+となり，$\ket{11}$の符合が反転(位相が$\pi$回転)することを確認できる。
 
 
 # Q10
@@ -576,6 +652,18 @@ qc.append(ccx, [0,1,2])
 
 [D]  
 qc.cry(0,1,2)  
+
+
+## 疑問
+
+## 解説
+[D]
+
+cry
+qc.cry(theta, control_bit, target_bit)の順にParameterをとる。  
+選択肢[D]のように指定すると，存在しない２番目のqbitをTarget bitに指定していることからエラーとなる。  
+[qc.cryのAPIリファレンス](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.cry.html)
+
 
 
 
@@ -602,10 +690,29 @@ qc.barrier(3)
 qc.barrier_all()  
 
 
+## 答え
+[B], [C]
+
+
+##　解説
+
+## API ref
+[barrier](https://qiskit.org/documentation/stubs/qiskit.circuit.library.Barrier.html)
+
+[C]
+
+
+[D]  
+3はindexがout of rangeとなるため　エラーとなる。
+
+
+[E]  
+qc.barrier_all()は使えそうだが，barrier_allというmethodはない。
+
+
 # Q12 
 > What code fragment codes the equivalent circuit if you remove the barrier in the following QuantumCircuit?
-![](2023-06-10-15-27-36.png)
-<img src="2023-06-10-">
+<img src="images/2023-06-10-15-27-36.png" width=500 height=200>
 
 
 [A]  
@@ -633,3 +740,184 @@ qc.z(0)
 qc.h(0)  
 qc.measure(0,0)  
 
+# Q13
+> Given the following code, what is the depth of the circuit?
+  ```python
+  qc = QuantumCircuit(2, 2)
+  qc.h(0)
+  qc.barrier(0)
+  qc.cx(0,1)
+  qc.barrier([0,1])
+  ```
+[A]  
+2  
+
+[B]  
+3 
+
+[C]  
+4  
+
+[D]  
+5  
+
+
+# Q14
+> Which code snippet would execute a circuit given these parameters?
+1. Measure the circuit 1024 times,
+2. use the QASM simulator,
+3. use a coupling map that connects three qubits linearly
+
+```python
+qc = QuantumCircuit(3)
+# Insert code fragment here
+result = job.result()
+```
+
+[A]  
+qasm_sim = Aer.get_backend('qasm_simulator')  
+couple_map = [[0, 1], [1, 2]]  
+job = execute(qc, backend=qasm_sim, shots=1024,   coupling_map=couple_map)  
+
+[B]  
+qasm_sim = Aer.getBackend('ibmq_simulator')  
+couple_map = [[0, 1], [0, 2]]  
+job = execute(qc, loop=1024, coupling_map=couple_map)
+
+[C]  
+qasm_sim = Aer.get_backend('qasm_simulator')   
+couple_map = [[0, 1], [1, 2]]  
+job = execute(qc, backend=qasm_sim, repeat=1024, coupling_map=couple_map)  
+
+[D]  
+qasm_sim = Aer.get_backend('qasm_simulator')  
+couple_map = [[0, 1], [1, 2]]  
+job = execute(backend=qasm_sim, qc, shot=1024, coupling_map=couple_map)  
+
+
+# Q15
+> Which of these would execute a circuit on a set of qubits which are coupled in a custom way?
+> 
+```python 
+from qiskit import QuantumCircuit, execute, BasicAer  
+backend = BasicAer.get_backend('qasm_simulator')
+qc = QuantumCircuit(3)
+    # insert code here
+```
+
+[A]  
+execute(qc, backend, shots=1024, coupling_map=[[0,1], [1,2]])  
+
+[B]  
+execute(qc, backend, shots=1024, custom_topology=[[0,1],[2,3]]
+
+[C]  
+execute(qc, backend, shots=1024, device="qasm_simulator", mode="custom") 
+
+[D]  
+execute(qc, backend, mode="custom")  
+
+
+
+#Q16 
+> Which three simulators are available in BasicAer?
+
+[A]  
+qasm_simulator  
+
+[B]  
+basic_qasm_simulator  
+
+[C]  
+statevector_simulator  
+
+[D]  
+unitary_simulator  
+
+[E]  
+quantum_simulator  
+
+[F]  
+quantum_circuit_simulator  
+
+
+# Q17
+> Which line of code would assign a statevector simulator object to the variable backend ?
+
+[A]  
+backend = BasicAer.StatevectorSimulatorPy()  
+
+[B]  
+backend = BasicAer.get_backend('statevector_simulator') 
+
+[C]  backend = BasicAer.StatevectorSimulatorPy().name()  
+
+[D]   
+backend = BasicAer.get_back('statevector_simulator')  
+
+
+
+
+# Q18  
+> Which code fragment would yield an operator that represents a single-qubit X gate?  
+
+[A]  
+op = Operator.Xop(0)  
+
+[B]  
+op = Operator([[0,1]])  
+
+[C]  qc = QuantumCircuit(1)
+qc.x(0)  
+op = Operator(qc)  
+
+[D]  
+op = Operator([[1,0,0,1]])  
+
+
+# Q19
+> What would be the fidelity result(s) for these two operators, which differ only by global phase?  
+
+```python 
+    op_a = Operator(XGate())
+    op_b = numpy.exp(1j * 0.5) * Operator(XGate())
+```
+
+[A]  
+state_fidelity() of 1.0  
+
+[B]  
+state_fidelity() and average_gate_fidelity() of 1.0  
+
+[C]  
+average_gate_fidelity()andprocess_fidelity()of 1.0
+
+[D]  
+state_fidelity()  
+average_gate_fidelity() and process_fidelity() of 1.0  
+
+
+# Q20 
+> Given this code fragment, which output fits most closely with the measurement probability distribution?
+
+```python 
+qc = QuantumCircuit(2, 2)
+qc.x(0)
+qc.measure([0,1], [0,1])
+simulator = Aer.get_backend('qasm_simulator')
+result = execute(qc, simulator, shots=1000).result()
+counts = result.get_counts(qc)
+print(counts)
+```
+
+[A]  
+{'00': 1000}  
+
+[B]  
+{'01': 1000}  
+
+[C]  
+{'10': 1000}  
+
+[D]  
+{'11': 1000}
