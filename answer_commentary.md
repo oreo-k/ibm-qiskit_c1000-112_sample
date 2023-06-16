@@ -1,3 +1,21 @@
+#各設問に対する解説の構成
+## 問題Part
+1. 問題
+2. 選択肢
+3. 正解選択肢 
+
+## 解説Part
+
+4.  用語が難しい場合はまずはその解説
+5.  概要解説
+6.  それぞれの選択肢解説
+7.  シミューレータによる結果確認
+8.  重要なqiskit API reference
+
+
+
+
+
 # Q1 
 
 > Which statement will create a quantum circuit with four quantum bits and four classical bits?  
@@ -19,7 +37,7 @@ QuantumRegister(4, 'cr1'))
 [A]
 
 ## 解説
-問題文は４つの量子ビットと4つの古典ビットを作るCode分を求めている。量子ビットを扱う回路の中に量子ビットと古典ビットを準備する最も簡単な方法がAである。
+問題文は４つの量子ビットと4つの古典ビットを作るCode分を求めている。量子回路に量子ビットと古典ビットを準備する最も簡単な方法がAである。
 
 qiskit APIには，QuantumeCircuit Classが準備されており
 ```
@@ -31,7 +49,7 @@ qc = QuantumCicuit(q,c)
 QuantumCircuit(QuantumRegister(4,"q"), ClassicalRegister(4, "c"))
 ```
 
-### 他の選択肢の解説
+#### 他の選択肢の解説
 [B]  
 因数を1つにする場合，その数の量子ビットが作られるため 4つの量子ビットを持つ回路となる。  
 [C]  
@@ -94,20 +112,15 @@ $$
 $$
 \begin{align}
     P_{\ket{0}}  &= \braket{0|\Psi'}^2 \\
-    &=\bra{0} (\cos{\frac{3 \pi}{8} \ket{0}} + \sin{\frac{3 \pi}{8}} \ket{1})^2 \\
+    &=\bra{0} \Bigl( \cos{\frac{3 \pi}{8} \ket{0}} + \sin{\frac{3 \pi}{8}} \ket{1})^2 \Bigr)\\
     &= \cos^2{\frac{3 \pi}{8}}
 \end{align}
 $$
 
-このとき，倍角の公式を使って，$\cos^2{\frac{3 \pi}{8}}$を計算してもいいが，面倒なので　それよりもざっくりとした値を把握することを優先する。こういった場合は，角度$\theta$で$\cos^2{\frac{3 \pi}{8}}$を評価すればよい。高校数学の範囲の計算だが，自分の理解の確認のために書いてみる。
+このとき，倍角の公式を使って$\cos^2{\frac{3 \pi}{8}}$を計算してもいいが，それよりもざっくりとした値を把握することを優先する。個人的には一意な値を求めるより，必要なスケール感で取り得る値の範囲を把握することの方が大事だと感じている。角度$\theta$で$\cos^2{\frac{3 \pi}{8}}$を評価すればよい。
 
-
-
-
-### $\cos^2{\theta}$の評価(高校数学の復習)
-$\theta=\frac{3 \pi}{8}$は
-$\frac{\pi}{3}<\theta = \frac{3\pi}{8} < \frac{\pi}{2}$
-と評価できる。このため，
+#### $\cos^2{\theta}$の評価(高校数学の復習)
+$\frac{\pi}{3}<\theta = \frac{3\pi}{8} < \frac{\pi}{2}$と評価できるため，
 
 $$
 \begin{align}
@@ -120,7 +133,15 @@ $$
 
 つまり，選択肢の中で0より大きく$\frac{1}{4}$より小さい値となり，答えはCとなる。
 
-## bloch simulator 
+## 複数回測定した場合の測定される量子状態のヒストグラム
+観測される状態のヒストグラムを作る場合は，Aer Simulator を使えばよい。  
+当classでは量子状態測定のノイズフリーシミュレーションを実行できる。
+
+回転後に測定される状態のヒストグラムは下記のようになる。
+<img src="images/2023-06-07-21-05-43.png" width=500 heigh=500>
+上記の通り，今回のシミュレートで回転操作後に状態$\ket{0}$を得る確率は0.1406であることがわかり，選択肢[C]が最も近い答えであることがわかる。
+
+#### bloch simulator を使ったBloch球上のベクトル回転
 
 bloch　simulatorを使って，Y軸方向の$\frac{3 \pi}{4}$回転した状態を描画してみる。
 
@@ -133,11 +154,6 @@ plot_bloch_multivector(statevector) # plot state vector
 ```
 
 <img src="images/2023-06-07-21-08-22.png" width=200 height=200>
-
-## Aer simulation
-この結果はAer Simulator を使って，ノイズフリーシミュレーションを実行できる。
-<img src="images/2023-06-07-21-05-43.png" width=500 heigh=500>
-上記の通り，今回のシミュレートでは状態$\ket{0}$を得る確率は0.1406であることがわかり，選択肢[C]が最も近い答えであることがわかる。
 
 
 # Q3. 
