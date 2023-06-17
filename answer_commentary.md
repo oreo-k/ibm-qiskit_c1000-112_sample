@@ -485,9 +485,7 @@ v =
 $$
 とすると，  
 測定確率は下記のようになる。  
-<img src="images/2023-06-14-20-31-15.png" width=300 height=200>
-
-
+<img src="images/2023-06-15-23-13-10.png" width=300 height=200>
 初期ベクトルvは，$\ket{00}$と$\ket{11}$の振幅を$\frac{1}{\sqrt{2}}$に初期化するものであるから，状態ベクトルは
 $\ket{\Psi_{0}} = \frac{1}{\sqrt{2}} \left( \ket{000} + \ket{011} \right)$  
 と表すことができるためである。
@@ -562,9 +560,9 @@ $$
   \left(
       \begin{matrix}
       1 & 0 & 0 & 0 \\
-      0 & 1 & 0 & 0 \\
       0 & 0 & 0 & 1 \\
       0 & 0 & 1 & 0 \\
+      0 & 1 & 0 & 0 \\
       \end{matrix}
 
   \right) \\
@@ -657,9 +655,13 @@ qc.cry(0,1,2)
 ## 疑問
 
 ## 解説
+
+[C]  
+[CXGate API ref](https://qiskit.org/documentation/stubs/qiskit.circuit.library.CXGate.html)
+
+
 [D]
 
-cry
 qc.cry(theta, control_bit, target_bit)の順にParameterをとる。  
 選択肢[D]のように指定すると，存在しない２番目のqbitをTarget bitに指定していることからエラーとなる。  
 [qc.cryのAPIリファレンス](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.cry.html)
