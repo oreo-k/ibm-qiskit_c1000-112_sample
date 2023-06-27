@@ -1,5 +1,16 @@
 
 
+<style>
+  .bg-y{
+    background-color: rgb(255,255,100);
+  }
+
+  .txt-g{
+    color: rgb(85,85,85);
+  }
+</style>
+
+
 
 # はじめに
 突然ですが，量子コンピュータに関する基礎知識を学ぶ直すことにしました！
@@ -51,7 +62,10 @@ Q#.6 言い残しほいほい
 
 > Which statement will create a quantum circuit with four quantum bits and four classical bits?  
 
+<span class="bg-y txt-g">
 [A]  
+</span>
+<br>
 QuantumCircuit(4, 4)  
 
 [B]  
@@ -152,7 +166,7 @@ ry(3*math.pi/4,0)はQuantumCircuitクラスに用意されたY軸方向の回転
 
 回転後の状態を$\ket{\Psi'}$とすると，Y軸方向の$\theta$回転後の状態は
 $\ket{\Psi'} = \cos{\frac{\theta}{2}} \ket{0} + \sin{\frac{\theta}{2}\ket{1}}$となる。
-ちなみに，上式が得られる理由は，Y軸方向の回転を操作する行列が下記で表されるためであり，
+ちなみに，上式が得られる理由は，Y軸方向の回転を操作する行列が下記で表されるためであり,  
 $$
 \begin{align}
     R_{Y}(\theta) =
@@ -163,10 +177,10 @@ $$
         \end{matrix}
         \right)
 \end{align}
-$$
+$$  
 この行列を$\ket{0}$に作用させると，$\ket{\Psi'}$が得られることが計算で確かめることができる。
 
-そのため，回転後に$\ket{0}$が観測される確率
+そのため，回転後に$\ket{0}$が観測される確率  
 $$
 \begin{align}
     P_{\ket{0}}  &= \braket{0|\Psi'}^2 \\
@@ -174,9 +188,9 @@ $$
     &= \cos^2{\frac{3 \pi}{8}} \braket{0|0} + \sin^2{\frac{3 \pi}{8}} \braket{1|0} \\
     &= \cos^2{\frac{3 \pi}{8}}
 \end{align}
-$$
+$$  
 
-このとき，倍角の公式を使って$\cos^2{\frac{3 \pi}{8}}$を計算してもいいが，それよりもざっくりとした値を把握することを優先する。個人的には一意な値を求めるより，必要なスケール感で取り得る値の範囲を把握することの方が大事だと感じている。角度$\theta$で$\cos^2{\frac{3 \pi}{8}}$を評価すればよい。
+このとき，倍角の公式を使って$\cos^2{\frac{3 \pi}{8}}$を計算してもいいが，それよりもざっくりとした値を把握することを優先する。個人的には一意な値を求めるより，必要なスケール感で取り得る値の範囲を把握することの方が大事だと感じている。角度$\theta$ で $\cos^2{\frac{3 \pi}{8}}$ を評価すればよい。
 
 $\frac{\pi}{3}<\theta = \frac{3\pi}{8} < \frac{\pi}{2}$と評価できるため，
 
@@ -218,13 +232,22 @@ bloch　simulatorを使って， $\ket{0}$をY軸方向に$\frac{3 \pi}{4}$回�
 ```
 <img src="images/2023-06-20-22-12-39.png" width=200 height=200>
 
-選択肢  
-[A]  
-qc.h(inp_reg)  
-qc.x(ancilla)  
-qc.draw()  
+選択肢
 
+<span class="bg-y txt-g">
+[A]  
+</span>
+<br>
+
+qc.h(inp_reg)
+qc.x(ancilla)
+qc.draw()
+
+<span class="bg-y txt-g">
 [B]  
+</span>
+<br>
+
 qc.h(inp_reg[0:2])  
 qc.x(ancilla[0])  
 qc.draw()  
@@ -234,7 +257,11 @@ qc.h(inp_reg[0:1])
 qc.x(ancilla[0])  
 qc.draw()  
 
+<span class="bg-y txt-g">
 [D]  
+</span>
+<br>
+
 qc.h(inp_reg[0])  
 qc.h(inp_reg[1])  
 qc.x(ancilla[0])  
@@ -252,11 +279,13 @@ qc.h(inp_reg)
 qc.x(ancilla)  
 qc.draw()  
 
-## 答え
-[A, B, D]
+
 
 ## Q3-1.用語ごろごろ
-ancilla : 日本語では補助の意味に相当します。量子計算の分野では，計算を進めるにあたり補助的に作用させるビットをancilla bitと呼ぶようです。例えば，制御NOTでは，制御ビットの状態に応じてターゲットビットに作用させる演算が決定されます。この際，ターゲットビットの状態を決めるための補助的なビットとして制御ビットが存在すると考えることができるのです！
+アンシラビットとは，エラー訂正のパリティチェックやアルゴリズム実行時に一時的に情報を保持するために使われます。計算の結果には直接影響を与えないことが多く，あくまで補助的な役割を果たします。
+勉強を始めた当初は　Target bitの状態を制御することもありアンシラビットに含まれるかと思っていましたが，計算結果に影響を与える点でアンシラには含まないようです。
+制御ビットは，特定の条件下で量子操作を制御するために使用され，制御ゲートの制御線として利用されていると言えます。
+
 
 ## Q3-2.背景もろもろ
 inp_regの0から1番目にq0, q1量子ビットが格納されており，ancillaの0番目にanc量子ビットが格納されています。  
@@ -423,7 +452,14 @@ bell.h(0)
 
 ## Q5-1.用語ごろごろ
 エンタングルとベル状態について解説しましょう！これが量子計算の醍醐味ですね！
+エンタングルとは，2つ以上の"量子ビット同士が従属している状態"を指します。とはいえ，"量子ビット同士が従属"?なんのこっちゃという感じです。"従属"の対義語である"独立"であること
 
+
+## Q5-2. 背景もろもろ
+
+
+
+## Q5-3. 選択肢ごりごり
 
 
 ## Q5-4.シミュレータぶんぶん
@@ -434,6 +470,10 @@ Aer Simulatorでそれぞれの測定頻度をPlotしてみましょう！
 選択肢の[A]のみですね！
 
 ちなみに[B], [C]は$\left( \ket{1} \otimes \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}) \right)$, [D]は $\left( \ket{0} \otimes \ket{0} \right)$の直積で表される。[A]は直席では表すことができず，エンタングルしていると言える。
+
+## Q5-5. APIぞろぞろ
+## Q5-6. 言い残しこしこし
+
 
 
 # Q6
@@ -471,6 +511,10 @@ qc.ry(math.pi, 0)
 ## 答え
 [A], [C]
 
+
+## Q#.1 用語ごろごろ
+## Q#.2 背景もろもろ
+
 ## 解説
 与えられた操作後，X軸上倒れたベクトルになっている。
 初期状態は，$\ket{\Psi_{0}} = \ket{0}$であり，ブロッホ球は  
@@ -481,6 +525,12 @@ qc.ry(math.pi, 0)
 ちなみに，選択肢[C]は  
 <img src="images/2023-06-07-21-35-59.png" width=300 height=300>  
 となる。
+
+## Q#.3 選択肢ごりごり
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+## Q#.6 言い残しこしこし
+
 
 # Q7.
 
@@ -597,6 +647,10 @@ q0, q1をそれぞれアダマール変換したものがテンソル積され�
 
 
 
+## Q#.3 選択肢ごりごり
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+## Q#.6 言い残しこしこし
 
 
 # Q9. 
@@ -617,6 +671,14 @@ qc.cz(0,1)
 
 ## 答え  
 [D]
+
+## Q#.1 用語ごろごろ
+## Q#.2 背景もろもろ
+## Q#.3 選択肢ごりごり
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+## Q#.6 言い残しこしこし
+
 
 ## 解説
 methodで用意されている制御NOTのParametersは　qc.cx(control, target)の順で指定する。
@@ -732,44 +794,105 @@ from qiskit.circuit.library import CXGate
 ccx = CXGate().control()  
 qc.append(ccx, [0,1,2])  
 
+<span class="bg-y txt-g">
 [D]  
+</span>
+
 qc.cry(0,1,2)  
 
-##　解答  
-[D]
 
 ## 疑問
 - CXGateの使い方がよくわからない。
 
+## Q10.1 用語ごろごろ
+Toffoliゲートは，シンプルにはANDゲートの量子版です！
+3つの量子ビットを操作するゲートであり，2つの制御量子ビットが1の状態のときのみ，3つめのTarget量子ビットにXゲートを適用します。
+q0_control|q1_control|q2_target|
+---|---|---|
+0|0|0|
+0|1|0|
+1|0|0|
+1|1|1|
+0|0|1|
+0|1|1|
+1|0|1|
+1|1|0|
+
+## Q10.2 背景もろもろ
+### Toffoliゲートの使い所
+Toffoliは量子計算のさまざまなアルゴリズムで使用されます！特に、量子エラー訂正など、誤り訂正や制御フローの実装などの応用で重要な役割を果たすようです(自分はまだ勉強中。。。)。また、Toffoliゲートは量子ビットの制御可能なユニバーサルセット（controlled-NOTゲートとHadamardゲートとの組み合わせ）の一部でもあります。
 
 
-## 解説
+### ユニバーサルセットについて
+量子計算における量子操作を近似的に実現するために基本的なゲートのセットのことを言います。個セットによって，量子アルゴリズムの計算を実行するために必要な全ての操作を実現することができます。
+具体的には以下の3つのゲートから構成されます。
+1. 任意の単一量子ビットゲート
+2. CNOTゲート
+3. 1.2.の組み合わせ
 
-[C]  
-[CXGate API ref](https://qiskit.org/documentation/stubs/qiskit.circuit.library.CXGate.html)
+toffoliゲートを単一量子ビットゲートとCNOTで表現すると下記のようになる。
+(自分ではとても思いつきませんが，qiskit libraryに描いてもらうことができます。)
+![](images/2023-06-25-11-21-20.png)
+
+## Q10.3 選択肢ごりごり
+[A]はQutumCircuit　classのccxメソッドに関する選択肢です。ccxメソッドはccx(q0, q1, target_bit)のように3つの量子ビットをparametersとしてとるのです。選択肢は
+"0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしています。<br>
+[B]はQutumCircuit classのmctメソッドに関する選択肢です。mctメソッドはmct(control_qbits,target_bit)をパラメータに取ります。control_qbitsはリストで指定することができるため，[B]は[A]同様，"0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしています！<br>
+
+[C]はCXGate classに関する選択肢です。簡単には，qc.cx(n)メソッドで量子回路上に制御NOTゲートは適用できます。CXGateはClassのため，制御NOTゲートのインスタンスを作る必要があります。自分でインスタンス化できる分，より柔軟にゲート設計できるのでしょうか...利点をよくわかっていません。。。
+選択肢の書き方をもう少し書き下すと，下記のようになります。
+```python
+cx = CXGate() #CXGateのインスタンスを作る
+ccx = cx.control()  #CXGateのcontrolメソッドを使って，制御ビットを１つ増やしてCCXにする
+qc.append(ccx, [0,1,2]) #量子回路qcにCCXゲートを追加する形で実装する。
+```
+qcのappendメソッドでCXを追加する場合，リストの末尾をTargetビットに指定します。
+そのため，グラフに起こすと下記のようになります。
+![](images/2023-06-26-16-49-19.png)  
+appendで渡す際に，[0,2,1]と指定すると，制御ビットが[q0,q2]でターゲットビットが[q1]として指定されます。 
+![](images/2023-06-26-16-51-09.png)
+
+
+[D]はqc.cryメソッドに関する選択肢です。(theta, control_bit, target_bit)の順にParameterをとります。選択肢[D]のように指定すると，１番目のqbitが1の時にq2に0degのY軸方向の回転を加えることを意味しています。ちなみに，何も変化を与えません。
+
+## Q10.4 シミューレータぶんぶん
 
 
 
-[D]  
-qc.cry(theta, control_bit, target_bit)の順にParameterをとる。  
-選択肢[D]のように指定すると，存在しない２番目のqbitをTarget bitに指定していることからエラーとなる。  
-[qc.cryのAPIリファレンス](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.cry.html)
+## Q10.5 APIぞろぞろ
+[qc.ccx](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.ccx.html)
+
+[qc.mct](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.mct.html)
+
+[CXGate](https://qiskit.org/documentation/stubs/qiskit.circuit.library.CXGate.html)
+
+[qc.append](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.append.html)
+
+[qc.cry](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.cry.html)
+
+
+## Q10.6 言い残しこしこし
 
 
 # Q11
 > Which two options would place a barrier across all qubits to the QuantumCircuit below?
 
-```
+```python
   qc = QuantumCircuit(3,3)
 ```
-
 [A]  
 qc.barrier(qc)  
 
+<span class="bg-y txt-g">
 [B]  
+</span>  
+
 qc.barrier([0,1,2])  
 
+<span class="bg-y txt-g">
 [C]  
+</span>
+
 qc.barrier()  
 
 [D]  
@@ -778,33 +901,62 @@ qc.barrier(3)
 [E]  
 qc.barrier_all()  
 
+## Q11.1 用語ごろごろ
 
-## 答え
-[B], [C]
+QuantumCircuitのbarrierメソッドに関する設問です。さて，barrierとは一体なんでしょうか？barrierの語源は障壁や境界で，その名の通りある区間で量子回路を区切るための境界を作ることです。境界を作る目的は，量子回路の各操作や固まりをグループ化することができることです！
+
+## Q11.2 背景もろもろ
+
+量子ゲートの中には，複数の量子ゲートをまとめることができる場合ができます。例えば，複数の回転ゲートが作用する場合，Totalの回転角を操作する回転ゲート1回が作用していると考えることができます。<br>
+例えば，S行列操作を2回連続，T行列操作を1回操作させる回路を考えます。
+それぞれの操作毎にbarrierを挟むと，それぞれの操作で区切られる。一方で，barrierを入れないとS行列2回による$\pi$回転とT行列の$\frac{\pi}{4}$の合計$\frac{5 \pi}{4} = - \frac{3 \pi}{4}$の1操作に集約されるのです。
+量子ゲートを考える際に，１つ１つの操作を分けたいとき，ある領域でグループ化したい時には大変ありがたいツールです！
+それぞれ図に起こすと下記のようになる。
+<img src="2023-06-27-19-59-12.png" width=400 height=350>
+
+これは次のQ12でも関係してくるので覚えておきましょう！
+(つぎの解説で文字数省略したいだけ。)
+
+## Q11.3 選択肢ごりごり
+
+[A]のようにbarrierメソッドは量子回路をparameterとして取ることはありません。なので不正解となります。
+
+[B]barrierメソッドはqargsのパラメータを取ります。指定した量子ビットの番号にbarrierをかけます。
+
+[C]
+barrierメソッドの因数に何も指定しないと，全ての量子ビットにbarrierが作用するため，題意を満たし正解となります。
+
+[D]  
+量子ビットは3つしか準備していません。barrier(3)はq4を指定することとなり，
+準備されていない量子ビットを指定することになります。そのため，indexがout of rangeでエラーとなってしまうため不正解です！
+
+[E]  
+qc.barrier_all()は使えそうだが，barrier_allというmethodはない。
 
 
-## 解説
+## Q#.4 シミューレータぶんぶん
+
+
+
+## Q11.5 APIぞろぞろ
+[qc.barrier](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.barrier.html)
+
+
+## Q11.6 言い残しこしこし
 
 ## API ref
 [barrier](https://qiskit.org/documentation/stubs/qiskit.circuit.library.Barrier.html)
 
-[C]
-
-
-[D]  
-3はindexがout of rangeとなるため　エラーとなる。
-
-
-[E]  
-qc.barrier_all()は使えそうだが，barrier_allというmethodはない。
 
 
 # Q12 
 > What code fragment codes the equivalent circuit if you remove the barrier in the following QuantumCircuit?
 <img src="images/2023-06-10-15-27-36.png" width=500 height=200>
 
-
+<span class="bg-y txt-g">
 [A]  
+</span>
+
 qc = QuantumCircuit(1,1)  
 qc.h(0)  
 qc.s(0)  
@@ -814,6 +966,7 @@ qc.measure(0,0)
 [B]  
 qc = QuantumCircuit(1,1)  
 qc.measure(0,0)  
+
 [C]  
 qc = QuantumCircuit(1,1)  
 qc.h(0)  
@@ -829,12 +982,37 @@ qc.z(0)
 qc.h(0)  
 qc.measure(0,0)  
 
-## 解答  
-[A]
+## Q12.1 用語ごろごろ
+barrierの説明は，Q11で実施済みです！忘れてしまった方は，Q11をチェックしてみてください！
 
-## 解説  
+## Q12.2 背景もろもろ
+こちらもQ11と同じです！
 
-[barrier API ](https://qiskit.org/documentation/stubs/qiskit.circuit.library.Barrier.html)
+## Q12.3 選択肢ごりごり
+設問の量子回路には H -> T -> barrier -> T -> Hが作用しています。
+Z軸方向に対する$\frac{\pi}{4}$回転(位相シフト)を表すT行列が二回作用しているため，barrierをなくすとその操作が1回の回転操作となり$\frac{\pi}{2}$の回転操作となります。$\frac{\pi}{2}$の回転操作はS行列で表されるため，H -> S -> Hの操作を実行している回路を表す選択肢が正解となります。1つ1つ探してみましょう！
+
+[A]はH->S->Hの回転操作を表しており，題意を満たすため正解です。
+
+[B]は量子ビットと古典ビットを１つずつ用意して，測定しただけですね！
+これらは題意の回路にはなり得ません！仮に問題がH->barrier->Hのような回路だった場合，Hゲートが2回連続することで単位ゲートとなるような場合は，正解となったでしょう！
+![](2023-06-27-21-00-31.png)
+
+[C]に見かけないメソッドが入っていますね！私も知りませんでしたのでチャジったところ，tdgメソッドはターゲット量子ビットに$T^{\dag}$を作用させるためのゲートだということがわかりました。ちなみに$T^{\dag}$は$T$ゲートの逆位相を適用するゲートであり，$-\frac{\pi}{4}$の位相シフトゲートです。問題の回路からbarrierを取り去ってもこの回路にはならないため，不正解です！
+
+[D]はH->Z->HでZゲートの回転角が0の場合のケースです。
+回路は結構複雑な回転操作となり，下記のようにまとめられます。
+![](2023-06-27-21-20-40.png)
+
+
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+[qc.tdg](https://qiskit.org/documentation/stubs/qiskit.circuit.library.TdgGate.html)
+tdgはTDaGgerのTDGということなのでしょう！
+
+## Q#.6 言い残しこしこし
+
+
 
 # Q13
 > Given the following code, what is the depth of the circuit?
@@ -857,6 +1035,21 @@ qc.measure(0,0)
 [D]  
 5  
 
+
+## Q13.1 用語ごろごろ
+depth (量子回路の深さ)は量子ゲート(操作)のレイヤー(階層)数を指します。
+ビットに作用させる操作数を数えることと同じです！
+## Q13.2 背景もろもろ
+深さを知ると何が嬉しいのでしょうか？一般に量子ゲートが増えると，実行するのに必要なリソースが増えるため，実行するゲートの数を知ることは重要です。また，量子ビットは外乱影響に極めて敏感でエラーが生じやすいことが知られています。当然，量子操作が多いほどエラーの影響も受けやすいため，エラー訂正ビットの要件にもつながります。上記の理由から，所望の回路を構築する上で，「どれくらいの量子操作があり，どれだけの量子ビットを準備すべきか？」を検討するために，深さを知ることは重要な訳です！
+
+## Q13.3 選択肢ごりごり
+barrierは量子操作には入りません！
+なので，今回は，最初のアダマールゲート，２番目の制御NOTゲート，合計２ゲートによる操作がおこなわれるため，深さは2と言えます。
+そのため，答えは[A]の1択となります。
+
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+## Q#.6 言い残しこしこし
 
 # Q14
 > Which code snippet would execute a circuit given these parameters?
@@ -881,7 +1074,7 @@ couple_map = [[0, 1], [0, 2]]
 job = execute(qc, loop=1024, coupling_map=couple_map)
 
 [C]  
-qasm_sim = Aer.get_backend('qasm_simulator')   
+qasm_sim = Aer.get_backend('qasm_simulator')  
 couple_map = [[0, 1], [1, 2]]  
 job = execute(qc, backend=qasm_sim, repeat=1024, coupling_map=couple_map)  
 
@@ -889,6 +1082,22 @@ job = execute(qc, backend=qasm_sim, repeat=1024, coupling_map=couple_map)
 qasm_sim = Aer.get_backend('qasm_simulator')  
 couple_map = [[0, 1], [1, 2]]  
 job = execute(backend=qasm_sim, qc, shot=1024, coupling_map=couple_map)  
+
+## Q14.1 用語ごろごろ
+QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使用して量子回路の動作をシミュレートするツールです。
+
+次に，shotとはなんでしょうか？これはシミュレーション実行時のサンプリング回数を指定するためのオプションです！これまでの解説に出てきましたが，量子回路で測定される状態は確率的な性質を持ちます。そのため，全く同じ回路を実行したとしても，得られる結果が異なることは日常的に起こり得ます。そのため，結果に統計的な信頼性を持たせるために一定数以上のサンプリングを行います！
+
+最後にカップリングマップについて説明しましょう！
+実際の量子デバイスでは，量子ビットがトポロジカルに配置されており，それぞれの量子ビットは一部の量子ビットと直接or間接的に繋がっています。量子回路におけるカップリングは，物理的な量子ビット間の接続性を表しており，量子ビット間の制御ゲートを適用する上で大変重要です！qiskitでは，transpileメソッドにcoupling_mapパラメータを指定することで，回路トランスパイル時にこれらの制約を考慮できます！ちなみに日隣接量子ビット間の操作を実現するためにはSWAPゲートが必要になる場合がありますが，カップリングマップに基づいてコンパイラが自動で挿入してくれる場合があるようです！
+
+## Q14.2 背景もろもろ
+
+
+## Q14.3 選択肢ごりごり
+## Q14.4 シミューレータぶんぶん
+## Q14.5 APIぞろぞろ
+## Q14.6 言い残しこしこし
 
 
 # Q15
@@ -914,6 +1123,13 @@ execute(qc, backend, shots=1024, device="qasm_simulator", mode="custom")
 execute(qc, backend, mode="custom")  
 
 
+## Q#.1 用語ごろごろ
+## Q#.2 背景もろもろ
+## Q#.3 選択肢ごりごり
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+## Q#.6 言い残しこしこし
+
 
 #Q16 
 > Which three simulators are available in BasicAer?
@@ -937,6 +1153,13 @@ quantum_simulator
 quantum_circuit_simulator  
 
 
+## Q#.1 用語ごろごろ
+## Q#.2 背景もろもろ
+## Q#.3 選択肢ごりごり
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+## Q#.6 言い残しこしこし
+
 # Q17
 > Which line of code would assign a statevector simulator object to the variable backend ?
 
@@ -951,7 +1174,12 @@ backend = BasicAer.get_backend('statevector_simulator')
 [D]   
 backend = BasicAer.get_back('statevector_simulator')  
 
-
+## Q#.1 用語ごろごろ
+## Q#.2 背景もろもろ
+## Q#.3 選択肢ごりごり
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+## Q#.6 言い残しこしこし
 
 
 # Q18  
@@ -970,6 +1198,13 @@ op = Operator(qc)
 [D]  
 op = Operator([[1,0,0,1]])  
 
+
+## Q#.1 用語ごろごろ
+## Q#.2 背景もろもろ
+## Q#.3 選択肢ごりごり
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+## Q#.6 言い残しこしこし
 
 # Q19
 > What would be the fidelity result(s) for these two operators, which differ only by global phase?  
@@ -992,6 +1227,13 @@ average_gate_fidelity()andprocess_fidelity()of 1.0
 state_fidelity()  
 average_gate_fidelity() and process_fidelity() of 1.0  
 
+
+## Q#.1 用語ごろごろ
+## Q#.2 背景もろもろ
+## Q#.3 選択肢ごりごり
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+## Q#.6 言い残しこしこし
 
 # Q20 
 > Given this code fragment, which output fits most closely with the measurement probability distribution?
@@ -1017,3 +1259,11 @@ print(counts)
 
 [D]  
 {'11': 1000}
+
+
+## Q#.1 用語ごろごろ
+## Q#.2 背景もろもろ
+## Q#.3 選択肢ごりごり
+## Q#.4 シミューレータぶんぶん
+## Q#.5 APIぞろぞろ
+## Q#.6 言い残しこしこし
