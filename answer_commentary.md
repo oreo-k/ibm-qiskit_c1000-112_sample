@@ -36,22 +36,22 @@ Q#. 問題
 - 正解選択肢 
 
 ### 解説Part
-Q#.1　用語ゴロゴロ
+Q#.1　用語
   - 用語が難しくて手が出せない場合があります。チャジれば(chatGPTに聞けば)いいですが，サクッと進むために私が簡潔に記載します！
 
-Q#.2 背景もろもろ
+Q#.2 背景
   - 筆者の理解の範囲で問題の背景や関連事項を描きます！
 
-Q#.3 選択肢それぞれ
+Q#.3 選択肢解説
   - 選択肢の解説です！正解だけでなく，不正解選択肢も舐め回します👅選択肢によっては「なんで不正解なの？」と思うとき，ないでしょうか？？私はめちゃくちゃあります！「なぜ不正解となるか？」を学ぶことも，正解を学ぶことと同じくらい大事だと思うので冗長にはなりますが，一生懸命書きたいと思います！時間があればサラッと目を通してください！「こう直せば，正解になるね！」まで書ければいいけど。。。さすがにしつこいかぁぁぁ😋
 
 Q#.4 シミューレータぶんぶん
   - 手計算だけでなく，シミュレータを使った計算も残したいと思います。ただし，Code部分はgithub上に残したjupyternotebookの方を参照してください！
 
-Q#.5 APIぞろぞろ
+Q#.5 Qiskit API
   - 関係するqiskit API をreferenceを記載します！
 
-Q#.6 言い残しほいほい
+Q#.6 言い残し
 - 書き忘れたことを描きます。関係あることだといいですね💩
 
 ---
@@ -81,12 +81,12 @@ QuantumCircuit(QuantumRegister(4, 'qr0'), QuantumRegister(4, 'cr1'))
 Registerという単語が出てきましたね。古典コンピュータでのレジスタとはなんだったでしょうか？レジスタは，データや処理を格納する場所である点でメモリと似ていますが，CPU内に存在している点が異なります。容量は限られている代わりにCPUと連携して動作できる分，高速な処理が可能です。メモリは記憶領域にあるので，大容量のデータを保存できる一方で動作は遅くなります。
 これから扱う量子ビット, 古典ビットは全て回路内に存在していることを想定しているためメモリではなくレジスタという表現が正しいことですね😋
 
-### Q1-2.背景もろもろ
+### Q1-2.背景
  まず，量子ビットと古典ビットの両方を用意しないといけない理由はなんでしょうか？量子コンピュータでは，重ね合わせやエンタングル状態といった量子ビット特有の状態を使って計算を実行しますが，量子ビットの状態を制御したり，状態を測定したりするのは古典ピットの役割なのです！なので，古典ビットは量子計算の制御や制御フローの管理において重要な役割を果たしていると言えるのです😋  
  問題文は４つの量子ビットと4つの古典ビットを作るCode分を求めています。
 
 
-### Q1-3.選択肢それぞれ
+### Q1-3.選択肢
 
 qiskit APIには，QuantumeCircuit Classが準備されており
 ```
@@ -121,7 +121,7 @@ QuantumCircuit(QuantumRegister(4,"q"), ClassicalRegister(4, "c"))
 #### Q1-4. シミュレータぶんぶん
 この問題はシミュレートすることないのでSkip！
 
-#### Q1-5. APIぞろぞろ
+#### Q1-5. Qiskit API
 [QutumCircuit](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.html)  
 第一引数にregistorsを取ることが説明されていますね！
 
@@ -152,15 +152,15 @@ qc.ry(3 * math.pi/4, 0)
 ## 答え
 [C]
 
-## Q2-1.用語ごろごろ
+## Q2-1.用語
 ry(3*math.pi/4,0)はQuantumCircuitクラスに用意されたY軸方向の回転操作メソッドです。ブロッホ球上の量子状態に対して，Y軸方向に$\frac{3 \pi}{4}$回転させるユニタリ操作を表します！
 またややこしいですが，"Y軸方向に回転"とは，ネジの頭をY軸の負側，ネジの部分を正方向に置いたときにネジを回す向きが正方向の回転になります。Y軸の負方向に向かって反時計回りと同じです！ややこしいな！
 
 
-## Q2-2.背景もろもろ
+## Q2-2.背景
 おなじみブロッホ球です。いまだにちゃんと描けません！確かに，回転操作については直感的に理解できるので重宝しますね！これをぐりぐり回せるシミュレータをUnityとかで描けるようになりたいなぁぁ(願望)
 
-## Q2-3. 選択肢色々
+## Q2-3. 選択肢解説
 
 初期状態 $\ket{0}$に対して, Y軸方向に$\theta = \frac{3 \pi}{4}$回転させた場合に，$\ket{0}$が観測される確率を求める問題。
 
@@ -281,13 +281,13 @@ qc.draw()
 
 
 
-## Q3-1.用語ごろごろ
+## Q3-1.用語
 アンシラビットとは，エラー訂正のパリティチェックやアルゴリズム実行時に一時的に情報を保持するために使われます。計算の結果には直接影響を与えないことが多く，あくまで補助的な役割を果たします。
 勉強を始めた当初は　Target bitの状態を制御することもありアンシラビットに含まれるかと思っていましたが，計算結果に影響を与える点でアンシラには含まないようです。
 制御ビットは，特定の条件下で量子操作を制御するために使用され，制御ゲートの制御線として利用されていると言えます。
 
 
-## Q3-2.背景もろもろ
+## Q3-2.背景
 inp_regの0から1番目にq0, q1量子ビットが格納されており，ancillaの0番目にanc量子ビットが格納されています。  
 与えられた画像からinp0 とinp1にアダマールゲート，anc0にNOTゲートを作用させる量子回路が与えられており，それらを実装するためのCodeを解答する必要があります！
 
@@ -377,10 +377,10 @@ qc.measure_all()
 qc.measure(0,1,2)
 
 
-### Q4-1. 用語ごろごろ
+### Q4-1. 用語
 測定のところは用語になりそうですが，下の背景もろもろのところで一緒に述べたいと思います！
 
-### Q4-2. 背景もろもろ
+### Q4-2. 背景
 まず，量子力学における測定で注意することはなんでしょうか？？
 代表的な注意点を3つあげてみましょう😅
 1. 測定が確率的である点
@@ -450,16 +450,16 @@ bell.h(0)
 ## 答え
 [A]
 
-## Q5-1.用語ごろごろ
+## Q5-1.用語
 エンタングルとベル状態について解説しましょう！これが量子計算の醍醐味ですね！
 エンタングルとは，2つ以上の"量子ビット同士が従属している状態"を指します。とはいえ，"量子ビット同士が従属"?なんのこっちゃという感じです。"従属"の対義語である"独立"であること
 
 
-## Q5-2. 背景もろもろ
+## Q5-2. 背景
 
 
 
-## Q5-3. 選択肢ごりごり
+## Q5-3.  選択肢解説
 
 
 ## Q5-4.シミュレータぶんぶん
@@ -471,8 +471,8 @@ Aer Simulatorでそれぞれの測定頻度をPlotしてみましょう！
 
 ちなみに[B], [C]は$\left( \ket{1} \otimes \frac{1}{\sqrt{2}} (\ket{0} + \ket{1}) \right)$, [D]は $\left( \ket{0} \otimes \ket{0} \right)$の直積で表される。[A]は直席では表すことができず，エンタングルしていると言える。
 
-## Q5-5. APIぞろぞろ
-## Q5-6. 言い残しこしこし
+## Q5-5. API
+## Q5-6. 言い残し
 
 
 
@@ -512,8 +512,8 @@ qc.ry(math.pi, 0)
 [A], [C]
 
 
-## Q#.1 用語ごろごろ
-## Q#.2 背景もろもろ
+## Q#.1 用語
+## Q#.2 背景
 
 ## 解説
 与えられた操作後，X軸上倒れたベクトルになっている。
@@ -526,10 +526,10 @@ qc.ry(math.pi, 0)
 <img src="images/2023-06-07-21-35-59.png" width=300 height=300>  
 となる。
 
-## Q#.3 選択肢ごりごり
+## Q#.3  選択肢解説
 ## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
-## Q#.6 言い残しこしこし
+## Q#.5 Qiskit API
+## Q#.6  言い残し
 
 
 # Q7.
@@ -647,10 +647,10 @@ q0, q1をそれぞれアダマール変換したものがテンソル積され�
 
 
 
-## Q#.3 選択肢ごりごり
+## Q#.3  選択肢解説
 ## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
-## Q#.6 言い残しこしこし
+## Q#.5 Qiskit API
+## Q#.6  言い残し
 
 
 # Q9. 
@@ -672,12 +672,12 @@ qc.cz(0,1)
 ## 答え  
 [D]
 
-## Q#.1 用語ごろごろ
-## Q#.2 背景もろもろ
-## Q#.3 選択肢ごりごり
+## Q#.1 用語
+## Q#.2 背景
+## Q#.3  選択肢解説
 ## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
-## Q#.6 言い残しこしこし
+## Q#.5 Qiskit API
+## Q#.6  言い残し
 
 
 ## 解説
@@ -804,7 +804,7 @@ qc.cry(0,1,2)
 ## 疑問
 - CXGateの使い方がよくわからない。
 
-## Q10.1 用語ごろごろ
+## Q10.1 用語
 Toffoliゲートは，シンプルにはANDゲートの量子版です！
 3つの量子ビットを操作するゲートであり，2つの制御量子ビットが1の状態のときのみ，3つめのTarget量子ビットにXゲートを適用します。
 q0_control|q1_control|q2_target|
@@ -818,7 +818,7 @@ q0_control|q1_control|q2_target|
 1|0|1|
 1|1|0|
 
-## Q10.2 背景もろもろ
+## Q10.2 背景
 ### Toffoliゲートの使い所
 Toffoliは量子計算のさまざまなアルゴリズムで使用されます！特に、量子エラー訂正など、誤り訂正や制御フローの実装などの応用で重要な役割を果たすようです(自分はまだ勉強中。。。)。また、Toffoliゲートは量子ビットの制御可能なユニバーサルセット（controlled-NOTゲートとHadamardゲートとの組み合わせ）の一部でもあります。
 
@@ -834,7 +834,7 @@ toffoliゲートを単一量子ビットゲートとCNOTで表現すると下記
 (自分ではとても思いつきませんが，qiskit libraryに描いてもらうことができます。)
 ![](images/2023-06-25-11-21-20.png)
 
-## Q10.3 選択肢ごりごり
+## Q10.3  選択肢解説
 [A]はQutumCircuit　classのccxメソッドに関する選択肢です。ccxメソッドはccx(q0, q1, target_bit)のように3つの量子ビットをparametersとしてとるのです。選択肢は
 "0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしています。<br>
 [B]はQutumCircuit classのmctメソッドに関する選択肢です。mctメソッドはmct(control_qbits,target_bit)をパラメータに取ります。control_qbitsはリストで指定することができるため，[B]は[A]同様，"0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしています！<br>
@@ -859,7 +859,7 @@ appendで渡す際に，[0,2,1]と指定すると，制御ビットが[q0,q2]で
 
 
 
-## Q10.5 APIぞろぞろ
+## Q10.5 Qiskit API
 [qc.ccx](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.ccx.html)
 
 [qc.mct](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.mct.html)
@@ -871,7 +871,7 @@ appendで渡す際に，[0,2,1]と指定すると，制御ビットが[q0,q2]で
 [qc.cry](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.cry.html)
 
 
-## Q10.6 言い残しこしこし
+## Q10.6  言い残し
 
 
 # Q11
@@ -901,11 +901,11 @@ qc.barrier(3)
 [E]  
 qc.barrier_all()  
 
-## Q11.1 用語ごろごろ
+## Q11.1 用語
 
 QuantumCircuitのbarrierメソッドに関する設問です。さて，barrierとは一体なんでしょうか？barrierの語源は障壁や境界で，その名の通りある区間で量子回路を区切るための境界を作ることです。境界を作る目的は，量子回路の各操作や固まりをグループ化することができることです！
 
-## Q11.2 背景もろもろ
+## Q11.2 背景
 
 量子ゲートの中には，複数の量子ゲートをまとめることができる場合ができます。例えば，複数の回転ゲートが作用する場合，Totalの回転角を操作する回転ゲート1回が作用していると考えることができます。<br>
 例えば，S行列操作を2回連続，T行列操作を1回操作させる回路を考えます。
@@ -917,7 +917,7 @@ QuantumCircuitのbarrierメソッドに関する設問です。さて，barrier�
 これは次のQ12でも関係してくるので覚えておきましょう！
 (つぎの解説で文字数省略したいだけ。)
 
-## Q11.3 選択肢ごりごり
+## Q11.3  選択肢解説
 
 [A]のようにbarrierメソッドは量子回路をparameterとして取ることはありません。なので不正解となります。
 
@@ -938,11 +938,11 @@ qc.barrier_all()は使えそうだが，barrier_allというmethodはない。
 
 
 
-## Q11.5 APIぞろぞろ
+## Q11.5 Qiskit API
 [qc.barrier](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.barrier.html)
 
 
-## Q11.6 言い残しこしこし
+## Q11.6  言い残し
 
 ## API ref
 [barrier](https://qiskit.org/documentation/stubs/qiskit.circuit.library.Barrier.html)
@@ -982,13 +982,13 @@ qc.z(0)
 qc.h(0)  
 qc.measure(0,0)  
 
-## Q12.1 用語ごろごろ
+## Q12.1 用語
 barrierの説明は，Q11で実施済みです！忘れてしまった方は，Q11をチェックしてみてください！
 
-## Q12.2 背景もろもろ
+## Q12.2 背景
 こちらもQ11と同じです！
 
-## Q12.3 選択肢ごりごり
+## Q12.3  選択肢解説
 設問の量子回路には H -> T -> barrier -> T -> Hが作用しています。
 Z軸方向に対する$\frac{\pi}{4}$回転(位相シフト)を表すT行列が二回作用しているため，barrierをなくすとその操作が1回の回転操作となり$\frac{\pi}{2}$の回転操作となります。$\frac{\pi}{2}$の回転操作はS行列で表されるため，H -> S -> Hの操作を実行している回路を表す選択肢が正解となります。1つ1つ探してみましょう！
 
@@ -1006,11 +1006,11 @@ Z軸方向に対する$\frac{\pi}{4}$回転(位相シフト)を表すT行列が�
 
 
 ## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
+## Q#.5 Qiskit API
 [qc.tdg](https://qiskit.org/documentation/stubs/qiskit.circuit.library.TdgGate.html)
 tdgはTDaGgerのTDGということなのでしょう！
 
-## Q#.6 言い残しこしこし
+## Q#.6  言い残し
 
 
 
@@ -1036,20 +1036,20 @@ tdgはTDaGgerのTDGということなのでしょう！
 5  
 
 
-## Q13.1 用語ごろごろ
+## Q13.1 用語
 depth (量子回路の深さ)は量子ゲート(操作)のレイヤー(階層)数を指します。
 ビットに作用させる操作数を数えることと同じです！
-## Q13.2 背景もろもろ
+## Q13.2 背景
 深さを知ると何が嬉しいのでしょうか？一般に量子ゲートが増えると，実行するのに必要なリソースが増えるため，実行するゲートの数を知ることは重要です。また，量子ビットは外乱影響に極めて敏感でエラーが生じやすいことが知られています。当然，量子操作が多いほどエラーの影響も受けやすいため，エラー訂正ビットの要件にもつながります。上記の理由から，所望の回路を構築する上で，「どれくらいの量子操作があり，どれだけの量子ビットを準備すべきか？」を検討するために，深さを知ることは重要な訳です！
 
-## Q13.3 選択肢ごりごり
+## Q13.3  選択肢解説
 barrierは量子操作には入りません！
 なので，今回は，最初のアダマールゲート，２番目の制御NOTゲート，合計２ゲートによる操作がおこなわれるため，深さは2と言えます。
 そのため，答えは[A]の1択となります。
 
 ## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
-## Q#.6 言い残しこしこし
+## Q#.5 Qiskit API
+## Q#.6  言い残し
 
 # Q14
 > Which code snippet would execute a circuit given these parameters?
@@ -1083,7 +1083,7 @@ qasm_sim = Aer.get_backend('qasm_simulator')
 couple_map = [[0, 1], [1, 2]]  
 job = execute(backend=qasm_sim, qc, shot=1024, coupling_map=couple_map)  
 
-## Q14.1 用語ごろごろ
+## Q14.1 用語
 QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使用して量子回路の動作をシミュレートするツールです。
 
 次に，shotとはなんでしょうか？これはシミュレーション実行時のサンプリング回数を指定するためのオプションです！これまでの解説に出てきましたが，量子回路で測定される状態は確率的な性質を持ちます。そのため，全く同じ回路を実行したとしても，得られる結果が異なることは日常的に起こり得ます。そのため，結果に統計的な信頼性を持たせるために一定数以上のサンプリングを行います！
@@ -1091,13 +1091,15 @@ QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使�
 最後にカップリングマップについて説明しましょう！
 実際の量子デバイスでは，量子ビットがトポロジカルに配置されており，それぞれの量子ビットは一部の量子ビットと直接or間接的に繋がっています。量子回路におけるカップリングは，物理的な量子ビット間の接続性を表しており，量子ビット間の制御ゲートを適用する上で大変重要です！qiskitでは，transpileメソッドにcoupling_mapパラメータを指定することで，回路トランスパイル時にこれらの制約を考慮できます！ちなみに日隣接量子ビット間の操作を実現するためにはSWAPゲートが必要になる場合がありますが，カップリングマップに基づいてコンパイラが自動で挿入してくれる場合があるようです！
 
-## Q14.2 背景もろもろ
+## Q14.2 背景
 
 
-## Q14.3 選択肢ごりごり
+## Q14.3  選択肢解説
+
+
 ## Q14.4 シミューレータぶんぶん
-## Q14.5 APIぞろぞろ
-## Q14.6 言い残しこしこし
+## Q14.5 Qiskit API
+## Q14.6  言い残し
 
 
 # Q15
@@ -1123,27 +1125,33 @@ execute(qc, backend, shots=1024, device="qasm_simulator", mode="custom")
 execute(qc, backend, mode="custom")  
 
 
-## Q#.1 用語ごろごろ
-## Q#.2 背景もろもろ
-## Q#.3 選択肢ごりごり
+## Q#.1 用語
+## Q#.2 背景
+## Q#.3  選択肢解説
 ## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
-## Q#.6 言い残しこしこし
+## Q#.5 Qiskit API
+## Q#.6  言い残し
 
 
-#Q16 
+# Q16 
 > Which three simulators are available in BasicAer?
 
+<span class="bg-y txt-g">
 [A]  
+</span>  
 qasm_simulator  
 
 [B]  
 basic_qasm_simulator  
 
+<span class="bg-y txt-g"> 
 [C]  
+</span>  
 statevector_simulator  
 
+<span class="bg-y txt-g">
 [D]  
+</span>
 unitary_simulator  
 
 [E]  
@@ -1153,12 +1161,27 @@ quantum_simulator
 quantum_circuit_simulator  
 
 
-## Q#.1 用語ごろごろ
-## Q#.2 背景もろもろ
-## Q#.3 選択肢ごりごり
+## Q#.1 用語
+## Q#.2 背景
+
+Aer, BasicAerともにqiskitシミュレーションバックエンドを管理するためのクラスです。Aerの方が高性能なシミュレーションを提供します。BasicAerはAerの下位互換を提供するためのクラスで，より簡素なシミュレーション環境を提供します。
+
+BasicAerは"qasm_simulator", "satevector_simulator", "unitary_simulator"の3種類を提供します！
+
+ちなみに，Aerは12種類のシミュレータを提供する。
+```python
+Aer.backends()
+```
+で確認できるので，興味があれば試して確認してみましょう！
+
+## Q#.3  選択肢解説
+この選択肢については，上記3つのシミュレータ以外は不正解です！
+
 ## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
-## Q#.6 言い残しこしこし
+## Q#.5 Qiskit API
+[BasicAer](https://qiskit.org/documentation/apidoc/providers_basicaer.html)
+
+## Q#.6  言い残し
 
 # Q17
 > Which line of code would assign a statevector simulator object to the variable backend ?
@@ -1166,20 +1189,61 @@ quantum_circuit_simulator
 [A]  
 backend = BasicAer.StatevectorSimulatorPy()  
 
+<span class="bg-y txt-g">
 [B]  
+</span>  
 backend = BasicAer.get_backend('statevector_simulator') 
 
-[C]  backend = BasicAer.StatevectorSimulatorPy().name()  
+[C]  
+backend = BasicAer.StatevectorSimulatorPy().name()  
 
 [D]   
 backend = BasicAer.get_back('statevector_simulator')  
 
-## Q#.1 用語ごろごろ
-## Q#.2 背景もろもろ
-## Q#.3 選択肢ごりごり
-## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
-## Q#.6 言い残しこしこし
+## Q17.1 用語
+今更ですがbackendとは，実際の量子デバイスやシミュレータを表すオブジェクトです。バックエンドは、量子回路の実行やシミュレーションを担当し、結果を提供します。
+ややこしいですが，AerやIBMQはバックエンドそのものではなく，プロバイダに当たります。それぞれのプロバイダが異なるバックエンドを管理しています。  
+総括すると、プロバイダはバックエンドを提供し、バックエンドは実際の量子デバイスやシミュレータを表します。ユーザーはプロバイダを介してバックエンドを選択し、量子回路を実行したり、結果を取得したりすることができます！
+backendは run, status, properties, configurationなどのメソッドを提供しています。
+
+## Q17.2 背景
+
+あんまり関係ないですが，BasicAerやqiskit.providers.basicaerが存在しお互い似ていて困りますね。。。。まず基本的な見分け方ですが，pythonでは小文字では，関数や変数，モジュールをあわらし，単語文頭が大文字になっている場合はクラスです。
+
+
+
+
+## Q17.3  選択肢解説
+個人的には難しい問題です！
+
+```python
+
+```
+
+[A]の選択肢ですが，BasicAerはStatevectorSimulatorPy()のクラスは持っていません。ちなみに，StatevectorSimulatorPy()のインスタンスはqiskit.providers.basicaerモジュールに入っています。なので，
+```python
+backend = qiskit.providers.basicaer.StatevectorSimulatorPy()
+backend = BasicAer.get_backend("statevector_simulator")
+```
+上記は全く同じbackendを指定している。
+選択肢はqiskit.providers.basicaerモジュールから呼び出してないので不正解！
+当然，選択肢のように呼び出すとエラーになります！
+
+[B]は正しいbackendインスタンスの作り方です！正解！
+
+[C]は[A]と同じ理由で不正解です！
+
+[D]はBasicAerのメソッドをget_backendではなく，get_backとなっているため，不正解！エラーになっちゃいます！
+
+## Q17.4 シミューレータぶんぶん
+特になしです！
+
+## Q17.5 Qiskit API
+[StatevectorSimulatorPy](https://qiskit.org/documentation/stubs/qiskit.providers.basicaer.StatevectorSimulatorPy.run.html)  
+[providers.basicaer](https://qiskit.org/documentation/apidoc/providers_basicaer.html)
+
+
+## Q17.6 言い残し
 
 
 # Q18  
@@ -1199,12 +1263,12 @@ op = Operator(qc)
 op = Operator([[1,0,0,1]])  
 
 
-## Q#.1 用語ごろごろ
-## Q#.2 背景もろもろ
-## Q#.3 選択肢ごりごり
+## Q#.1 用語
+## Q#.2 背景
+## Q#.3  選択肢解説
 ## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
-## Q#.6 言い残しこしこし
+## Q#.5 Qiskit API
+## Q#.6  言い残し
 
 # Q19
 > What would be the fidelity result(s) for these two operators, which differ only by global phase?  
@@ -1228,12 +1292,12 @@ state_fidelity()
 average_gate_fidelity() and process_fidelity() of 1.0  
 
 
-## Q#.1 用語ごろごろ
-## Q#.2 背景もろもろ
-## Q#.3 選択肢ごりごり
+## Q#.1 用語
+## Q#.2 背景
+## Q#.3  選択肢解説
 ## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
-## Q#.6 言い残しこしこし
+## Q#.5 Qiskit API
+## Q#.6  言い残し
 
 # Q20 
 > Given this code fragment, which output fits most closely with the measurement probability distribution?
@@ -1261,9 +1325,9 @@ print(counts)
 {'11': 1000}
 
 
-## Q#.1 用語ごろごろ
-## Q#.2 背景もろもろ
-## Q#.3 選択肢ごりごり
+## Q#.1 用語
+## Q#.2 背景
+## Q#.3  選択肢解説
 ## Q#.4 シミューレータぶんぶん
-## Q#.5 APIぞろぞろ
-## Q#.6 言い残しこしこし
+## Q#.5 Qiskit API
+## Q#.6  言い残し
