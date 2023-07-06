@@ -1045,11 +1045,40 @@ depth (量子回路の深さ)は量子ゲート(操作)のレイヤー(階層)�
 ## Q13.3  選択肢解説
 barrierは量子操作には入りません！
 なので，今回は，最初のアダマールゲート，２番目の制御NOTゲート，合計２ゲートによる操作がおこなわれるため，深さは2と言えます。
-そのため，答えは[A]の1択となります。
+そのため，答えは[A]の1択となります！
 
-## Q#.4 シミューレータぶんぶん
-## Q#.5 Qiskit API
-## Q#.6  言い残し
+このように簡単な回路のDepthを知りたいことはまれで，大抵は深い階層をもつ場合や未知の場合の深さを知りたい場合が多いです。そのため，実際に与えられた回路からdepth methodを使って深さを求める方法を試してみましょう！
+
+```python
+qc = QuantumCircuit(2, 2)
+qc.h(0)
+qc.barrier(0)
+qc.cx(0,1)
+qc.barrier([0,1])
+
+print(qc.depth())
+```
+これを実行すると consoleに2が出力されることを確認することができます。
+
+
+## Q13.4 シミューレータぶんぶん
+今回はシミュレータを使って，ユニタリ操作回数に応じて長くなる実行時間の傾向を可視化してみたいと思います！  
+回路としてやっていることは$R_{y}(\theta=\frac{\pi}{6})$をひたすら足していき，そのRy操作回数に応じた実行時間のplotです。
+
+例えば，10回のUnitary操作をしている時の回路図は下記です。
+![](images/2023-06-30-09-16-13.png)
+
+当たり前の結果ではありますが操作回数におおよそ比例して実行時間が増えることがわかります！
+
+![](images/2023-06-30-09-07-48.png)
+
+## Q13.5 Qiskit API
+
+[qc.depth](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.depth.html)
+
+## Q13.6  言い残し
+
+とくにございません！
 
 # Q14
 > Which code snippet would execute a circuit given these parameters?
@@ -1089,13 +1118,21 @@ QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使�
 次に，shotとはなんでしょうか？これはシミュレーション実行時のサンプリング回数を指定するためのオプションです！これまでの解説に出てきましたが，量子回路で測定される状態は確率的な性質を持ちます。そのため，全く同じ回路を実行したとしても，得られる結果が異なることは日常的に起こり得ます。そのため，結果に統計的な信頼性を持たせるために一定数以上のサンプリングを行います！
 
 最後にカップリングマップについて説明しましょう！
-実際の量子デバイスでは，量子ビットがトポロジカルに配置されており，それぞれの量子ビットは一部の量子ビットと直接or間接的に繋がっています。量子回路におけるカップリングは，物理的な量子ビット間の接続性を表しており，量子ビット間の制御ゲートを適用する上で大変重要です！qiskitでは，transpileメソッドにcoupling_mapパラメータを指定することで，回路トランスパイル時にこれらの制約を考慮できます！ちなみに日隣接量子ビット間の操作を実現するためにはSWAPゲートが必要になる場合がありますが，カップリングマップに基づいてコンパイラが自動で挿入してくれる場合があるようです！
+実際の量子デバイスでは，量子ビットがトポロジカルに配置されており，それぞれの量子ビットは一部の量子ビットと直接or間接的に繋がっています。量子回路におけるカップリングは，物理的な量子ビット間の接続性を表しており，量子ビット間の制御ゲートを適用する上で大変重要です！qiskitでは，transpileメソッドにcoupling_mapパラメータを指定することで，回路トランスパイル時にこれらの制約を考慮できます！ちなみに非隣接量子ビット間の操作を実現するためにはSWAPゲートが必要になる場合がありますが，カップリングマップに基づいてコンパイラが自動で挿入してくれる場合があるようです！
 
 ## Q14.2 背景
 
 
 ## Q14.3  選択肢解説
 
+[A]は正しくパラメータを指定できており大正解！一度パラメータを整理しましょう！  
+- shots: 試行回数
+- backend: バックエンドを指定
+- coupling_map: 結合する量子ビット同士を指定します。色々なフォーマットが許されます！
+
+[B]はloopというパラメータでiteration回数を指定していますが，実際にはloopというパラメータは取りません！なので不正解！
+[C]も[B]と同じように，repeatというパラメータは取らないので不正解！
+[D]はshotというパラメータを指定していますが，正しくはshotsのため不正解です！
 
 ## Q14.4 シミューレータぶんぶん
 ## Q14.5 Qiskit API
@@ -1161,8 +1198,8 @@ quantum_simulator
 quantum_circuit_simulator  
 
 
-## Q#.1 用語
-## Q#.2 背景
+## Q16.1 用語
+## Q16.2 背景
 
 Aer, BasicAerともにqiskitシミュレーションバックエンドを管理するためのクラスです。Aerの方が高性能なシミュレーションを提供します。BasicAerはAerの下位互換を提供するためのクラスで，より簡素なシミュレーション環境を提供します。
 
@@ -1175,7 +1212,8 @@ Aer.backends()
 で確認できるので，興味があれば試して確認してみましょう！
 
 ## Q#.3  選択肢解説
-この選択肢については，上記3つのシミュレータ以外は不正解です！
+この選択肢については，上記3つのシミュレータ以外は
+BasicAer classでは提供されていないので不正解となります！
 
 ## Q#.4 シミューレータぶんぶん
 ## Q#.5 Qiskit API
@@ -1192,6 +1230,7 @@ backend = BasicAer.StatevectorSimulatorPy()
 <span class="bg-y txt-g">
 [B]  
 </span>  
+
 backend = BasicAer.get_backend('statevector_simulator') 
 
 [C]  
@@ -1208,7 +1247,8 @@ backendは run, status, properties, configurationなどのメソッドを提供�
 
 ## Q17.2 背景
 
-あんまり関係ないですが，BasicAerやqiskit.providers.basicaerが存在しお互い似ていて困りますね。。。。まず基本的な見分け方ですが，pythonでは小文字では，関数や変数，モジュールをあわらし，単語文頭が大文字になっている場合はクラスです。
+BasicAerやqiskit.providers.basicaerが存在しお互い似ていて困りますね。。。。pythonの初学者への話になってしまいますが，ClassとModuleの違いを今一度はっきりさせましょう！まず基本的な名称のルールですが，pythonでは小文字は，関数や変数，モジュールをあわらし，単語文頭が大文字になっている場合はクラスです。また，モジュールは
+関連する関数，クラス，変数などのコードの集合体です。そのため，今回のケースでは，BasicAerはクラスで，qiskit.providers.basicはモジュールを指します。
 
 
 
@@ -1263,13 +1303,44 @@ op = Operator(qc)
 op = Operator([[1,0,0,1]])  
 
 
-## Q#.1 用語
-## Q#.2 背景
-## Q#.3  選択肢解説
-## Q#.4 シミューレータぶんぶん
-## Q#.5 Qiskit API
-## Q#.6  言い残し
+## Q18.1 用語
+operatorとは，物理学で扱う演算子のことです。数学では作用素と言います。量子情報の分野では，量子ビットや古典ビットに対する何らかの操作を演算子で表現することが多いです！
+## Q18.2 背景
+この問題は，qiskitのOperatorクラスに関する問題です。
+このOperatorクラスを使って自分で定義したい演算子を作っておくと，再利用しやすくていいですね！
 
+## Q18.3  選択肢解説
+Operator Classの最も簡単な使い方は，リストかNumpy Arrayで与える。
+[A]はOperatorオブジェクトはXop()のメソッドは持ちません。そのため，不正解です！
+[B]はOperatorオブジェクトとしての使い方は間違っておらず，指定したオペレータオブジェクトを作成できます。しかし，2行1列のベクトルができるだけでNOTゲートはできません。そのため不正解です！
+[C]は単一量子ビットを持ちX回路を挿入した量子回路を作成し，そのQuantumCircuitオブジェクトをOperatorのparamaterに入れている。OperatorクラスはQuantumCircuitオブジェクトをパラメータとして取ることができます！なので，NOT回路表すQuantumCircuitオブジェクトをパラメータに取りOperatorオブジェクトを作成しているため，題意を満たし正解となります！
+[D]は[B]と似ています！与えられた書き方でOperator演算子を作ることはできますが，NOTゲートにはなりません。なので，題意を満たさず不正解となります！
+
+ちなみに，リストを与えてNOT Gateを作る場合，
+```python
+op_x = Operator([[0,1],[1,0]])
+```  
+のようにして作ることができる。
+ちなみに，Operatorオブジェクトの使い方は，QuantumCircuitのappendメソッドに挿入して回路に追加することができます！
+<img src="images/2023-07-05-00-07-28.png" width=200 height=100)
+
+## Q18.4 シミューレータぶんぶん
+今回は，自作したOperatorを使ってNOTゲートを試作して下記の回路を設計してみましょう！
+この結果をシミュレートすると100%の確率で{01}が検出されることが確認できます！
+
+<img src="images/2023-07-05-00-43-18.png" width=300 height=200>
+
+<img src="images/2023-07-05-00-43-52.png" width=300 height=200>
+
+
+## Q18.5 Qiskit 
+[operator API](https://qiskit.org/documentation/tutorials/circuits_advanced/02_operators_overview.html)
+   
+
+## Q18.6  言い残し
+
+
+---
 # Q19
 > What would be the fidelity result(s) for these two operators, which differ only by global phase?  
 
@@ -1285,19 +1356,79 @@ state_fidelity() of 1.0
 state_fidelity() and average_gate_fidelity() of 1.0  
 
 [C]  
-average_gate_fidelity()andprocess_fidelity()of 1.0
+average_gate_fidelity() and process_fidelity() of 1.0
 
 [D]  
 state_fidelity()  
 average_gate_fidelity() and process_fidelity() of 1.0  
 
+## Q19.1 用語
+まずfiderityについてです。まだ50%程度の理解だと思いますが，それでもすごく時間がかかりました。。。
 
-## Q#.1 用語
-## Q#.2 背景
-## Q#.3  選択肢解説
-## Q#.4 シミューレータぶんぶん
-## Q#.5 Qiskit API
-## Q#.6  言い残し
+- state_fidelity(状態フィデリティ)  
+２つの量子状態間の類似度を評価します！
+
+- average_gate_fidelity(平均ゲートフィデリティ)  
+実際の量子ゲート操作と理想的な量子ゲート操作間の類似度を評価するものです！
+
+- process_fidelity(プロセスフィデリティ)  
+理想的な量子プロセス(量子回路の一連のゲート操作)と実際の量子プロセスの間の類似度を評価するために使用されます！
+
+いずれも量子状態やプロセスの類似度を評価するためのツールという展で共通です！
+
+## Q19.2 背景
+average_gate_fidelityが0.8の場合を考えてみましょう！
+0.8と忠実度が高くても一部のエラーが生じる可能性があります。
+
+### 重ね合わせ状態の変換
+$\frac{1}{\sqrt{2}}(\ket{0}+\ket{1})$のアダマール状態を考えたときに  
+$\frac{1}{\sqrt{2}}(\ket{0}+e^{i \phi}\ket{1})$  
+ここで、$\phi$ はエラーによって生じる位相のずれを表しています。
+
+### エンタングルメントの変換
+$\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$のbell状態を考えたときも同様に
+$\frac{1}{\sqrt{2}}(\ket{00}+e^{i \phi}\ket{11})$  
+ここで、$\phi$ はエラーによって生じる位相のずれを表しています。
+
+
+## Q19.3  選択肢解説
+
+今回取り扱うのは2つのOperatorオブジェクトの忠実度を計算する問いです！
+Operatorオブジェクトはゲート操作を表すため，忠実度は
+average_gate_fidelityとprocess_fidelityを使って計算できます！
+
+一方で，Inputがquantum stateでない場合はqiskit errorになってしまいます！
+![](2023-07-05-21-11-51.png)
+なので，state_fidelityでは忠実度は計算できません。なので，state_fidelityが入っていない選択肢が正解となります！
+なので，正解は[C]となります！
+
+## Q19.4 シミューレータぶんぶん
+
+
+## Q19.5 Qiskit API
+[XGate](https://qiskit.org/documentation/stubs/qiskit.circuit.library.XGate.control.html)
+
+[average_gate_fidelity](https://qiskit.org/documentation/stubs/qiskit.quantum_info.average_gate_fidelity.html)
+
+[process_fidelity](https://qiskit.org/documentation/stubs/qiskit.quantum_info.process_fidelity.html)
+
+[state_fidelity](https://qiskit.org/documentation/stubs/qiskit.quantum_info.state_fidelity.html)
+
+
+quantum channelとは量子ビットの状態を操作したり伝達したりするための数学的な表現です！
+
+$\rho_{out}= \epsilon (\rho_{in})$  
+$\rho_{in}$は入力の密度行列，$\rho_{out}$は出力の行列を表す。  
+$\epsilon$は量子チャネルを表すリニアな写像です。
+
+状態の密度行列を別の密度行列に変換するリニアな写像で，行列演算に相当します。
+
+量子チャネルは，様々な操作や物理的なプロセスをモデル化するために使用されます。
+例えば，ユニたり変換や測定，ノイズやエラーの効果を表現するために使用されます！
+量子チャネルの理解と分析は，量子情報処理や量子通信などの応用で重要な役割を果たします！
+
+
+
 
 # Q20 
 > Given this code fragment, which output fits most closely with the measurement probability distribution?
