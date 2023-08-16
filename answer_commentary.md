@@ -874,7 +874,10 @@ qc.h(0)
 [B]  
 qc.rx(math.pi / 2, 0)  
 
+<span class="bg-y txt-g">
 [C]  
+</span><br>  
+
 qc.ry(math.pi / 2, 0)  
 
 [D]  
@@ -972,6 +975,7 @@ Z軸周りの回転ゲートは位相ゲートと呼ばれており，それぞ�
 選択肢は$\pi / 4$である[A]のみが正解です😋
 
 # Q7.4 シミュレーション
+特に今回はシミュレーションすることはありません！
 
 # Q7.5 Qiskit API
 
@@ -1005,7 +1009,7 @@ qc.initialize(v,[0,1])
 <span class="bg-y txt-g">
 [B]  <br>
 </span>
-qc.h(0)  
+qc.h(0) <br>
 qc.cx(0,1)  
 
 [C]  
@@ -1022,12 +1026,13 @@ qc.h(0)
 qc.h(1)  
 qc.measure_all()
 
-## 解説
+## Q8.2 背景
 何度も出てくるので覚えておいた方がいい数字が0.707！
-これは$\frac{1}{\sqrt{2}}$のことです！
+これは$\frac{1}{\sqrt{2}}$です！
 つまり，Outputで表現されているベクトルは
 $$
-v = 
+\begin{align}
+\ket{v} &= 
 \left(
     \begin{matrix}
       \frac{1}{\sqrt{2}}  \\
@@ -1035,59 +1040,72 @@ v =
       0 \\
       \frac{1}{\sqrt{2}} \\
     \end{matrix}
-\right)
+\right) \\
+&= \frac{1}{\sqrt{2}} (\ket{00} + \ket{11})
+\end{align}
 $$
 となります！
 上記のベクトルとなるゲートの組み合わせを探しましょう！
 
+ちなみに，qc.initializeが初めて出てきたので，選択肢解説にいく前に使い方を解説しましょう！
+第1引数には量子状態を指定するパラメータ，第2因数は量子レジスタを指定します。
+この量子状態を指定するパラメータは主に3種類です！
+i.) 文字列でパウリ行列の固有値を指定する方法
+[label](https://qiskit.org/documentation/locale/ta_IN/stubs/qiskit.quantum_info.Statevector.from_label.html#qiskit.quantum_info.Statevector.from_label)の中からstringで指定する
+ii.) 数値のリストで確率振幅を指定する方法
+iii.) 10進数を代入し，その2進数表現の量子状態を指す方法
+
+## Q8.3 選択肢解説
+
 #### 選択肢[A]
-
-
+上記のパラメータの指定方法のii.)に該当する方法で，ベル状態を作っています！そのため題意を満たし正解となります😋
 
 #### 選択肢[B]  
 状態を計算すると下記のようになります。
 $$
 \begin{align}
-    \ket{q_{0}'} &= \hat{H} \ket{0}_{q_{0}} \\
-    &= \frac{1}{\sqrt{2}} (\ket{0}_{q_{0}} + \ket{1}_{q_{0}})
-\end{align}
-$$
-次にCNOTゲートが適用されるため，$\ket{q_{0}}, \ket{q_{1}}$を直積状態にして表現したのちに，CNOTゲートを適用するのので下記の計算してみましょう！すると，
-$$
-\begin{align}
-  \ket{\Psi'} &= \ket{q'_{1}} \otimes \ket{q'_{0}} \\
+  \ket{v_{0}'} &= \hat{H} \ket{0}_{v_{0}} \\
+    &= \frac{1}{\sqrt{2}} (\ket{0}_{q_{0}} + \ket{1}_{v_{0}}) \\
+  \ket{q_{1}} &= \ket{1}_{v_{1}} \\
+  \ket{\Psi'} &= \ket{v_{1}} \otimes \ket{v'_{0}} \\
   &= \frac{1}{\sqrt{2}} (\ket{00}+\ket{01}) \\
 \end{align}
 $$
-これは $\ket{00}$ と$\ket{11}$の振幅を$\frac{1}{\sqrt{2}}$に設定しており，ベル状態となっています！これは，題意合致するため正解です😋
+ここにCNOT(q0, q1)が適用され，
 $$
 \begin{align}
-  \hat{CNOT}_{q_{0},q_{1}} \ket{\Psi'} &= \frac{1}{\sqrt{2}} (\ket{00}+\ket{11})  \\
+  \hat{CNOT}_{v_{0},q_{1}} \ket{\Psi'} &= \frac{1}{\sqrt{2}} (\ket{00}+\ket{11})  \\
 \end{align}
 $$
-これも，[A]と同様にベル状態を生成できます！これも題意に合致しているため正解となります！
-
-
-
-
+となります。これは $\ket{00}$ と$\ket{11}$の振幅を$\frac{1}{\sqrt{2}}$に設定しており，ベル状態となっています！これは，題意合致するため正解です😋
 
 #### 選択肢[C]  
-この場合は，0番目のqubitは $\ket{q_{0}}=\ket{0}, \ket{q_{1}}=\ket{1}$で初期化されているため，$\ket{\Psi_{0}} = \ket{1} \otimes \ket{0} = \ket{10}$となる。  
+今回は上記のiii.)の方法で初期化されており, $\ket{v_{0}}, \ket{v_{1}}$はそれぞれ$\ket{v_{0}}=\ket{0}, \ket{v_{1}}=\ket{1}$で初期化されます！両方の直積として状態は$\ket{\Psi} = \ket{1} \otimes \ket{0} = \ket{10}$となります！これは，題意に反するため不正解となります🙃  
 
 #### 選択肢[D]  
-初期状態が$\ket{00}$ に対して，制御NOTで操作しても，状態は変わらないため，最終的な結果は$\ket{00}$となる。
+初期状態が$\ket{00}$ に対して，制御NOTで操作しても，状態は変わらないため，最終的な結果は$\ket{00}$となります！
 
 #### 選択肢[E]  
-q0, q1をそれぞれアダマール変換したものがテンソル積された状態が得られる。
-
-選択肢の[A]~[E]のそれぞれの量子状態を測定した際のヒストグラムは下記の通りになる。
-<img src="images/2023-06-14-20-25-26.png" width=500 height=400>
-
-## Q8.3  選択肢解説
+ディラック表記で計算すると下記のようになります！
+$$
+\begin{align}
+  \ket{q_{0}} &= \hat{H} \ket{0}_{q_{0}} \\
+  &= \frac{1}{\sqrt{2}} ( \ket{0}_{q_{0}} + \ket{1}_{q_{0}})\\
+  \ket{q_{1}} &= \hat{H} \ket{0}_{q_{1}} \\
+  &= \frac{1}{\sqrt{2}} ( \ket{0}_{q_{1}} + \ket{1}_{q_{1}})\\
+  \ket{\Psi} &= \ket{q_{0}} \otimes \ket{q_{1}}\\
+  &= \frac{1}{2}(\ket{00}+\ket{10}+\ket{10}+\ket{11})
+\end{align}
+$$
 
 
 ## Q8.4 シミューレータ
+選択肢の[A]~[E]のそれぞれの量子状態を測定した際のヒストグラムは下記の通りになります！上の計算通りの計測結果になってますね！
+<img src="images/2023-06-14-20-25-26.png" width=500 height=400>
+
+
 ## Q8.5 Qiskit API
+[qc.initialize](https://qiskit.org/documentation/locale/ta_IN/stubs/qiskit.circuit.QuantumCircuit.initialize.html)
 ## Q8.6  言い残し
 
 
@@ -1110,24 +1128,19 @@ qc.cz(0,1)
 ## 答え  
 [D]
 
-## Q#.1 用語
-## Q#.2 背景
-## Q#.3  選択肢解説
-## Q#.4 シミューレータ
-## Q#.5 Qiskit API
-## Q#.6  言い残し
+## Q9.1 用語
+今まで出てきた用語ばかりですね！
 
+## Q9.2 背景
+背景についても特にありません！
 
-## 解説
-methodで用意されている制御NOTのParametersは　qc.cx(control, target)の順で指定する。
+## Q9.3  選択肢解説
+methodで用意されている制御NOTのParametersは　qc.cx(control, target)の順で指定します！
 [A], [B]
-cx, cnot　methodは同じ使い方が可能。
+cx, cnot　methodは同じ使い方が可能です！
 
 [C]
-また複数の制御ビットを持つNOT Gateを使いたい時は.mct methodも用意されている。
-第1因数としてリストを与えると，制御ビットとして用いるqubitを指定することができる。
-
-例えば，下記のように2つの制御ビットを持つ制御NOT(toffoli) Gateを作ることもできる。
+また複数の制御ビットを持つNOT Gateを使いたい時は.mct methodも用意されています。qc.cxとの違いは，制御ビットを複数指定できる点です！第1因数としてリストを与えると，制御ビットとして用いるqubitを指定することができるのです！例えば，下記のように2つの制御ビットを持つ制御NOT(toffoli) Gateを作ることができます！
 ```python 
 qc = QuantumCircuit(3)
 qc.mct([0, 1], 2)
@@ -1135,87 +1148,14 @@ qc.draw()
 ```
 <img src="images/2023-06-09-22-52-00.png" width=150 height=200>
 
-制御NOTゲートは
-$$
-
-\begin{align}
-
-\hat{CX} &= 
-  \left(
-      \begin{matrix}
-      1 & 0 & 0 & 0 \\
-      0 & 0 & 0 & 1 \\
-      0 & 0 & 1 & 0 \\
-      0 & 1 & 0 & 0 \\
-      \end{matrix}
-
-  \right) \\
-
-  &= \hat{I_t} \otimes \Bigl( \ket{0_c} \bra{0_c} \Bigr) + \Bigl( \ket{0}_t \bra{1}_t + \ket{1}_t \bra{0}_t \Bigr) \otimes \Bigl( \ket{1}_c \bra{1}_c \Bigr) \\
-
-\end{align}
-$$
-
-初期状態$\ket{{\Psi_0}}$として下記のように定義して，$\hat{CX}$を作用させると
-$$
-\begin{align}
-  \ket{\Psi_{0}}
-      &=
-  \left(
-    \begin{matrix}
-      \alpha \\
-      \beta \\
-      \gamma \\
-      \delta
-    \end{matrix}
-  \right) \\
-
-    & = \alpha \ket{0}_t \otimes  \ket{0}_c +
-    \beta \ket{0}_t \otimes \ket{1}_c + 
-    \gamma \ket{1}_t \otimes \ket{0}_c + \delta \ket{1}_t \otimes \ket{1}_c \\
-    & = \alpha \ket{00}+ \beta \ket{01} + \gamma \ket{10} + \delta \ket{11}\\ 
-\\
-\ket{\Psi'} &= \hat{CX} \ket{\Psi_0} \\
-&= \alpha \ket{00}+ \beta \ket{11} + \gamma \ket{10} + \delta \ket{01}\\ 
-
-\end{align} \\
-$$
-
-となり，$\ket{01}$と$\ket{11}$状態の振幅が入れ替わることを確認できる。
-
-
-
-
 [D]
-制御ZGateは，制御ビットが1, かつTargetビットが1の時，そのTarge ビットのいそうを反転させる。<br> 
-そのため，X-Gateのビット反転操作にはならず，題意に反するため不正解。
-制御ZGateの行列，ディラック表現は下記のようになる。
-$$
-\begin{align}
-  \hat{CZ} &= 
-  \left(
-    \begin{matrix} 
-    1 & 0 & 0 & 0 \\
-    0 & 1 & 0 & 0 \\
-    0 & 0 & 1 & 0 \\
-    0 & 0 & 0 & -1 \\
-    \end{matrix}
-  \right)\\
+Q5.で出てきたように制御ZGateは，制御ビットが1, かつTargetビットが1の時，そのTarget ビットの位相を反転させます。これは，CXゲートとは異なる操作になるため不正解です！🙃
 
-  &= \hat{I}_t \ket{0}_c+ \Bigl( \ket{0}_t \bra{0}_t - \ket{1}_t \bra{1}_t \Bigr) \ket{1}_c \bra{1}_c 
-\end{align}
-$$
+## Q9.4 シミューレータ
+今回はシミュレートすることは特にありません！
 
-$\hat{CX}$の時と同様に，ベクトル$\ket{\Psi_{0}}$に作用させると
-
-$$
-\begin{align}
-  \ket{\Psi'} &= \hat{CZ} \ket{\Psi_{0}}  \\
-  &= \alpha \ket{00}+ \beta \ket{01} + \gamma \ket{10} - \delta \ket{11}\\ 
-
-\end{align}  
-$$
-となり，$\ket{11}$の符合が反転(位相が$\pi$回転)することを確認できる。
+## Q9.5 Qiskit API
+[qc.mct](https://qiskit.org/documentation/stable/0.19/stubs/qiskit.circuit.QuantumCircuit.mct.html)
 
 
 # Q10
@@ -1271,10 +1211,11 @@ toffoliゲートを単一量子ビットゲートとCNOTで表現すると下記
 
 ## Q10.3  選択肢解説
 [A]はQutumCircuit　classのccxメソッドに関する選択肢です。ccxメソッドはccx(q0, q1, target_bit)のように3つの量子ビットをparametersとしてとるのです。選択肢は
-"0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしています。<br>
+"0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしています！<br>
+
 [B]はQutumCircuit classのmctメソッドに関する選択肢です。mctメソッドはmct(control_qbits,target_bit)をパラメータに取ります。control_qbitsはリストで指定することができるため，[B]は[A]同様，"0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしています！<br>
 
-[C]はCXGate classに関する選択肢です。簡単には，qc.cx(n)メソッドで量子回路上に制御NOTゲートは適用できます。CXGateはClassのため，制御NOTゲートのインスタンスを作る必要があります。自分でインスタンス化できる分，より柔軟にゲート設計できるのでしょうか...利点をよくわかっていません。。。
+[C]はCXGate classに関する選択肢です。CXGateはClassのため，制御NOTゲートのインスタンスを作る必要があります。自分でインスタンス化できる分，より柔軟にゲート設計できるのでしょうか...利点をよくわかっていません。。。
 選択肢の書き方をもう少し書き下すと，下記のようになります。
 ```python
 cx = CXGate() #CXGateのインスタンスを作る
@@ -1283,16 +1224,14 @@ qc.append(ccx, [0,1,2]) #量子回路qcにCCXゲートを追加する形で実�
 ```
 qcのappendメソッドでCXを追加する場合，リストの末尾をTargetビットに指定します。
 そのため，グラフに起こすと下記のようになります。
-![](images/2023-06-26-16-49-19.png)  
+<img src="images/2023-06-26-16-49-19.png" width=150 height=200>
 appendで渡す際に，[0,2,1]と指定すると，制御ビットが[q0,q2]でターゲットビットが[q1]として指定されます。 
-![](images/2023-06-26-16-51-09.png)
+<img src="images/2023-06-26-16-51-09.png" width=150 height=200>
 
-
-[D]はqc.cryメソッドに関する選択肢です。(theta, control_bit, target_bit)の順にParameterをとります。選択肢[D]のように指定すると，１番目のqbitが1の時にq2に0degのY軸方向の回転を加えることを意味しています。ちなみに，何も変化を与えません。
-
+[D]はqc.cryメソッドに関する選択肢です！(theta, control_bit, target_bit)の順にParameterをとります！選択肢[D]のように指定すると，１番目のqbitが1の時にq2に0degのY軸方向の回転を加えることを意味しています！
+これは，題意のようなToffoliゲートにはなり得えません！なので不正解です🙃
 ## Q10.4 シミューレータ　
-
-
+今回もシミュレーションは特にありません！
 
 ## Q10.5 Qiskit API
 [qc.ccx](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.ccx.html)
@@ -1305,8 +1244,6 @@ appendで渡す際に，[0,2,1]と指定すると，制御ビットが[q0,q2]で
 
 [qc.cry](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.cry.html)
 
-
-## Q10.6  言い残し
 
 
 # Q11
@@ -1346,42 +1283,32 @@ QuantumCircuitのbarrierメソッドに関する設問です。さて，barrier�
 例えば，S行列操作を2回連続，T行列操作を1回操作させる回路を考えます。
 それぞれの操作毎にbarrierを挟むと，それぞれの操作で区切られる。一方で，barrierを入れないとS行列2回による$\pi$回転とT行列の$\frac{\pi}{4}$の合計$\frac{5 \pi}{4} = - \frac{3 \pi}{4}$の1操作に集約されるのです。
 量子ゲートを考える際に，１つ１つの操作を分けたいとき，ある領域でグループ化したい時には大変ありがたいツールです！
-それぞれ図に起こすと下記のようになる。
-<img src="2023-06-27-19-59-12.png" width=400 height=350>
+それぞれ図に起こすと下記のようになります！
+<img src="images/2023-06-27-19-59-12.png" width=400 height=350>
 
 これは次のQ12でも関係してくるので覚えておきましょう！
-(つぎの解説で文字数省略したいだけ。)
 
 ## Q11.3  選択肢解説
 
-[A]のようにbarrierメソッドは量子回路をparameterとして取ることはありません。なので不正解となります。
+qc.barrier(num_qubits, label=None)の因数をとります。
+barrierを入れたいタイミングは，qc.barrier()を挿入する場所で定義され
+そのbarrierを入れる量子ビットを第1因数として指定します！
 
-[B]barrierメソッドはqargsのパラメータを取ります。指定した量子ビットの番号にbarrierをかけます。
+選択肢[A]のようにbarrierメソッドは量子回路をparameterとして取ることはありません！なのでエラーとなってしまいます！不正解🙃
 
-[C]
-barrierメソッドの因数に何も指定しないと，全ての量子ビットにbarrierが作用するため，題意を満たし正解となります。
+選択肢[B]のようにbarrierメソッドはqargsのパラメータを取ります。指定した量子ビットの番号にbarrierをかけることができます。これは題意を満たすため正解です😋
 
-[D]  
-量子ビットは3つしか準備していません。barrier(3)はq4を指定することとなり，
-準備されていない量子ビットを指定することになります。そのため，indexがout of rangeでエラーとなってしまうため不正解です！
+選択肢[C]のようにbarrierメソッドの因数に何も指定しないと，全ての量子ビットにbarrierが作用するため，題意を満たし正解となります😋
 
-[E]  
-qc.barrier_all()は使えそうだが，barrier_allというmethodはない。
+選択肢[D]のように量子ビットは3つしか準備していません。barrier(3)はq4を指定することとなり，準備されていない量子ビットを指定することになります。そのため，indexがout of rangeでエラーとなってしまうため不正解です🙃
 
+選択肢[E]のようにqc.barrier_all()は使えそうですが，barrier_allというmethodはないのです。。。。なので不正解です🙃
 
-## Q#.4 シミューレータ
-
-
+## Q11.4 シミューレータ
+今回は特に指定することはありません！
 
 ## Q11.5 Qiskit API
 [qc.barrier](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.barrier.html)
-
-
-## Q11.6  言い残し
-
-## API ref
-[barrier](https://qiskit.org/documentation/stubs/qiskit.circuit.library.Barrier.html)
-
 
 
 # Q12 
@@ -1424,30 +1351,41 @@ barrierの説明は，Q11で実施済みです！忘れてしまった方は，Q
 こちらもQ11と同じです！
 
 ## Q12.3  選択肢解説
-設問の量子回路には H -> T -> barrier -> T -> Hが作用しています。
-Z軸方向に対する$\frac{\pi}{4}$回転(位相シフト)を表すT行列が二回作用しているため，barrierをなくすとその操作が1回の回転操作となり$\frac{\pi}{2}$の回転操作となります。$\frac{\pi}{2}$の回転操作はS行列で表されるため，H -> S -> Hの操作を実行している回路を表す選択肢が正解となります。1つ1つ探してみましょう！
+設問の量子回路には H -> T -> barrier -> T -> Hが作用しています！
+Z軸方向に対する$\frac{\pi}{4}$回転(位相シフト)を表すT行列が二回作用しているため，barrierをなくすとその操作が1回の回転操作となり$\frac{\pi}{2}$の回転操作となります！$\frac{\pi}{2}$の回転操作はS行列で表されるため，H -> S -> Hの操作を実行している回路を表す選択肢が正解となります。1つ1つ探してみましょう！
 
-[A]はH->S->Hの回転操作を表しており，題意を満たすため正解です。
+選択肢[A]はH->S->Hの回転操作を表しており，題意を満たすため正解です😋
 
-[B]は量子ビットと古典ビットを１つずつ用意して，測定しただけですね！
-これらは題意の回路にはなり得ません！仮に問題がH->barrier->Hのような回路だった場合，Hゲートが2回連続することで単位ゲートとなるような場合は，正解となったでしょう！
-![](2023-06-27-21-00-31.png)
+選択肢[B]は量子ビットと古典ビットを１つずつ用意して，測定しただけですね！
+これらは題意の回路にはなり得ません🙃
 
-[C]に見かけないメソッドが入っていますね！私も知りませんでしたのでチャジったところ，tdgメソッドはターゲット量子ビットに$T^{\dag}$を作用させるためのゲートだということがわかりました。ちなみに$T^{\dag}$は$T$ゲートの逆位相を適用するゲートであり，$-\frac{\pi}{4}$の位相シフトゲートです。問題の回路からbarrierを取り去ってもこの回路にはならないため，不正解です！
+選択肢[C]に見かけないメソッドが入っていますね！私も知りませんでしたのでチャジったところ，tdgメソッドはターゲット量子ビットに$T^{\dag}$を作用させるためのゲートだということがわかりました。ちなみに$T^{\dag}$は$T$ゲートの逆位相を適用するゲートであり，$-\frac{\pi}{4}$の位相シフトゲートです。問題の回路からbarrierを取り去ってもこの回路にはならないため，不正解です！
 
 [D]はH->Z->HでZゲートの回転角が0の場合のケースです。
 回路は結構複雑な回転操作となり，下記のようにまとめられます。
 ![](2023-06-27-21-20-40.png)
 
 
-## Q#.4 シミューレータ
-## Q#.5 Qiskit API
+## Q12.4 シミューレータ
+問題文の回路とその回路を変換したときの回路図です。
+このwo barrierと同じ状態となるゲートの組み合わせが正解になります！
+<img src="images/2023-08-01-22-39-35.png" width=400 height=400>
+
+全ての選択肢の回路図を表示してみます。
+選択肢[A]
+<img src="images/2023-08-01-22-54-19.png" width=400 height=400>
+
+選択肢[C]
+<img src="images/2023-08-01-22-55-43.png" width=400 height=400>
+
+選択肢[D]
+<img src="images/2023-08-01-22-59-18.png" width=400 height=400>
+
+確かに選択肢Aの変換後の回路は問題文の回路と一致することが分かりますね！
+
+## Q12.5 Qiskit API
 [qc.tdg](https://qiskit.org/documentation/stubs/qiskit.circuit.library.TdgGate.html)
 tdgはTDaGgerのTDGということなのでしょう！
-
-## Q#.6  言い残し
-
-
 
 # Q13
 > Given the following code, what is the depth of the circuit?
@@ -1458,11 +1396,14 @@ tdgはTDaGgerのTDGということなのでしょう！
   qc.cx(0,1)
   qc.barrier([0,1])
   ```
-[A]  
+
+<span class='bg-y txt-'>
+[A]
+</span> <br>
 2  
 
 [B]  
-3 
+3  
 
 [C]  
 4  
@@ -1482,7 +1423,7 @@ barrierは量子操作には入りません！
 なので，今回は，最初のアダマールゲート，２番目の制御NOTゲート，合計２ゲートによる操作がおこなわれるため，深さは2と言えます。
 そのため，答えは[A]の1択となります！
 
-このように簡単な回路のDepthを知りたいことはまれで，大抵は深い階層をもつ場合や未知の場合の深さを知りたい場合が多いです。そのため，実際に与えられた回路からdepth methodを使って深さを求める方法を試してみましょう！
+このように簡単な回路のDepthを知りたいことはまれで，大抵は深い階層をもつ場合や未知の場合の深さを知りたい場合が多いです。その際はQuautumCircuit classのメソッドからdepth methodを使って深さを求める方法を試してみましょう！
 
 ```python
 qc = QuantumCircuit(2, 2)
@@ -1508,12 +1449,7 @@ print(qc.depth())
 ![](images/2023-06-30-09-07-48.png)
 
 ## Q13.5 Qiskit API
-
 [qc.depth](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.depth.html)
-
-## Q13.6  言い残し
-
-とくにございません！
 
 # Q14
 > Which code snippet would execute a circuit given these parameters?
@@ -1526,31 +1462,32 @@ qc = QuantumCircuit(3)
 # Insert code fragment here
 result = job.result()
 ```
-
-[A]  
-qasm_sim = Aer.get_backend('qasm_simulator')  
-couple_map = [[0, 1], [1, 2]]  
+<span class="bg-y txt-g">
+[A]  <br>
+</span>
+qasm_sim = Aer.get_backend('qasm_simulator')  <br>
+couple_map = [ [0, 1], [1, 2] ] <br>
 job = execute(qc, backend=qasm_sim, shots=1024,   coupling_map=couple_map)  
 
 [B]  
 qasm_sim = Aer.getBackend('ibmq_simulator')  
-couple_map = [[0, 1], [0, 2]]  
+couple_map = [ [0, 1], [0, 2] ]  
 job = execute(qc, loop=1024, coupling_map=couple_map)
 
 [C]  
 qasm_sim = Aer.get_backend('qasm_simulator')  
-couple_map = [[0, 1], [1, 2]]  
+couple_map = [ [0, 1], [1, 2] ]  
 job = execute(qc, backend=qasm_sim, repeat=1024, coupling_map=couple_map)  
 
 [D]  
 qasm_sim = Aer.get_backend('qasm_simulator')  
-couple_map = [[0, 1], [1, 2]]  
+couple_map = [ [0, 1], [1, 2] ]  
 job = execute(backend=qasm_sim, qc, shot=1024, coupling_map=couple_map)  
 
 ## Q14.1 用語
-QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使用して量子回路の動作をシミュレートするツールです。
+QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使用して量子回路の動作をシミュレートするツールです!
 
-次に，shotとはなんでしょうか？これはシミュレーション実行時のサンプリング回数を指定するためのオプションです！これまでの解説に出てきましたが，量子回路で測定される状態は確率的な性質を持ちます。そのため，全く同じ回路を実行したとしても，得られる結果が異なることは日常的に起こり得ます。そのため，結果に統計的な信頼性を持たせるために一定数以上のサンプリングを行います！
+次に，shotとはなんでしょうか？これはシミュレーション実行時のサンプリング回数を指定するためのオプションです！これまでの解説に出てきましたが，量子回路で測定される状態は確率的な性質を持ちます。そのため，全く同じ回路を実行したとしても，得られる結果が異なることは日常的に起こり得ます。そのため，結果に統計的な信頼性を持たせるために一定数以上のサンプリングを行います！量子測定においては，単一の測定では判断することはできず複数回の測定が必要です！その際のサンプリング数を指定します😆
 
 最後にカップリングマップについて説明しましょう！
 実際の量子デバイスでは，量子ビットがトポロジカルに配置されており，それぞれの量子ビットは一部の量子ビットと直接or間接的に繋がっています。量子回路におけるカップリングは，物理的な量子ビット間の接続性を表しており，量子ビット間の制御ゲートを適用する上で大変重要です！qiskitでは，transpileメソッドにcoupling_mapパラメータを指定することで，回路トランスパイル時にこれらの制約を考慮できます！ちなみに非隣接量子ビット間の操作を実現するためにはSWAPゲートが必要になる場合がありますが，カップリングマップに基づいてコンパイラが自動で挿入してくれる場合があるようです！
@@ -1560,7 +1497,7 @@ QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使�
 
 ## Q14.3  選択肢解説
 
-[A]は正しくパラメータを指定できており大正解！一度パラメータを整理しましょう！  
+[A]は正しくパラメータを指定できており大正解😋一度パラメータを整理しましょう！  
 - shots: 試行回数
 - backend: バックエンドを指定
 - coupling_map: 結合する量子ビット同士を指定します。色々なフォーマットが許されます！
@@ -1570,6 +1507,8 @@ QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使�
 [D]はshotというパラメータを指定していますが，正しくはshotsのため不正解です！
 
 ## Q14.4 シミューレータ
+特にありません！
+
 ## Q14.5 Qiskit API
 ## Q14.6  言い残し
 
@@ -1583,12 +1522,13 @@ backend = BasicAer.get_backend('qasm_simulator')
 qc = QuantumCircuit(3)
     # insert code here
 ```
-
-[A]  
-execute(qc, backend, shots=1024, coupling_map=[[0,1], [1,2]])  
+<span class="bg-y txt-g">
+[A]  <br>
+</span>
+execute(qc, backend, shots=1024, coupling_map=[　[0,1], [1,2]　])  <br>
 
 [B]  
-execute(qc, backend, shots=1024, custom_topology=[[0,1],[2,3]]
+execute(qc, backend, shots=1024, custom_topology=[ [0,1],[2,3] ])
 
 [C]  
 execute(qc, backend, shots=1024, device="qasm_simulator", mode="custom") 
@@ -1596,10 +1536,18 @@ execute(qc, backend, shots=1024, device="qasm_simulator", mode="custom")
 [D]  
 execute(qc, backend, mode="custom")  
 
-
 ## Q15.1 用語
+今回解説する用語は特にありません！
+
 ## Q15.2 背景
+Q14とほとんど同じため，今回開設すべきことはありません！
+
 ## Q15.3  選択肢解説
+いずれもシミュレートしてみると実行できてしまいます。
+そのため，どの選択肢が正しいか分かりません！
+
+選択肢[A]は，申し分なく正解です😋
+
 ## Q15.4 シミューレータ
 ## Q15.5 Qiskit API
 ## Q15.6  言い残し
@@ -1611,7 +1559,7 @@ execute(qc, backend, mode="custom")
 <span class="bg-y txt-g">
 [A]  
 </span>  
-qasm_simulator  
+qasm_simulator <br>
 
 [B]  
 basic_qasm_simulator  
