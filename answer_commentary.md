@@ -1585,7 +1585,7 @@ quantum_circuit_simulator
 
 
 ## Q16.1 用語
-
+今回は特別な用語はありません！
 
 
 ## Q16.2 背景
@@ -1600,12 +1600,12 @@ Aer.backends()
 ```
 で確認できるので，興味があれば試して確認してみましょう！
 
-## Q#.3  選択肢解説
+## Q16.3  選択肢解説
 この選択肢については，上記3つのシミュレーション以外は
 BasicAer classでは提供されていないので不正解となります！
 
-## Q#.4 シミューレータ
-## Q#.5 Qiskit API
+## Q16.4 シミューレータ
+## Q16.5 Qiskit API
 [BasicAer](https://qiskit.org/documentation/apidoc/providers_basicaer.html)
 
 ## Q#.6  言い残し
@@ -1684,7 +1684,11 @@ op = Operator.Xop(0)
 [B]  
 op = Operator([[0,1]])  
 
-[C]  qc = QuantumCircuit(1)
+<span class="bg-y txt-g">
+[C]
+</span>
+<br>
+qc = QuantumCircuit(1)
 qc.x(0)  
 op = Operator(qc)  
 
@@ -1699,10 +1703,10 @@ operatorとは，物理学で扱う演算子のことです。数学では作用
 このOperatorクラスを使って自分で定義したい演算子を作っておくと，再利用しやすくていいですね！
 
 ## Q18.3  選択肢解説
-Operator Classの最も簡単な使い方は，リストかNumpy Arrayで与える。
+Operator Classの最も簡単な使い方は，リストかNumpy Arrayで与えます！
 [A]はOperatorオブジェクトはXop()のメソッドは持ちません。そのため，不正解です！
 [B]はOperatorオブジェクトとしての使い方は間違っておらず，指定したオペレータオブジェクトを作成できます。しかし，2行1列のベクトルができるだけでNOTゲートはできません。そのため不正解です！
-[C]は単一量子ビットを持ちX回路を挿入した量子回路を作成し，そのQuantumCircuitオブジェクトをOperatorのparamaterに入れている。OperatorクラスはQuantumCircuitオブジェクトをパラメータとして取ることができます！なので，NOT回路表すQuantumCircuitオブジェクトをパラメータに取りOperatorオブジェクトを作成しているため，題意を満たし正解となります！
+[C]は単一量子ビットを持ちX回路を挿入した量子回路を作成し，そのQuantumCircuitオブジェクトをOperatorのparamaterに入れています！OperatorクラスはQuantumCircuitオブジェクトをパラメータとして取ることができます！なので，NOT回路表すQuantumCircuitオブジェクトをパラメータに取りOperatorオブジェクトを作成しているため，題意を満たし正解となります😋
 [D]は[B]と似ています！与えられた書き方でOperator演算子を作ることはできますが，NOTゲートにはなりません。なので，題意を満たさず不正解となります！
 
 ちなみに，リストを与えてNOT Gateを作る場合，
@@ -1744,8 +1748,11 @@ state_fidelity() of 1.0
 [B]  
 state_fidelity() and average_gate_fidelity() of 1.0  
 
-[C]  
+<span class="bg-y txt-g">
+[C] <br>
+</span>
 average_gate_fidelity() and process_fidelity() of 1.0
+<br>
 
 [D]  
 state_fidelity()  
@@ -1853,13 +1860,26 @@ print(counts)
 今まで解いてきた問題の総集編のような問題ですね！
 今まで19問解いてきているのであれば，この問題は簡単ですね！
 
+
+
+## Q20.3  選択肢解説
+
 量子ビット２個，古典ビット２個を準備して0番目の量子ビットにNOT Gateをかけます．
 そして，準備した古典ビットで２つの量子ビットをそれぞれ測定しています．
 
-そうやって用意した回路をqasm_simulatorで1000回の試行回数でシミュレーションしている．
-初期状態は $\ket{q_{0}} \ket{q_{1}} = \ket{0} \ket{0}$
+初期状態は 
+$$
+\begin{align}
+\ket{\Psi} &= \ket{q_{0}} \ket{q_{1}} \\
+&= \ket{0}_{q_{1}} \ket{0}_{q_{0}} \\
+&= \ket{00} \\
+\ket{\Psi '} &= \hat{X_{q_{0}}} \ket{\Psi}  \\
+&= ( \ket{0}\bra{1} + \ket{1}\bra{0})_{q_{0}}  \ket{0}_{q_{1}} \ket{0}_{q_{0}} \\
+&= \ket{0}_{q_{1}} \ket{1}_{q_{0}} \\
+&= \ket{01}
+\end{align}
+$$
 
-## Q20.3  選択肢解説
 得られる結果は$\ket{01}$となるため，それ以外の選択肢は不正解です！
 
 ## Q20.4 シミューレータ
