@@ -1,25 +1,58 @@
-<style>
-  .bg-y{
-    background-color: rgb(255,255,100);
-  }
 
-  .txt-g{
-    color: rgb(85,85,85);
-  }
-</style>
+みなさんこんにちは！
+この記事は，IBMが提供する**Exam C1000-112: Fundamentals of Quantum Computation Using Qiskit v0.2X Developerサンプル問題の解説記事**です！
+IBM量子開発者認定という資格を提供していますが，その資格取得のためには本試験をpassする必要があります。
+(筆者は2023年8月にIBM量子開発者認定を取得。取得ホヤホヤ🍲で書いてます。)
+
+本試験の詳細や私自身の合格体験記は別の記事とし，この記事では**サンプル問題の解説記事**に集中しています。
+もし私自身にも興味を持ってくださる方がいれば，どうぞ合格体験記の記事の方に来てくださればと思います！
+それでは，早速本解説の概要と構成を説明します。
+
+# 本解説の概要
+できる限り丁寧に解説しているため，基礎を理解している方からすると冗長な内容になっています💦
+例えば，設問によっては計算部分を行列形式とディラック形式をそれぞれ書き分けたりしています。
+また，すでに解説済みの計算が出てきても極力省略せずに解説するように心がけています。ですので，まだ関連知識が十分に定着していない初学者の方には親切な内容になっています😋
+大まかに理解する上で計算自体はそんなに重要ではありませんが，今後量子操作を実装していく予定がある方には，数式の取り扱いにも慣れておく必要があるため丁寧に記載しています。ただし，深追いするよりはわからない場合は　すっ飛ばして後で戻ってくるくらいのザックリ理解が良いと思います😊
+
+# 各設問に対する解説の構成
+単純な解説だけでなく，その問題の背景や専門用語，数式処理，シミュレーション結果など内容が盛りだくさんです！なので，それぞれにSectionを設けて解説しています！項目は下記の通りです！
+(下記の#には問題番号が入ります。)
+
+## 問題Part
+**Q#. 問題**
+- 選択肢一覧
 
 
+**A#. 解答**
+- 正解選択肢 
+
+
+## 解説Part
+**Q#.1 用語**
+  - そもそも用語が分からなくて手が出ないときがありますね。チャジれば(chatGPTに聞けば)いいですが，サクッと進むために私が簡潔に用語解説します！
+
+**Q#.2 背景**
+  - 筆者の理解の範囲で問題の背景や関連事項を紹介します！
+
+**Q#.3 選択肢解説**
+  - 選択肢の解説です。正解だけでなく，不正解選択肢も舐め回します👅選択肢によっては「なんで不正解なの？」と思うとき，ないでしょうか？私はめちゃくちゃあります。「なぜ不正解となるか？」を学ぶことも，正解を学ぶことと同じくらい大事だと思うので冗長にはなりますが，それを承知で書きたいと思います！設問によっては，「こう直せば，正解になる！」まで書いてproactiveな解説にしていきます。
+
+**Q#.4　qiskitシミュレーション**
+  - 手計算だけでなく，qiskitを用いたシミュレーション結果も紹介します。ただし，Code部分はgithub上に残したjupyternotebookの方を参照してください！
+
+**Q#.5 Qiskit API**
+  - 関係するqiskit API referenceのリンクを記載します！気になるものをチェックしてみてください！
+
+
+---
 
 それでは早速始めていきましょう！  
-第一問は基本的な量子回路を作成する問題です！！
+第一問は基本的な量子回路を作成する問題です！
 
-# Q1 
+# Q1.
 > Which statement will create a quantum circuit with four quantum bits and four classical bits?  
 
-<span class="bg-y txt-g">
 [A]  
-</span>
-<br>
 QuantumCircuit(4, 4)  
 
 [B]  
@@ -29,7 +62,10 @@ QuantumCircuit(4)
 QuantumCircuit(QuantumRegister(4, 'qr0'), QuantumRegister(4, 'cr1'))  
 
 [D]  
- QuantumCircuit([4, 4])  
+ QuantumCircuit([4, 4])
+
+## 答え
+[A] 
 
 ## Q1-1.用語
 Registerという単語が出てきましたね。古典コンピュータでのレジスタとはなんだったでしょうか？レジスタは，データや処理を格納する場所である点でメモリと似ていますが，CPU内に存在している点が異なります。容量は限られている代わりにCPUと連携して動作できる分，高速な処理が可能です。メモリは記憶領域にあるので，大容量のデータを保存できる一方で動作は遅くなります。
@@ -62,15 +98,11 @@ QuantumCircuit(QuantumRegister(4,"q"), ClassicalRegister(4, "c"))
 ```
 QuantumCircuit(QuantumRegister(4,"q"), ClassicalRegister(4, "c"))
 ```
-<img src="images/image.png" width=100 height=300>  
-
 とかけば正解でした！
 
 [D]  
 選択肢のようにリストは引数として受け入れません！よってエラーとなってしまいます！
-それぞれの数はリストの外に出して，
-第一引数: 量子ビット数，第二因数: 古典ビット数
-となるようにしましょう！
+それぞれの数はリストの外に出して，第1引数: 量子ビット数，第2引数: 古典ビット数となるようにしましょう！
 
 ## Q1-4. シミュレーション
 この問題はシミュレートすることないのでSkipします！
@@ -81,7 +113,8 @@ QuantumCircuit(QuantumRegister(4,"q"), ClassicalRegister(4, "c"))
 ---
 
 さて，第2問です！
-今度は初期状態に回転操作を加えた後の操作後の状態に関する問題です！
+今度はある初期状態に回転操作を加えた後の操作後の状態に関する問題です！
+
 
 ## Q2. 
 > Given this code fragment, what is the probability that a measurement would result in $\ket{0}$ ?
@@ -97,9 +130,7 @@ qc.ry(3 * math.pi/4, 0)
 [B]  
 0.5  
 
-<span class="bg-y txt-g">
 [C]   
-</span><br>
 0.1464  
 
 
@@ -107,33 +138,75 @@ qc.ry(3 * math.pi/4, 0)
 1.0  
 
 
+## 答え
+[C]
+
 ## Q2-1.用語
-ry(3*math.pi/4,0)はQuantumCircuitクラスに用意されたY軸方向の回転操作メソッドです。ブロッホ球上の量子状態に対して，Y軸方向に$\frac{3 \pi}{4}$回転させるユニタリ操作を表します！ちなみに，"Y軸方向に回転"とは，ネジを締める側に回したときに進む方向をY軸正方向としたときに，その回転方向を正方向とします！
-また，しれっとmeasurementが出てきています。量子力学における測定は古典力学での測定ほど単純ではなく測定に確率的な要素が含まれます！この辺りは，計算をしながら考え方を確認していきましょう！量子力学的測定に関する詳しい背景は Q4.で扱うのでそこまで待ってください！
+ry(3*math.pi/4,0)はQuantumCircuitクラスに用意されたY軸方向の回転操作メソッドです。ブロッホ球上の量子状態に対して，Y軸方向に$\frac{3 \pi}{4}$回転させるユニタリ操作を表します。ちなみに，"Y軸方向に回転"とは，ネジを締める側に回したときに進む方向をY軸正方向としたときに，その回転方向を正方向とします。
+また，しれっとmeasurementが出てきています。量子力学における測定は古典力学での測定ほど単純ではなく測定に確率的な要素が含まれます。この辺りは，計算をしながら考え方を確認していきましょう！量子力学的測定に関する詳しい背景は Q4.で扱うのでそこまで待ってください！
 
 
 ## Q2-2.背景
-測定確率の計算は，ディラック記法を用いて計算してみましょう！また，状態ベクトルの回転についてはおなじみのブロッホ球を使って考えてみましょう！回転操作については直感的に理解できるので重宝しますね！これをぐりぐり回せるシミュレーションをUnityとかで描けるようになりたいなぁ🌛と思って，並行して試しに作っていますが，難しい。。。。
+測定確率の計算は，ディラック記法を用いて計算してみましょう！また，状態ベクトルの回転についてはおなじみのブロッホ球を使って考えてみましょう！回転操作については直感的に理解できるので重宝しますね！これをぐりぐり回せるシミュレーションをUnityとかで描けるようになりたいなぁ🌛と思って，この記事執筆と並行して試しに作っていますが，難しい。。。。
 
 ## Q2-3. 選択肢解説
-初期状態 $\ket{0}$に対して, Y軸方向に$\theta = \frac{3 \pi}{4}$回転させた場合に，$\ket{0}$が観測される確率を求める問題です！
 
-回転後の状態を$\ket{\Psi'}$とすると，Y軸方向の$\theta$回転後の状態は
+初期状態$\ket{\Psi_{0}} =
+  \left(
+    \begin{matrix}
+      1 \\
+      0 \\
+    \end{matrix}
+  \right)
+    = \ket{0}$に対して, Y軸方向に$\theta = \frac{3 \pi}{4}$回転させた場合に，$\ket{0}$が観測される確率を求める問題です。
+
+一般に, 初期状態$\ket{0}$のみを持つ状態$\ket{\Psi_{0}}$に対して，Y軸方向の$\theta$回転後の状態$\ket{\Psi'}$は
 $\ket{\Psi'} = \cos{\frac{\theta}{2}} \ket{0} + \sin{\frac{\theta}{2}\ket{1}}$となります。
-上式が得られる理由は，Y軸方向の回転を操作する行列が下記で表されるためであり,  
+上式が得られる理由は，Y軸方向の回転を操作する行列が
+
 $$
 \begin{align}
-    R_{Y}(\theta) =
+    R_{Y}(\theta) &=
         \left(
+          \begin{matrix}
+            \cos{\frac{\theta}{2}} & - \sin{\frac{\theta}{2}} \\
+            \sin{\frac{\theta}{2}} & \cos{\frac{\theta}{2}}
+          \end{matrix}
+        \right)
+\end{align}
+$$  
+
+で表されるためであり, この行列を$\ket{\Psi_{0}}=\ket{0}$に作用させると，$\ket{\Psi'}$が得られることが下記の計算で確かめることができます！自分でもやってみましょう！  
+$\ket{\Psi'}$が得られる過程は下記の通りです。
+
+$$
+\begin{align}
+\ket{\Psi'} &= R_{Y}(\theta) \ket{\Psi} \\
+      &= \left(
         \begin{matrix}
         \cos{\frac{\theta}{2}} & - \sin{\frac{\theta}{2}} \\
         \sin{\frac{\theta}{2}} & \cos{\frac{\theta}{2}}
         \end{matrix}
         \right)
+        \left(
+          \begin{matrix}
+            1 \\
+            0
+          \end{matrix}
+        \right) \\
+      &= \left(
+          \begin{matrix}
+            \cos{\frac{\theta}{2}} \\
+            \sin{\frac{\theta}{2}}
+          \end{matrix}
+        \right) \\
+      &= \cos{\frac{\theta}{2}} \ket{0} + \sin{\frac{\theta}{2}} \ket{1}
 \end{align}
-$$  
-この行列を$\ket{0}$に作用させると，$\ket{\Psi'}$が得られることが下記の計算で確かめることができます！自分でもやってみましょう！  
+$$
+
+となり，$\ket{\Psi'}$が得られることが示されました。
 では，ここから$\ket{\Psi '}$に$\bra{0}$を作用させて，$\ket{0}$が測定される確率を求めてみましょう！
+
 $$
 \begin{align}
     P_{\ket{0}}  &= \braket{0|\Psi'}^2 \\
@@ -156,14 +229,14 @@ $$
 \end{align}
 $$
 
-つまり，選択肢の中で0より大きく$\frac{1}{4}$より小さい値となり，答えは[C]となります！今回の問題は計算結果が異なるため[C]以外の選択肢は問答無用で不正解となります！
+つまり，選択肢の中で0より大きく$\frac{1}{4}$より小さい値となり，答えは[C]となります！今回の問題は[C]以外の選択肢は上記の範囲に入らないため不正解です🙃
 
 ## Q2-4.シミュレーション
-観測される状態のヒストグラムを作る場合は，Aer Simulator が使えます！  
-当モジュールでは量子状態測定をノイズフリーシミュレーションができるのです！
+観測される状態のヒストグラムを作る場合は，Aer Simulator が使えます。  
+当モジュールでは量子状態測定をノイズフリーシミュレーションできます。
 量子コンピュータにおけるノイズとは，環境ノイズやゲートエラー，量子ビット間の結合エラー，読み取りエラーなどが含まれます。それらのノイズがない，理想的な量子コンピュータを想定してシミュレーションされます。
 
-回転後に測定される状態のヒストグラムは下記のようになります！
+回転後に測定される状態のヒストグラムは下記のようになります。
 <img src="images/2023-06-07-21-05-43.png" width=500 heigh=500>  
 今回のシミュレーションでは，1024回の試行に対して,$\ket{0}$が144回, $\ket{1}$が880回測定されることがわかりました。つまり, 回転操作後に状態$\ket{0}$を得る確率Pは$P=\frac{144}{1024}=0.1406$であることがわかり，選択肢[C]が最も近い答えであることがわかります！
 
@@ -189,20 +262,13 @@ bloch　simulatorを使って， $\ket{0}$をY軸方向に$\frac{3 \pi}{4}$回�
 ```
 <img src="images/2023-06-20-22-12-39.png" width=200 height=200>
 
-<br>
-<span class="bg-y txt-g">  
-[A]<br>
-</span>  
-qc.h(inp_reg)<br>
-qc.x(ancilla)<br>  
-qc.draw()<br>
 
-<br>
-<span class="bg-y txt-g">
+[A]
+qc.h(inp_reg)
+qc.x(ancilla)
+qc.draw()
+
 [B]  
-</span>
-<br>
-
 qc.h(inp_reg[0:2])  
 qc.x(ancilla[0])  
 qc.draw()  
@@ -212,10 +278,7 @@ qc.h(inp_reg[0:1])
 qc.x(ancilla[0])  
 qc.draw()  
 
-<span class="bg-y txt-g">
 [D]  
-</span>
-<br>
 
 qc.h(inp_reg[0])  
 qc.h(inp_reg[1])  
@@ -234,8 +297,12 @@ qc.h(inp_reg)
 qc.x(ancilla)  
 qc.draw()  
 
+## 答え
+[A], [B], [D]
+
+
 ## Q3-1.用語
-変数名にancillaという見慣れない言葉があります！これは量子回路で登場するancilla bitのことを指しています！アンシラビットとは，エラー訂正のパリティチェックやアルゴリズム実行時に一時的に情報を保持するために使われます。計算の結果には直接影響を与えないことが多く，あくまで補助的な役割を果たしていることがアンシラとして定義する要件です！勉強を始めた当初は　Target bitの状態を制御することもありアンシラビットに含まれるかと思っていましたが，計算結果に影響を与える点でアンシラには含まないようです。
+変数名にancillaという見慣れない言葉があります。これは量子回路で登場するancilla bitのことを指しています。アンシラビットとは，エラー訂正のパリティチェックやアルゴリズム実行時に一時的に情報を保持するために使われます。計算の結果には直接影響を与えないことが多く，あくまで補助的な役割を果たしていることがアンシラとして定義する要件です！勉強を始めた当初は　Target bitの状態を制御することもありアンシラビットに含まれるかと思っていましたが，計算結果に影響を与える点でアンシラには含まないようです。
 制御ビットは，特定の条件下で量子操作を制御するために使用され，制御ゲートの制御線として利用されていると言えます。
 
 
@@ -246,64 +313,56 @@ inp_regの0から1番目にq0, q1量子ビットが格納されており，ancil
 アダマールゲートとNOTゲートについて解説しましょう！
 
 ### アダマールゲート
-アダマールゲートが使われる最も簡単な例は，量子ビットの重ね合わせです！  
+アダマールゲートが使われる最も簡単な例は，量子ビットの重ね合わせです。
 アダマール変換は
+
 $$
   \begin{align}
-      \hat{H} =
+      \hat{H} &=
       \frac{1}{\sqrt{2}}
           \left(
           \begin{matrix}
-          +1 & +1 \\
-          +1 & -1
+            +1 & +1 \\
+            +1 & -1
           \end{matrix}
-          \right)  
-  \end{align}
-$$
-$$
-  \begin{align}
-  = \frac{1}{\sqrt{2}} (\ket{0}+\ket{1})\bra{0} + \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})\bra{1}
+          \right)\\
+  &= \frac{1}{\sqrt{2}} (\ket{0}+\ket{1})\bra{0} + \frac{1}{\sqrt{2}}(\ket{0}-\ket{1})\bra{1}
   \end{align}
 $$  
 
 と表されるため，始状態が$\ket{0}$のとき，終状態は$\frac{1}{\sqrt{2}}(\ket{0}+\ket{1})$, 
-始状態が$\ket{1}$のとき，終状態は$\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$となります😋
-このように，アダマール変換を用いると，初期状態が１つの状態のみを持つ単一量子ビットに作用した際に，量子ビットの重ね合わせ状態を作ることができます！
+始状態が$\ket{1}$のとき，終状態は$\frac{1}{\sqrt{2}}(\ket{0}-\ket{1})$となります。
+このように，**アダマール変換を用いると，初期状態が１つの状態のみを持つ単一量子ビットに作用した際に，量子ビットの重ね合わせ状態を作る**ことができます。量子計算をする上で大変重要なゲート操作です！
 
 ### NOTゲート
 NOTゲートは行列で書く場合，
+
 $$
 \begin{align}
-  \hat{X} = 
+  \hat{X} &= 
     \left(
       \begin{matrix}
         0 & 1 \\
         1 & 0
       \end{matrix}
-    \right)
+    \right) \\
+&= \ket{0}\bra{1} + \ket{1} \bra{0}
 \end{align}
 $$
 
-
-$$
-= \ket{0}\bra{1} + \ket{1} \bra{0}
-$$
 と表されます！
 これは，始状態が$\ket{0}$のとき終状態は$\ket{1}$, 始状態が$\ket{1}$のとき終状態$\ket{0}$となります！
 つまり，始状態と反対の状態に変換する変換がNOTゲートです！
 
 与えられた画像からinp0 とinp1にアダマールゲート，anc0にNOTゲートを作用させる量子回路が与えられており，それらを実装するためのCodeを解答する必要があります！
-今回この問題を解いていて初めて知りましたが，リストのスライス表現で複数の量子ビットに同じ量子操作を実施できるらしいってことを知りました。らっきーらっきー。
+今回この問題を解いていて初めて知りましたが，リストのスライス表現で複数の量子ビットに同じ量子操作を実施できるらしいってことを知りました。こういう知識の絵方もありますね。やってよかった！
 
 
 
 
 ## Q3-3.選択肢解説
 
-<span class="bg-y txt-g">
 [A]  
-</span>  
-
 QuantumCircuit.h(qubit)はパラメータとして，QuantumRegisterを取ります！
 この時，複数のqubitを指定する場合，指定したqubit全てのアダマール変換を施します！
 
@@ -314,10 +373,7 @@ qc.draw()
 ```
 これは題意の通りのため，正解です😋
 
-<span class="bg-y txt-g">
 [B]  
-</span>  
-
 ```python
 qc.h(inp_reg[0:2]) ##inp_regの0~1番目の量子ビットにアダマール変換を施す  
 qc.x(ancilla[0])   ## ancillaにNOT ゲートを施す
@@ -332,10 +388,8 @@ qc.x(ancilla[0])   ## ancillaにNOT ゲートを施す
 これは，inp_regの1番目の量子ビットにアダマール変換が施されないため，題意を満たさず不正解です🙃 
 <img src="images/2023-06-05-21-40-37.png" width=230 height=300>
 
-<span class="bg-y txt-g">
-[D]  
-</span>  
 
+[D]  
 ```python
 qc.h(inp_reg[0])  ##inp_regの0番目の量子ビットにアダマール変換を施す
 qc.h(inp_reg[1])  ##inp_regの1番目の量子ビットにアダマール変換を施す
@@ -374,7 +428,7 @@ $\ket{100}, \ket{101}, \ket{110}, \ket{111}$がおおよそ当確率で検出さ
 
 これらの結果は理論的に確かめることもできます!
 ただし，直積状態の考え方を使うため，Q5の解説で　エンタングルしている状態，していない状態(直積状態)を学んでから戻ってくるのが良いかもしれません😭
-サッと呼んで難しい場合は，次の問題に飛んじゃいましょう🛩
+サッと読んで理解が難しいと感じた場合は，次の問題に飛んじゃいましょう🛩
 $\ket{zyx}$と表現する場合，x, y, zはそれぞれ$x:inp_{0}$の状態，$y:inp_{1}$の状態，$z:anc$の状態を指し，直積で表されています。  
 つまり，$\ket{zyx} = \ket{z} \otimes \ket{y} \otimes \ket{x}$と計算されます。  
 本来であれば，それぞれの3つの量子ビットが0と1の２つの状態を持つため，
@@ -401,8 +455,10 @@ $$
   \frac{1}{2} (\ket{100}+\ket{101}+\ket{110}+\ket{111})
 \end{align}
 $$
+
 と，終状態の状態ベクトルを計算することができます。
 念の為，測定後に$\ket{100}$状態が得られる確率を計算してみると
+
 $$
 \begin{align}
   P_{\ket{100}} &= \braket{100 | \Psi '}^2 \\
@@ -412,6 +468,7 @@ $$
   &= \frac{1}{4} \\
 \end{align}
 $$
+
 となり，$\ket{100}$は$ \frac{1}{4}$の確率で測定されることが分かります😋
 他の状態についても同様の計算で測定確率を導くことができ，いずれの状態も$\frac{1}{4}$の確率で検出されることが分かります。
 実際に確率的に検出される量子力学の測定において1024回試行すると厳密に$\frac{1}{4}$，つまり256回ずつの検出回数とはならず，上記のヒストグラムのようなばらつきを含む結果となります😜
@@ -428,19 +485,20 @@ $$
 <img src="images/2023-07-20-22-33-28.png" width=250 height=230>  
 
 
-<br>
-<span class="bg-y txt-g">  
 [A]  
-</span>  
-
 qc.measure([0,1,2], [0,1,2])  
+
 [B]  
 qc.measure([0,0], [1,1], [2,2])
+
 [C]  
 qc.measure_all()  
+
 [D]  
 qc.measure(0,1,2)
 
+## 答え
+[A]
 
 ## Q4-1. 用語
 測定については用語として扱わずに，下の背景partで述べます！
@@ -454,29 +512,49 @@ qc.measure(0,1,2)
   - 量子力学では，測定自体が重ね合わせ状態を破壊してある一つの状態に固定させてしまう場合があります。測定によって系が特定の状態に制約されるとも言えます。また数学的には，測定は非ユニタリ操作であり，測定後に測定前の状態に可逆的に戻すことはできません！
 3. 測定結果が観測者に依存しうる点
   - 量子力学における測定は，観測者+量子状態がセットである点も重要です。観測者自身やその測定手段が異なる場合，測定される状態は変わります！
+  
+古典的な決定論的測定とは考え方が異なることを再認識しましょう！
+これらの問題を解くにあたり，状態ベクトルにかかる係数の意味を考えました。
+私としては，**２つの状態がある割合で同時に存在する** というよりも, **それぞれの状態を測定したときに得られる確率振幅がそれぞれ異なる**と捉えることがしっくりくるようです。ここにつしては，自分の不勉強もありどちらが物理的に正しいのかよくわかりません。精進して，ここに自信を持って自分の考えを述べられるようにしたいと思います！
+
+例えば，
+$$
+\ket{\Psi} = \frac{1}{2} \left( \ket{0} + \sqrt{3} \ket{1}\right)
+$$
+という状態が存在する場合，$\ket{0}$が測定される確率は$\frac{1}{4}$, $\ket{1}$が測定される確率は$\frac{3}{4}$となります。
+上記のように状態ベクトル$\ket{\Psi}$を書くと，あたかもその状態の中にある比率で$\ket{0}$と$\ket{1}$の２つの状態がある割合(係数)で混在しているかのように感じます。確かにその考え方でも問題ないのかもしれませんが，私の場合は実際に2状態が混在しているというよりも，単にその状態が観測される確率振幅と考える方が納得です。それぞれの係数はQ3-4.でも実施したように，$\ket{\Psi}$に対して，$\ket{0}$( or $\ket{1}$)が測定される確率振幅と考える方がシンプルに感じ流ためです。
+ですので，私の理解では係数はその状態が測定で得られる確率振幅と捉えています！今のところ，これで困ることはありません！
+
+
 
 ## Q4-3. 選択肢解説
-まずは，3つの量子ビットと3つの古典ビットを用意します！量子ビット[0,1,2]をそれぞれの順番で　古典ビット[0,1,2]で測定する回路を作成します！
-qc.measureはqc.cmeasure(qubit, cbit)のように，2つのパラメータを取り，測定を実行します。  
+問題文でも述べられている通りですが，与えられた量子回路のキーとなる特徴は，
+1. 3つの量子ビットがある
+2. 3つの古典ビットがある
+3. q0->c0, q1->c1, q2->c2 でそれぞれ測定される
+の3点です。
+
+qc.measureはqc.measure(qubit, cbit)のように，**2つのパラメータ**を取り，測定を実行します。  
+
 [A]  
 qc.measure([0,1,2], [0,1,2])  
 これは，題意を満たしており，正解です😋
 
 [B]  
 qc.measure([0,0], [1,1], [2,2])
-3つのパラメータを取っているため，TypeErrorになります！不正解🙃
+3つのパラメータを取っているため，TypeErrorになってしまいます。そのため不正解です🙃
 
 [C]  
 qc.measure_all()  
 
-qc.measure_all()は，新たに測定用のcbitを追加して測定結果を保存します！
-また，qc.measre_all()は，測定前にBarrierを入れる仕様になっている。
-与えられた回路では，古典ビットが既に3つあるため，新たに追加される分の古典ビットが多くなるため題意に沿わなくなってしまいます。そのため不正解です🙃  
+qc.measure_all()は，新たに測定用のcbitを追加して測定結果を保存します。
+また，qc.measre_all()は，測定前にBarrierを入れる仕様になっています。
+与えられた回路では，古典ビットが既に3つ作成済みのため，新たに追加される分の古典ビットが多くなるため題意に沿わなくなってしまいます。そのため不正解です🙃  
 <img src="images/2023-06-05-22-53-30.png" width=300 height=300>
 
-ちなみに，qc.measure_all()はparameterで既存の古典ビットに測定を保存することができます！
+ちなみに，qc.measure_all()はparameterの指定の仕方で既存の古典ビットに測定を保存することができます！
 その場合，qc.measure_all(add_bits=False)とします！
-この場合，題意を満たすため正解となります！  
+この場合，題意を満たすため正解となります！
 <img src="images/2023-06-05-22-57-14.png" width=300 height=250>
 
 
@@ -485,7 +563,7 @@ qc.measure(0,1,2)
 これも[B]同様，3つのパラメータを取っているため，TypeErrorになります！もち不正解です🙃
 
 ### Q4-4. シミュレーション
-今回シミュレーションすることは特にありません！
+今回シミュレーションすることは特にないため，Skipします。
 
 
 ---
@@ -494,13 +572,12 @@ qc.measure(0,1,2)
 # Q5
 > Which code fragment will produce a maximally entangled, or Bell, state?
 
-<span class="bg-y txt-g">
+
 [A]  
-</span><br>
-bell = QuantumCircuit(2)<br>
-bell.h(0)<br>
-bell.x(1)<br>
-bell.cx(0, 1)<br>  
+bell = QuantumCircuit(2)
+bell.h(0)
+bell.x(1)
+bell.cx(0, 1)  
 
 [B]  
 bell = QuantumCircuit(2)  
@@ -519,7 +596,8 @@ bell = QuantumCircuit(2)
 bell.h(0)  
 bell.h(0)
 
-
+## 答え
+[A]
 
 ## Q5-1.用語
 エンタングルとベル状態について解説しましょう！量子計算の醍醐味ですね！
@@ -534,6 +612,7 @@ bell.h(0)
 
 ### i.) それぞれの量子ビットが独立で単一の状態を持つ場合
 仮に$\ket{q_{0}}$は$\ket{0}$, $\ket{q_1}$が$\ket{0}$の状態をとる場合，量子状態$\ket{\Psi}$は
+
 $$
 \begin{align}
   \ket{\Psi} &= \ket{0_{q_{0}}} \otimes \ket{0_{q_{1}}} \\
@@ -541,13 +620,18 @@ $$
   &= \ket{00}
 \end{align}
 $$
+
 と表され，全体としての量子状態は唯一の状態$\ket{00}$を取ります。
 それぞれ１つの状態しか取らないので全体としても１つの状態となるのは，理解しやすいかと思います。  
 では，どちらかが2つの量子状態を持つ場合はどうなるでしょうか？
 
 ### ii.) 1方が1状態，他方が2状態の重ね合わせの場合
-次に, $\ket{q_{0}}=\ket{0}$, $\ket{q_{1}}= \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right)$をとる場合を考えてみましょう！$\ket{q_{0}}$はi.) と同様に唯一の状態を取りますが，$\ket{q_{1}}$は2状態が重ね合わせられており，測定した場合$\frac{1}{2}$の確率でそれぞれ$\ket{0}, \ket{1}$が測定される状態です。ただし，$\ket{q_{0}}$と$\ket{q_{1}}$は独立であり，それぞれに影響を与えることはありません。このとき，全体としての量子状態$\ket{\Psi}$はどうなるでしょうか？？シンプルに考えると，①$\ket{q_{0}}$が$\ket{0}$で$\ket{q_{1}}$が$\ket{0}$と,
-②$\ket{q_{0}}$が$\ket{0}$で$\ket{q_{1}}$が$\ket{1}$の2状態があり得そうですね！これは，それぞれが独立であれば，起こりうる事象は積事象として表されることから，計算で導出することができます。これが量子状態でいう"直積"状態です！簡単ですが計算して確かめてみましょう！
+次に, $\ket{q_{0}}=\ket{0}$, $\ket{q_{1}}= \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right)$をとる場合を考えてみましょう！$\ket{q_{0}}$はi.) と同様に唯一の状態を取りますが，$\ket{q_{1}}$は2状態が重ね合わせられており，測定した場合$\frac{1}{2}$の確率でそれぞれ$\ket{0}, \ket{1}$が測定される状態です。ただし，$\ket{q_{0}}$と$\ket{q_{1}}$は独立であり，それぞれに影響を与えることはありません。このとき，全体としての量子状態$\ket{\Psi}$はどうなるでしょうか？？シンプルに考えると，
+1. $\ket{q_{0}}$が$\ket{0}$で$\ket{q_{1}}$が$\ket{0}$
+2. $\ket{q_{0}}$が$\ket{0}$で$\ket{q_{1}}$が$\ket{1}$
+   
+の2状態があり得そうですね！これは，それぞれが独立であれば，起こりうる事象は積事象として表されることから，計算で導出することができます。これが量子力学で耳にする"**直積**"状態です。簡単ですが計算して確かめてみましょう！
+
 $$
 \begin{align}
   \ket{\Psi} &= \ket{q_{0}} \otimes \ket{q_{1}} \\
@@ -558,6 +642,7 @@ $$
   &= \frac{1}{\sqrt{2}} \left( \ket{00} + \ket{01} \right) \\
 \end{align}
 $$
+
 この積事象(直積)の計算から，上記の２状態となることが分かります！
 重要なことなのでもう一度書きますが，上記のように積事象(直積)で表されるのは，２つの状態が独立であるからです！
 
@@ -565,59 +650,35 @@ $$
 エンタングル状態では，上記のようにそれぞれの量子ビットが独立ではなく，従属関係にあります！つまり，上記のような直積状態で表現できない状態がエンタングルメント状態と言えます。
 ２量子ビットが直積で表すことのできる状態は全部で7種類です！
 計算しながら確認してみましょう！
+
 $$
 \begin{align}
   \ket{\Psi_{0}} &= \alpha \ket{0_{q_{0}}} \otimes \beta \ket{0_{q_{1}}} \\
   &= \alpha \beta \ket{0_{q_{0}}} \ket{0_{q_{1}}} \\
-  &= \alpha \beta \ket{0} \ket{0}
-\end{align}
-$$
-
-$$
-\begin{align}
+  &= \alpha \beta \ket{00}  \\
+\\
   \ket{\Psi_{1}} &= \alpha \ket{1_{q_{0}}} \otimes \beta \ket{1_{q_{1}}} \\
   &= \alpha \beta \ket{1_{q_{0}}} \ket{1_{q_{1}}} \\
-  &= \alpha \beta \ket{1} \ket{1}
-\end{align}
-$$
-
-$$
-\begin{align}
+  &= \alpha \beta \ket{11}  \\
+\\
   \ket{\Psi_{2}} &= \alpha \ket{0_{q_{0}}} \otimes  \left( 
     \beta \ket{0_{q_{1}}} + \gamma \ket{1_{q_{1}}} \right) \\
   &= \alpha \beta \ket{0_{q_{0}}} \ket{0_{q_{1}}} +  \alpha \gamma \ket{0_{q_{0}}} \ket{1_{q_{1}}} \\
-  &= \alpha \beta \ket{00} + \alpha \gamma \ket{01}
-\end{align}
-$$
-
-$$
-\begin{align}
+  &= \alpha \beta \ket{00} + \alpha \gamma \ket{01}\\
+\\
   \ket{\Psi_{3}} &= \alpha \ket{1_{q_{0}}} \otimes \left( 
     \beta \ket{0_{q_{1}}} + \gamma \ket{1_{q_{1}}} \right) \\
   &= \alpha \beta \ket{1_{q_{0}}} \ket{0_{q_{1}}} + \alpha \gamma \ket{1_{q_{0}}} \ket{1_{q_{1}}} \\
-  &= \alpha \beta \ket{10} + \alpha \gamma \ket{11}
-\end{align}
-$$
-
-$$
-\begin{align}
-  \ket{\Psi_{4}} &= \left( \alpha \ket{0_{q_{0}}} + \beta \ket{1_{q_{0}}} \right) \otimes \gamma \ket{0_{q_{1}}} \\
+  &= \alpha \beta \ket{10} + \alpha \gamma \ket{11} \\
+\\
+  \ket{\Psi_{4}} &= \left( \alpha \ket{0_{q_{0}}} + \beta \ket {1_{q_{0}}} \right) \otimes \gamma \ket{0_{q_{1}}} \\
   &= \alpha \beta \ket{0_{q_{0}}} \ket{0_{q_{1}}} +  \alpha \gamma \ket{1_{q_{0}}} \ket{0_{q_{1}}}  \\
-  &= \alpha \beta \ket{00} + \alpha \gamma \ket{10}
-\end{align}
-$$
-
-$$
-\begin{align}
+  &= \alpha \beta \ket{00} + \alpha \gamma \ket{10}\\
+\\
   \ket{\Psi_{5}} &= \left( \alpha \ket{0_{q_{0}}} + \beta \ket{1_{q_{0}}} \right) \otimes \gamma \ket{1_{q_{1}}} \\
   &= \alpha \gamma \ket{0_{q_{0}}} \ket{1_{q_{1}}} + \beta \gamma \ket{1_{q_{0}}} \ket{1_{q_{1}}}  \\
-  &= \alpha \beta \ket{01} + \alpha \gamma \ket{11} 
-\end{align}
-$$
-
-
-$$
-\begin{align}
+  &= \alpha \beta \ket{01} + \alpha \gamma \ket{11} \\
+\\
   \ket{\Psi_{6}} &= \left( \alpha \ket{0_{q_{0}}} + \beta \ket{1_{q_{0}}} \right) \otimes \left( \gamma \ket{0_{q_{1}}} + \delta \ket{1_{q_{1}}} \right) \\
   &= \alpha \gamma \ket{0_{q_{0}}} \ket{0_{q_{1}}} +  \beta \gamma \ket{1_{q_{0}}} \ket{0_{q_{1}}} + \alpha \delta \ket{0_{q_{0}}} \ket{1_{q_{1}}} + \beta \delta \ket{1_{q_{0}}} \ket{1_{q_{1}}} \\
   &= \alpha \gamma \ket{0} \ket{0} +  \beta \gamma \ket{1} \ket{0} + \alpha \delta \ket{0} \ket{1} + \beta \delta \ket{1} \ket{1}\\
@@ -627,6 +688,7 @@ $$
 
 それでは，エンタングル状態の例を用いて考えます。
 たとえば，ベル状態は以下です。
+
 $$
 \begin{align}
   \ket{\Phi^{+}} = \frac{1}{\sqrt{2}} \left( \ket{00} + \ket{11} \right) \\
@@ -635,15 +697,17 @@ $$
   \ket{\Psi^{-}} = \frac{1}{\sqrt{2}} \left( \ket{01} - \ket{10} \right) \\
 \end{align}
 $$
-直積状態で表すことのできる状態の組み合わせの中に，ベル状態の4状態は含まれないことが分かります。つまり，ベル状態は2量子ビットの直積で表すことができないお互いに従属した関係であることと言えます！
+
+直積状態で表すことのできる状態の組み合わせの中に，ベル状態の4状態は含まれないことが分かります。つまり，ベル状態は2量子ビットの**直積で表すことができない**,つまり**お互いに従属した関係**であると言えます。これが**エンタングル状態の本質**です！
 
 ## Q5-2. 背景
 今回の問題はいかにベル状態を作るかの問題です！
-問題文に制御NOT, 制御Zゲートが出てくるのでそれぞれどういうゲートなのかについて解説したいと思います！
+問題文に制御NOT, 制御Zゲートが出てくるのでそれぞれどういう性質を持つゲートなのかについて解説したいと思います！
 
 ###  量子状態ベクトル表現の定義
 初期状態を$\ket{\Psi_{0}}$, 終状態を$\ket{\Psi_{1}}$とします！
 また，状態ベクトルの各要素は
+
 $$
 \begin{align}
   \ket{\Psi} &= 
@@ -655,16 +719,17 @@ $$
     \end{pmatrix} \\
 \end{align}
 $$
-とします。
 
+とします。
 $\hat{CX}$:CNOT(制御NOT)ゲート, $\hat{CZ}$:CZゲートは以下の通りです！
 ### 制御NOTゲート
 制御NOTゲートは  
-①Contolビットが$\ket{0}$のときはTargetビットには何もせず,  
-②Controlビットが$\ket{1}$のとき，Targetビットの状態を反転させる  
-ゲートです！
+**①Contolビットが$\ket{0}$のときは,Targetビットには何もせず**,  
+**②Controlビットが$\ket{1}$のときは,Targetビットの状態を反転させる**  
+ゲートです。
 まずはディラック表示では下記のように表現されます！
 それぞれ添字がついていますが，tはTarget, cはControlを表しています。
+
 $$
 \begin{align}
 \hat{CX}
@@ -673,10 +738,11 @@ $$
 \end{align}
 $$
 
+これを行列表現にすると
 
 $$
 \begin{align}
-  \hat{CX}= 
+\hat{CX} = 
       \left(
           \begin{matrix}
           1 & 0 & 0 & 0 \\
@@ -687,8 +753,10 @@ $$
       \right) \\
 \end{align}
 $$
-として表されます！
+
+として表されます。
 試しに，初期状態$\ket{{\Psi_0}}$として下記のように定義して，$\hat{CX}$を作用させると
+
 $$
 \begin{align}
   \ket{\Psi_{0}}
@@ -712,19 +780,21 @@ $$
 
 となり，$\ket{01}$と$\ket{11}$状態の確率振幅が入れ替わることが確認できます！
 
-###　制御Z(位相反転)ゲート
+### 制御Z(位相反転)ゲート
 
 また，制御Zゲートは，
-①Contolビットが$\ket{0}$のときはTargetビットには何もせず,  
-②Controlビットが$\ket{1}$のとき，Targetビットの位相を反転させる  
+**①Contolビットが$\ket{0}$のときは, Targetビットには何もせず,**  
+**②Controlビットが$\ket{1}$のときは，Targetビットの位相を反転させる**
 ゲートです！
 制御Zゲートの行列，ディラック表現は下記のようになります！
+
 $$
 \hat{CZ} = \Bigl( \ket{0}_t \bra{0}_t + \ket{1}_t \bra{1}_t \Bigr) 
 \ket{0}_c + \Bigl( \ket{0}_t \bra{0}_t + e^{\pi}\ket{1}_t \bra{1}_t \Bigr) \ket{1}_c \bra{1}_c 
 $$
 
 これを行列表現にすると，
+
 $$
 \begin{align}
 \hat{CZ} =
@@ -738,8 +808,10 @@ $$
   \right)\\
 \end{align}
 $$
+
 と表されます。
 $\hat{CX}$の時と同様に，ベクトル$\ket{\Psi_{0}}$に作用させると
+
 $$
 \begin{align}
   \ket{\Psi'} &= \hat{CZ} \ket{\Psi_{0}}  \\
@@ -747,15 +819,16 @@ $$
   &= c_{00} \ket{00}+ c_{10} \ket{10} + c_{01}\ket{01} -c_{11} \ket{11}\\
 \end{align}  
 $$
+
 となり，$\ket{11}$の符合が反転(位相が$\pi$回転)することを確認できます！
 
 ## Q5-3.  選択肢解説
-各設問の量子操作後の終状態を計算してみましょう！
-２量子ビットそれぞれのオペレーションをして直積で計算してみましょう！
+各設問の量子操作後の終状態を計算してみましょう。
 
-#### 選択肢[A]
+[A]
 下記の計算が実行されます！そんなに難しくないので，冗長に感じるかもしれませんが耐えましょう！
 まず，$\ket{q_{0}}$, $\ket{q_{1}}$のそれぞれに対して独立にアダマールゲート，NOTゲートが適用されます！
+
 $$
 \begin{align}
     \ket{q_{0}'} &= \hat{H} \ket{0}_{q_{0}} \\
@@ -764,23 +837,29 @@ $$
 &= \ket{1}_{q_{1}}
 \end{align}
 $$
-次にCNOTゲートが適用されるため，$\ket{q_{0}}, \ket{q_{1}}$を直積状態にして表現したのちに，CNOTゲートを適用するのので下記の計算してみましょう！すると，
+
+次にCNOTゲートが適用されるため，$\ket{q_{0}}, \ket{q_{1}}$を直積状態にして表現したのちに，CNOTゲートを適用するの
+ので下記の計算してみましょう！すると，
+
 $$
 \begin{align}
   \ket{\Psi'} &= \ket{q'_{1}} \otimes \ket{q'_{0}} \\
   &= \frac{1}{\sqrt{2}} (\ket{10}+\ket{11}) \\
 \end{align}
 $$
+
 CNOTゲートを適用すると
+
 $$
 \begin{align}
 \hat{CNOT_{q_{0}, q_{1}}} \ket{\Psi'} &= \frac{1}{\sqrt{2}} (\ket{10} + \ket{01})
 \end{align}
 $$
-となることが分かります！これは，直積状態で作ることができない状態でエンタングルしていると言えます！よって，正解となります😋
+
+となることが分かります。これは，直積状態で作ることができない状態でエンタングルしていると言えます。よって，正解となります😋
 また，それぞれの確率振幅からそれぞれの状態は等しい確率で測定されることが分かりますね！
 
-#### 選択肢[B]
+[B]
 どんどん計算していきましょう！
 
 $$ 
@@ -789,17 +868,21 @@ $$
   &= \ket{00} \\
 \end{align}
 $$
+
 CNOTゲートを適用すると
+
 $$
 \begin{align}
   \hat{CNOT}_{q_{0},q_{1}} \ket{\Psi'} &= \ket{00} \\
 \hat{X}_{q_{1}} \hat{H}_{q_{0}} \ket{\Psi'} &= \frac{1}{\sqrt{2}} ( \ket{11} + \ket{10} ) \\
 \end{align}
 $$
+
 この結果から，終状態は$\ket{11}, \ket{10}$の2種類となり，これらは直積で表現できる状態です。つまり，それぞれは独立の状態と言えエンタングルしていないと言えます。そのため，題意を満たさず不正解となります🙃
 
-#### 選択肢[C]
+[C]
 どんどん行きましょう！
+
 $$
 \begin{align}
     \ket{q_{0}'} &= \hat{H} \ket{0}_{q_{0}} \\
@@ -810,15 +893,18 @@ $$
   &= \frac{1}{\sqrt{2}} (\ket{10}+\ket{11}) \\
 \end{align}
 $$
+
 ここに$CZ$ゲートを適用すると
 
 $$
 \hat{CZ}_{q_{0}, q_{1}} \ket{\Psi'} = \frac{1}{\sqrt{2}} ( \ket{10} - \ket{11})
 $$
+
 となります。これは選択肢[B]と同様に直積で表現できる状態のためエンタングルしていないと言えません。そのため，題意を満たさず不正解となります🙃
 
-#### 選択肢[D]
-どんどんどんどんに行きましょう！
+[D]
+ラスト！ファイトです！
+
 $$
 \begin{align}
     \ket{q_{0}'} &= \hat{H} \ket{0}_{q_{0}} \\
@@ -831,6 +917,7 @@ $$
 &= \ket{00}
 \end{align}
 $$
+
 となります。この結果は，最後は$\ket{00}$の唯一の状態となります！これはもちろん題意を満たさず不正解となります🙃
 
 
@@ -846,7 +933,7 @@ Aer Simulatorでそれぞれの測定頻度をPlotしてみましょう！
 
 ## Q5-5. API
 [QuantumCircuit.cx](https://qiskit.org/documentation/stable/0.36/stubs/qiskit.circuit.QuantumCircuit.cx.html)
-第1, 2にどちらの量子ビットを入れるかを混同してしまいます💦紛らわしいですが，第1因数に制御ビット，第2因数にターゲットビットを設定します！ここで覚えてしまいましょう！
+私は毎度, 第1, 2にどちらの量子ビットを入れるかを混同してしまいます💦紛らわしいですが，第1因数に制御ビット，第2因数にターゲットビットを設定します。ここで覚えてしまいましょう！
 
 ---
 
@@ -863,21 +950,15 @@ Aer Simulatorでそれぞれの測定頻度をPlotしてみましょう！
   outputstate = result.get_statevector(qc)  
   plot_bloch_multivector(outputstate)
 ```
-<img src="images/2023-06-07-21-16-09.png" width=200 height=250>
+<img src="images/2023-06-07-21-16-09.png" width=230 height=250>
 
-<br>
-<span class="bg-y txt-g">
 [A]  
-</span><br>
 qc.h(0)  
 
 [B]  
 qc.rx(math.pi / 2, 0)  
 
-<span class="bg-y txt-g">
-[C]  
-</span><br>  
-
+[C]
 qc.ry(math.pi / 2, 0)  
 
 [D]  
@@ -887,6 +968,8 @@ qc.rz(-math.pi / 2, 0)
 [E]  
 qc.ry(math.pi, 0)
 
+## 答え
+[A], [C]
 
 ## Q6.1 用語
 rxゲート,ryゲート, rzゲートはそれぞれX,Y,Z軸周りの回転する単一量子ビットゲートです！
@@ -937,9 +1020,6 @@ Z軸上の状態ベクトルは，Z軸回りに回転させても同じ位置に
 ## Q6.5 Qiskit API
 [hadamard](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.h.html)
 
-## Q6.6  言い残し
-
-
 ---
 次は位相ゲートに関する問題です！
 # Q7.
@@ -949,17 +1029,17 @@ Z軸上の状態ベクトルは，Z軸回りに回転させても同じ位置に
 [A]  
 π/4  
 
-<span class="bg-y txt-g">
-[B]<br>  
-</span>
+[B]
 π/2
-<br>
 
 [C]  
 π/8  
 
 [D]  
 π
+
+## 答え
+[B]
 
 # Q7.1 用語
 Z軸周りの回転ゲートは位相ゲートと呼ばれており，それぞれ回転角度が$\frac{\pi}{2}, \frac{\pi}{4}$ には名称がついており，それぞれS, T ゲートと呼びます！
@@ -972,16 +1052,16 @@ Z軸周りの回転ゲートは位相ゲートと呼ばれており，それぞ�
 
 
 # Q7.3 選択肢解説
-選択肢は$\pi / 4$である[A]のみが正解です😋
+選択肢は$\pi / 2$である[B]のみが正解です😋
 
 # Q7.4 シミュレーション
-特に今回はシミュレーションすることはありません！
+特に今回はシミュレーションすることはないので，Skipします！
 
 # Q7.5 Qiskit API
-
+APIも特にないので，skipします！
 
 ---
-<br>
+さて，つぎは状態ベクトルの出力に関する問題です！
 
 ## Q8. 
 > Which two code fragments, when inserted into the code below, will produce the statevector shown in the output?
@@ -1000,16 +1080,13 @@ print(statevector)
 Output:
 [0.707+0.j  0.+0.j  0.+0.j  0.707+0.j]
 
-<span class="bg-y txt-g">
-[A]  <br>
-</span>
-v = [1/sqrt(2), 0, 0, 1/sqrt(2)] <br>
+
+[A]
+v = [1/sqrt(2), 0, 0, 1/sqrt(2)]
 qc.initialize(v,[0,1])  
-<br>
-<span class="bg-y txt-g">
-[B]  <br>
-</span>
-qc.h(0) <br>
+
+[B]
+qc.h(0)
 qc.cx(0,1)  
 
 [C]  
@@ -1026,10 +1103,15 @@ qc.h(0)
 qc.h(1)  
 qc.measure_all()
 
+## 答え
+[A], [B]
+
+
 ## Q8.2 背景
 何度も出てくるので覚えておいた方がいい数字が0.707！
 これは$\frac{1}{\sqrt{2}}$です！
 つまり，Outputで表現されているベクトルは
+
 $$
 \begin{align}
 \ket{v} &= 
@@ -1044,6 +1126,7 @@ $$
 &= \frac{1}{\sqrt{2}} (\ket{00} + \ket{11})
 \end{align}
 $$
+
 となります！
 上記のベクトルとなるゲートの組み合わせを探しましょう！
 
@@ -1057,11 +1140,12 @@ iii.) 10進数を代入し，その2進数表現の量子状態を指す方法
 
 ## Q8.3 選択肢解説
 
-#### 選択肢[A]
+[A]
 上記のパラメータの指定方法のii.)に該当する方法で，ベル状態を作っています！そのため題意を満たし正解となります😋
 
-#### 選択肢[B]  
+[B]  
 状態を計算すると下記のようになります。
+
 $$
 \begin{align}
   \ket{v_{0}'} &= \hat{H} \ket{0}_{v_{0}} \\
@@ -1071,22 +1155,27 @@ $$
   &= \frac{1}{\sqrt{2}} (\ket{00}+\ket{01}) \\
 \end{align}
 $$
+
 ここにCNOT(q0, q1)が適用され，
+
 $$
 \begin{align}
   \hat{CNOT}_{v_{0},q_{1}} \ket{\Psi'} &= \frac{1}{\sqrt{2}} (\ket{00}+\ket{11})  \\
 \end{align}
 $$
+
 となります。これは $\ket{00}$ と$\ket{11}$の振幅を$\frac{1}{\sqrt{2}}$に設定しており，ベル状態となっています！これは，題意合致するため正解です😋
 
-#### 選択肢[C]  
+[C]  
 今回は上記のiii.)の方法で初期化されており, $\ket{v_{0}}, \ket{v_{1}}$はそれぞれ$\ket{v_{0}}=\ket{0}, \ket{v_{1}}=\ket{1}$で初期化されます！両方の直積として状態は$\ket{\Psi} = \ket{1} \otimes \ket{0} = \ket{10}$となります！これは，題意に反するため不正解となります🙃  
 
-#### 選択肢[D]  
+[D]  
 初期状態が$\ket{00}$ に対して，制御NOTで操作しても，状態は変わらないため，最終的な結果は$\ket{00}$となります！
+なので，不正解です🙃
 
-#### 選択肢[E]  
-ディラック表記で計算すると下記のようになります！
+[E]  
+ディラック表記で計算すると下記のようになります。
+
 $$
 \begin{align}
   \ket{q_{0}} &= \hat{H} \ket{0}_{q_{0}} \\
@@ -1098,15 +1187,20 @@ $$
 \end{align}
 $$
 
+これも題意に反するため不正解です🙃
+
 
 ## Q8.4 シミューレータ
-選択肢の[A]~[E]のそれぞれの量子状態を測定した際のヒストグラムは下記の通りになります！上の計算通りの計測結果になってますね！
+選択肢の[A]~[E]のそれぞれの量子状態を測定した際のヒストグラムは下記の通りになります。上の計算通りの計測結果になってますね！
 <img src="images/2023-06-14-20-25-26.png" width=500 height=400>
 
 
 ## Q8.5 Qiskit API
 [qc.initialize](https://qiskit.org/documentation/locale/ta_IN/stubs/qiskit.circuit.QuantumCircuit.initialize.html)
-## Q8.6  言い残し
+
+
+---
+次はCNOT Gateの扱い方に関する問題です！
 
 
 # Q9. 
@@ -1136,11 +1230,9 @@ qc.cz(0,1)
 
 ## Q9.3  選択肢解説
 methodで用意されている制御NOTのParametersは　qc.cx(control, target)の順で指定します！
-[A], [B]
-cx, cnot　methodは同じ使い方が可能です！
+選択肢[A], [B]で使用されているcx, cnot　methodは同じ使い方が可能で，正しい使い方であり正解です😋
 
-[C]
-また複数の制御ビットを持つNOT Gateを使いたい時は.mct methodも用意されています。qc.cxとの違いは，制御ビットを複数指定できる点です！第1因数としてリストを与えると，制御ビットとして用いるqubitを指定することができるのです！例えば，下記のように2つの制御ビットを持つ制御NOT(toffoli) Gateを作ることができます！
+選択肢[C]のように複数の制御ビットを持つNOT Gateを使いたい時は.mct methodも用意されています。qc.cxとの違いは，制御ビットを複数指定できる点です！第1因数としてリストを与えると，制御ビットとして用いるqubitを指定することができるのです！例えば，下記のように2つの制御ビットを持つ制御NOT(toffoli) Gateを作ることができます！
 ```python 
 qc = QuantumCircuit(3)
 qc.mct([0, 1], 2)
@@ -1148,8 +1240,10 @@ qc.draw()
 ```
 <img src="images/2023-06-09-22-52-00.png" width=150 height=200>
 
-[D]
-Q5.で出てきたように制御ZGateは，制御ビットが1, かつTargetビットが1の時，そのTarget ビットの位相を反転させます。これは，CXゲートとは異なる操作になるため不正解です！🙃
+ということで，これも正解になります😋
+
+
+選択肢[D]は, Q5.で出てきたように制御ZGateは，制御ビットが1, かつTargetビットが1の時，そのTarget ビットの位相を反転させます。これは，CXゲートとは異なる操作になるため不正解です🙃
 
 ## Q9.4 シミューレータ
 今回はシミュレートすることは特にありません！
@@ -1157,6 +1251,9 @@ Q5.で出てきたように制御ZGateは，制御ビットが1, かつTargetビ
 ## Q9.5 Qiskit API
 [qc.mct](https://qiskit.org/documentation/stable/0.19/stubs/qiskit.circuit.QuantumCircuit.mct.html)
 
+---
+
+さて次は，Toffoli Gateの使い方についての問題です！
 
 # Q10
 > Which code fragment will produce a multi-qubit gate other than a Toffoli?
@@ -1172,11 +1269,11 @@ from qiskit.circuit.library import CXGate
 ccx = CXGate().control()  
 qc.append(ccx, [0,1,2])  
 
-<span class="bg-y txt-g">
 [D]  
-</span>
-
 qc.cry(0,1,2)  
+
+## 答え
+[D]
 
 
 ## Q10.1 用語
@@ -1211,9 +1308,9 @@ toffoliゲートを単一量子ビットゲートとCNOTで表現すると下記
 
 ## Q10.3  選択肢解説
 [A]はQutumCircuit　classのccxメソッドに関する選択肢です。ccxメソッドはccx(q0, q1, target_bit)のように3つの量子ビットをparametersとしてとるのです。選択肢は
-"0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしています！<br>
+"0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしており正解です😋
 
-[B]はQutumCircuit classのmctメソッドに関する選択肢です。mctメソッドはmct(control_qbits,target_bit)をパラメータに取ります。control_qbitsはリストで指定することができるため，[B]は[A]同様，"0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしています！<br>
+[B]はQutumCircuit classのmctメソッドに関する選択肢です。mctメソッドはmct(control_qbits,target_bit)をパラメータに取ります。control_qbitsはリストで指定することができるため，[B]は[A]同様，"0", "1", の量子ビットを制御ビット，"2"をターゲットビットとして指定できており題意を満たしているため正解です😋
 
 [C]はCXGate classに関する選択肢です。CXGateはClassのため，制御NOTゲートのインスタンスを作る必要があります。自分でインスタンス化できる分，より柔軟にゲート設計できるのでしょうか...利点をよくわかっていません。。。
 選択肢の書き方をもう少し書き下すと，下記のようになります。
@@ -1225,13 +1322,17 @@ qc.append(ccx, [0,1,2]) #量子回路qcにCCXゲートを追加する形で実�
 qcのappendメソッドでCXを追加する場合，リストの末尾をTargetビットに指定します。
 そのため，グラフに起こすと下記のようになります。
 <img src="images/2023-06-26-16-49-19.png" width=150 height=200>
-appendで渡す際に，[0,2,1]と指定すると，制御ビットが[q0,q2]でターゲットビットが[q1]として指定されます。 
+これは題意を満たしており，正解です😋
+
+ちなみに，appendで渡す際に，[0,2,1]と指定すると，制御ビットが[q0,q2]でターゲットビットが[q1]として指定されます。 
 <img src="images/2023-06-26-16-51-09.png" width=150 height=200>
+
+
 
 [D]はqc.cryメソッドに関する選択肢です！(theta, control_bit, target_bit)の順にParameterをとります！選択肢[D]のように指定すると，１番目のqbitが1の時にq2に0degのY軸方向の回転を加えることを意味しています！
 これは，題意のようなToffoliゲートにはなり得えません！なので不正解です🙃
 ## Q10.4 シミューレータ　
-今回もシミュレーションは特にありません！
+今回もシミュレーションは特にないため，Skipします！
 
 ## Q10.5 Qiskit API
 [qc.ccx](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.ccx.html)
@@ -1244,6 +1345,9 @@ appendで渡す際に，[0,2,1]と指定すると，制御ビットが[q0,q2]で
 
 [qc.cry](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.cry.html)
 
+---
+
+はい，次は barrierの使い方に関する問題です！
 
 
 # Q11
@@ -1255,16 +1359,10 @@ appendで渡す際に，[0,2,1]と指定すると，制御ビットが[q0,q2]で
 [A]  
 qc.barrier(qc)  
 
-<span class="bg-y txt-g">
 [B]  
-</span>  
-
 qc.barrier([0,1,2])  
 
-<span class="bg-y txt-g">
 [C]  
-</span>
-
 qc.barrier()  
 
 [D]  
@@ -1273,12 +1371,13 @@ qc.barrier(3)
 [E]  
 qc.barrier_all()  
 
-## Q11.1 用語
+## 答え
+[B], [C]
 
+## Q11.1 用語
 QuantumCircuitのbarrierメソッドに関する設問です。さて，barrierとは一体なんでしょうか？barrierの語源は障壁や境界で，その名の通りある区間で量子回路を区切るための境界を作ることです。境界を作る目的は，量子回路の各操作や固まりをグループ化することができることです！
 
 ## Q11.2 背景
-
 量子ゲートの中には，複数の量子ゲートをまとめることができる場合ができます。例えば，複数の回転ゲートが作用する場合，Totalの回転角を操作する回転ゲート1回が作用していると考えることができます。<br>
 例えば，S行列操作を2回連続，T行列操作を1回操作させる回路を考えます。
 それぞれの操作毎にbarrierを挟むと，それぞれの操作で区切られる。一方で，barrierを入れないとS行列2回による$\pi$回転とT行列の$\frac{\pi}{4}$の合計$\frac{5 \pi}{4} = - \frac{3 \pi}{4}$の1操作に集約されるのです。
@@ -1294,31 +1393,32 @@ qc.barrier(num_qubits, label=None)の因数をとります。
 barrierを入れたいタイミングは，qc.barrier()を挿入する場所で定義され
 そのbarrierを入れる量子ビットを第1因数として指定します！
 
-選択肢[A]のようにbarrierメソッドは量子回路をparameterとして取ることはありません！なのでエラーとなってしまいます！不正解🙃
+[A]のようにbarrierメソッドは量子回路をparameterとして取ることはありません！なのでエラーとなってしまいます！不正解です🙃
 
-選択肢[B]のようにbarrierメソッドはqargsのパラメータを取ります。指定した量子ビットの番号にbarrierをかけることができます。これは題意を満たすため正解です😋
+[B]のようにbarrierメソッドはqargsのパラメータを取ります。指定した量子ビットの番号にbarrierをかけることができます。これは題意を満たすため正解です😋
 
-選択肢[C]のようにbarrierメソッドの因数に何も指定しないと，全ての量子ビットにbarrierが作用するため，題意を満たし正解となります😋
+[C]のようにbarrierメソッドの因数に何も指定しないと，全ての量子ビットにbarrierが作用するため，題意を満たし正解となります😋
 
-選択肢[D]のように量子ビットは3つしか準備していません。barrier(3)はq4を指定することとなり，準備されていない量子ビットを指定することになります。そのため，indexがout of rangeでエラーとなってしまうため不正解です🙃
+[D]のように量子ビットは3つしか準備していません。barrier(3)はq4を指定することとなり，準備されていない量子ビットを指定することになります。そのため，indexがout of rangeでエラーとなってしまうため不正解です🙃
 
-選択肢[E]のようにqc.barrier_all()は使えそうですが，barrier_allというmethodはないのです。。。。なので不正解です🙃
+[E]のようにqc.barrier_all()は使えそうですが，barrier_allというmethodはないのです。。。。なので不正解です🙃
 
 ## Q11.4 シミューレータ
-今回は特に指定することはありません！
+今回は特にシミュレートすることがないため，skipします！
 
 ## Q11.5 Qiskit API
 [qc.barrier](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.barrier.html)
 
 
+--- 
+次は　barrierの特性や使い所の理解に関する問題です！
+
 # Q12 
 > What code fragment codes the equivalent circuit if you remove the barrier in the following QuantumCircuit?
 <img src="images/2023-06-10-15-27-36.png" width=500 height=200>
 
-<span class="bg-y txt-g">
-[A]  
-</span>
 
+[A]  
 qc = QuantumCircuit(1,1)  
 qc.h(0)  
 qc.s(0)  
@@ -1344,11 +1444,14 @@ qc.z(0)
 qc.h(0)  
 qc.measure(0,0)  
 
+## 答え
+[A]
+
 ## Q12.1 用語
 barrierの説明は，Q11で実施済みです！忘れてしまった方は，Q11をチェックしてみてください！
 
 ## Q12.2 背景
-こちらもQ11と同じです！
+背景もQ11と同じです！
 
 ## Q12.3  選択肢解説
 設問の量子回路には H -> T -> barrier -> T -> Hが作用しています！
@@ -1387,6 +1490,10 @@ Z軸方向に対する$\frac{\pi}{4}$回転(位相シフト)を表すT行列が�
 [qc.tdg](https://qiskit.org/documentation/stubs/qiskit.circuit.library.TdgGate.html)
 tdgはTDaGgerのTDGということなのでしょう！
 
+---
+次は，depthに関する問題です！
+
+
 # Q13
 > Given the following code, what is the depth of the circuit?
   ```python
@@ -1397,9 +1504,7 @@ tdgはTDaGgerのTDGということなのでしょう！
   qc.barrier([0,1])
   ```
 
-<span class='bg-y txt-'>
 [A]
-</span> <br>
 2  
 
 [B]  
@@ -1409,12 +1514,17 @@ tdgはTDaGgerのTDGということなのでしょう！
 4  
 
 [D]  
-5  
+5
+
+
+## 答え
+[A]
 
 
 ## Q13.1 用語
 depth (量子回路の深さ)は量子ゲート(操作)のレイヤー(階層)数を指します。
 ビットに作用させる操作数を数えることと同じです！
+
 ## Q13.2 背景
 深さを知ると何が嬉しいのでしょうか？一般に量子ゲートが増えると，実行するのに必要なリソースが増えるため，実行するゲートの数を知ることは重要です。また，量子ビットは外乱影響に極めて敏感でエラーが生じやすいことが知られています。当然，量子操作が多いほどエラーの影響も受けやすいため，エラー訂正ビットの要件にもつながります。上記の理由から，所望の回路を構築する上で，「どれくらいの量子操作があり，どれだけの量子ビットを準備すべきか？」を検討するために，深さを知ることは重要な訳です！
 
@@ -1451,6 +1561,10 @@ print(qc.depth())
 ## Q13.5 Qiskit API
 [qc.depth](https://qiskit.org/documentation/stubs/qiskit.circuit.QuantumCircuit.depth.html)
 
+
+---
+次は，シミュレートの実行の仕方と，シミュレーション条件の指定の仕方に関する問題です！
+
 # Q14
 > Which code snippet would execute a circuit given these parameters?
 1. Measure the circuit 1024 times,
@@ -1462,11 +1576,9 @@ qc = QuantumCircuit(3)
 # Insert code fragment here
 result = job.result()
 ```
-<span class="bg-y txt-g">
-[A]  <br>
-</span>
-qasm_sim = Aer.get_backend('qasm_simulator')  <br>
-couple_map = [ [0, 1], [1, 2] ] <br>
+[A]
+qasm_sim = Aer.get_backend('qasm_simulator')
+couple_map = [ [0, 1], [1, 2] ] 
 job = execute(qc, backend=qasm_sim, shots=1024,   coupling_map=couple_map)  
 
 [B]  
@@ -1474,15 +1586,18 @@ qasm_sim = Aer.getBackend('ibmq_simulator')
 couple_map = [ [0, 1], [0, 2] ]  
 job = execute(qc, loop=1024, coupling_map=couple_map)
 
-[C]  
-qasm_sim = Aer.get_backend('qasm_simulator')  
-couple_map = [ [0, 1], [1, 2] ]  
-job = execute(qc, backend=qasm_sim, repeat=1024, coupling_map=couple_map)  
+[C]
+qasm_sim = Aer.get_backend('qasm_simulator')
+couple_map = [ [0, 1], [1, 2] ]
+job = execute(qc, backend=qasm_sim, repeat=1024, coupling_map=couple_map)
 
 [D]  
 qasm_sim = Aer.get_backend('qasm_simulator')  
 couple_map = [ [0, 1], [1, 2] ]  
 job = execute(backend=qasm_sim, qc, shot=1024, coupling_map=couple_map)  
+
+## 答え
+[A]
 
 ## Q14.1 用語
 QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使用して量子回路の動作をシミュレートするツールです!
@@ -1490,7 +1605,7 @@ QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使�
 次に，shotとはなんでしょうか？これはシミュレーション実行時のサンプリング回数を指定するためのオプションです！これまでの解説に出てきましたが，量子回路で測定される状態は確率的な性質を持ちます。そのため，全く同じ回路を実行したとしても，得られる結果が異なることは日常的に起こり得ます。そのため，結果に統計的な信頼性を持たせるために一定数以上のサンプリングを行います！量子測定においては，単一の測定では判断することはできず複数回の測定が必要です！その際のサンプリング数を指定します😆
 
 最後にカップリングマップについて説明しましょう！
-実際の量子デバイスでは，量子ビットがトポロジカルに配置されており，それぞれの量子ビットは一部の量子ビットと直接or間接的に繋がっています。量子回路におけるカップリングは，物理的な量子ビット間の接続性を表しており，量子ビット間の制御ゲートを適用する上で大変重要です！qiskitでは，transpileメソッドにcoupling_mapパラメータを指定することで，回路トランスパイル時にこれらの制約を考慮できます！ちなみに非隣接量子ビット間の操作を実現するためにはSWAPゲートが必要になる場合がありますが，カップリングマップに基づいてコンパイラが自動で挿入してくれる場合があるようです！
+実際の量子デバイスでは，量子ビットがトポロジカルに配置されており，それぞれの量子ビットは一部の量子ビットと直接or間接的に繋がっています。量子回路におけるカップリングは，物理的な量子ビット間の接続性を表しており，量子ビット間の制御ゲートを適用する上で重要です。qiskitでは，transpileメソッドにcoupling_mapパラメータを指定することで，回路トランスパイル時に量子ビット同士の繋がり方を指定することができます！ちなみに非隣接量子ビット間の操作を実現するためにはSWAPゲートが必要になる場合がありますが，カップリングマップに基づいてコンパイラが自動で挿入してくれる場合があるらしいです。
 
 ## Q14.2 背景
 
@@ -1502,16 +1617,22 @@ QASMはQuantum Assenbly Languageからもじったもので，QASM言語を使�
 - backend: バックエンドを指定
 - coupling_map: 結合する量子ビット同士を指定します。色々なフォーマットが許されます！
 
-[B]はloopというパラメータでiteration回数を指定していますが，実際にはloopというパラメータは取りません！なので不正解！
+[B]は get_backend()メソッドがGetBackendという異なるメソッド名で呼ばれているためerrorになるようです！なので，この選択肢は不正解です🙃
+また，iterationを指定していると思われるloopというパラメータも，適切に実行されることを確認しました！
 [C]も[B]と同じように，repeatというパラメータは取らないので不正解！
-[D]はshotというパラメータを指定していますが，正しくはshotsのため不正解です！
+[D]はQuantum Circuit インスタンスを第一因数に指定していないことでerrorとなります！
+通常iteration回数はshotsというparameter名を指定するかと思いますが，shotでもOKなようです！
+シミュレータでは特にエラーとなることなく，iterationが実行されるようです。
+
 
 ## Q14.4 シミューレータ
 特にありません！
 
 ## Q14.5 Qiskit API
-## Q14.6  言い残し
+特にありません！
 
+---
+つぎは，量子ビット同士の繋がり方を指定してシミュレーションを実行する方法とその指定の仕方に関する問題です！
 
 # Q15
 > Which of these would execute a circuit on a set of qubits which are coupled in a custom way?
@@ -1522,10 +1643,8 @@ backend = BasicAer.get_backend('qasm_simulator')
 qc = QuantumCircuit(3)
     # insert code here
 ```
-<span class="bg-y txt-g">
-[A]  <br>
-</span>
-execute(qc, backend, shots=1024, coupling_map=[　[0,1], [1,2]　])  <br>
+[A]
+execute(qc, backend, shots=1024, coupling_map=[　[0,1], [1,2]　])
 
 [B]  
 execute(qc, backend, shots=1024, custom_topology=[ [0,1],[2,3] ])
@@ -1535,6 +1654,9 @@ execute(qc, backend, shots=1024, device="qasm_simulator", mode="custom")
 
 [D]  
 execute(qc, backend, mode="custom")  
+
+## 答え
+[A]
 
 ## Q15.1 用語
 今回解説する用語は特にありません！
@@ -1550,31 +1672,24 @@ Q14とほとんど同じため，今回開設すべきことはありません�
 
 ## Q15.4 シミューレータ
 ## Q15.5 Qiskit API
-## Q15.6  言い残し
 
+
+---
+つぎは，BasicAerクラスで実行できるシミュレータの種類に関する知識を問う問題です！
 
 # Q16 
 > Which three simulators are available in BasicAer?
 
-<span class="bg-y txt-g">
 [A]  
-</span>  
-qasm_simulator <br>
+qasm_simulator
 
 [B]  
 basic_qasm_simulator  
 
-<span class="bg-y txt-g"> 
 [C]  
-</span>  
-
 statevector_simulator
 
-<span class="bg-y txt-g">  
 [D]
-</span>
-  
-
 unitary_simulator  
 
 [E]  
@@ -1582,6 +1697,9 @@ quantum_simulator
 
 [F]  
 quantum_circuit_simulator  
+
+## 答え
+[A], [C], [D]
 
 
 ## Q16.1 用語
@@ -1601,14 +1719,17 @@ Aer.backends()
 で確認できるので，興味があれば試して確認してみましょう！
 
 ## Q16.3  選択肢解説
-この選択肢については，上記3つのシミュレーション以外は
-BasicAer classでは提供されていないので不正解となります！
+この選択肢については，[A], [C], [D]のシミュレーション以外はBasicAer classでは提供されていないので不正解となります🙃
 
 ## Q16.4 シミューレータ
+今回はシミュレーションすることはありません！
+
 ## Q16.5 Qiskit API
 [BasicAer](https://qiskit.org/documentation/apidoc/providers_basicaer.html)
 
-## Q#.6  言い残し
+---
+次は, backend指定時のシミュレータの種類の指定の仕方を問う問題です。
+
 
 # Q17
 > Which line of code would assign a statevector simulator object to the variable backend ?
@@ -1616,10 +1737,7 @@ BasicAer classでは提供されていないので不正解となります！
 [A]  
 backend = BasicAer.StatevectorSimulatorPy()  
 
-<span class="bg-y txt-g">
 [B]  
-</span>  
-
 backend = BasicAer.get_backend('statevector_simulator') 
 
 [C]  
@@ -1627,6 +1745,9 @@ backend = BasicAer.StatevectorSimulatorPy().name()
 
 [D]   
 backend = BasicAer.get_back('statevector_simulator')  
+
+## 答え
+[B]
 
 ## Q17.1 用語
 今更ですがbackendとは，実際の量子デバイスやシミュレーションを表すオブジェクトです。バックエンドは、量子回路の実行やシミュレーションを担当し、結果を提供します。
@@ -1643,26 +1764,22 @@ BasicAerやqiskit.providers.basicaerが存在しお互い似ていて困りま�
 
 
 ## Q17.3  選択肢解説
-個人的には難しい問題です！
-
-```python
-
-```
+暗記が苦手な私には酷な問題です笑
 
 [A]の選択肢ですが，BasicAerはStatevectorSimulatorPy()のクラスは持っていません。ちなみに，StatevectorSimulatorPy()のインスタンスはqiskit.providers.basicaerモジュールに入っています。なので，
 ```python
 backend = qiskit.providers.basicaer.StatevectorSimulatorPy()
 backend = BasicAer.get_backend("statevector_simulator")
 ```
-上記は全く同じbackendを指定している。
-選択肢はqiskit.providers.basicaerモジュールから呼び出してないので不正解！
+上記は全く同じbackendを指定していることになります。
+選択肢はqiskit.providers.basicaerモジュールから呼び出してないので不正解です🙃
 当然，選択肢のように呼び出すとエラーになります！
 
-[B]は正しいbackendインスタンスの作り方です！正解！
+[B]は正しいbackendインスタンスの作り方のため，正解となります😋
 
-[C]は[A]と同じ理由で不正解です！
+[C]は[A]と同じ理由で不正解です🙃
 
-[D]はBasicAerのメソッドをget_backendではなく，get_backとなっているため，不正解！エラーになっちゃいます！
+[D]はBasicAerのメソッドをget_backendではなく，get_backとなっているためエラーになり不正解になります🙃
 
 ## Q17.4 シミューレータ
 特になしです！
@@ -1671,9 +1788,9 @@ backend = BasicAer.get_backend("statevector_simulator")
 [StatevectorSimulatorPy](https://qiskit.org/documentation/stubs/qiskit.providers.basicaer.StatevectorSimulatorPy.run.html)  
 [providers.basicaer](https://qiskit.org/documentation/apidoc/providers_basicaer.html)
 
+---
 
-## Q17.6 言い残し
-
+次は，演算子をマニュアルで指定することができるOperator classに関する知識を問う問題です！
 
 # Q18  
 > Which code fragment would yield an operator that represents a single-qubit X gate?  
@@ -1684,10 +1801,7 @@ op = Operator.Xop(0)
 [B]  
 op = Operator([[0,1]])  
 
-<span class="bg-y txt-g">
 [C]
-</span>
-<br>
 qc = QuantumCircuit(1)
 qc.x(0)  
 op = Operator(qc)  
@@ -1695,25 +1809,28 @@ op = Operator(qc)
 [D]  
 op = Operator([[1,0,0,1]])  
 
+## 答え
+[C]
 
 ## Q18.1 用語
-operatorとは，物理学で扱う演算子のことです。数学では作用素と言います。量子情報の分野では，量子ビットや古典ビットに対する何らかの操作を演算子で表現することが多いです！
+operatorとは，物理学で扱う演算子のことです。数学では作用素と言います。量子情報の分野では，量子ビットや古典ビットに対する何らかの操作を演算子で表現することが多いです。
+
 ## Q18.2 背景
 この問題は，qiskitのOperatorクラスに関する問題です。
 このOperatorクラスを使って自分で定義したい演算子を作っておくと，再利用しやすくていいですね！
 
 ## Q18.3  選択肢解説
-Operator Classの最も簡単な使い方は，リストかNumpy Arrayで与えます！
-[A]はOperatorオブジェクトはXop()のメソッドは持ちません。そのため，不正解です！
-[B]はOperatorオブジェクトとしての使い方は間違っておらず，指定したオペレータオブジェクトを作成できます。しかし，2行1列のベクトルができるだけでNOTゲートはできません。そのため不正解です！
+Operator Classの最も簡単な使い方は，リストかNumpy Arrayで与えます。
+[A]はOperatorオブジェクトはXop()のメソッドは持ちません。そのため，不正解です🙃
+[B]はOperatorオブジェクトとしての使い方は間違っておらず，指定したオペレータオブジェクトを作成できます。しかし，2行1列のベクトルができるだけでNOTゲートはできません。そのため不正解です🙃
 [C]は単一量子ビットを持ちX回路を挿入した量子回路を作成し，そのQuantumCircuitオブジェクトをOperatorのparamaterに入れています！OperatorクラスはQuantumCircuitオブジェクトをパラメータとして取ることができます！なので，NOT回路表すQuantumCircuitオブジェクトをパラメータに取りOperatorオブジェクトを作成しているため，題意を満たし正解となります😋
-[D]は[B]と似ています！与えられた書き方でOperator演算子を作ることはできますが，NOTゲートにはなりません。なので，題意を満たさず不正解となります！
+[D]は[B]と似ています。与えられた書き方でOperator演算子を作ることはできますが，NOTゲートにはなりません。なので，題意を満たさず不正解となります🙃
 
 ちなみに，リストを与えてNOT Gateを作る場合，
 ```python
 op_x = Operator([[0,1],[1,0]])
 ```  
-のようにして作ることができる。
+のようにして作ることができます。
 ちなみに，Operatorオブジェクトの使い方は，QuantumCircuitのappendメソッドに挿入して回路に追加することができます！
 <img src="images/2023-07-05-00-07-28.png" width=200 height=100)
 
@@ -1728,12 +1845,13 @@ op_x = Operator([[0,1],[1,0]])
 
 ## Q18.5 Qiskit 
 [operator API](https://qiskit.org/documentation/tutorials/circuits_advanced/02_operators_overview.html)
-   
-
-## Q18.6  言い残し
 
 
 ---
+つぎは，量子フィデリティの考え方と意味の理解を問う問題です！
+
+
+
 # Q19
 > What would be the fidelity result(s) for these two operators, which differ only by global phase?  
 
@@ -1748,15 +1866,15 @@ state_fidelity() of 1.0
 [B]  
 state_fidelity() and average_gate_fidelity() of 1.0  
 
-<span class="bg-y txt-g">
-[C] <br>
-</span>
+[C]
 average_gate_fidelity() and process_fidelity() of 1.0
-<br>
 
 [D]  
 state_fidelity()  
 average_gate_fidelity() and process_fidelity() of 1.0  
+
+## 答え
+[C]
 
 ## Q19.1 用語
 まずfiderityについてです。まだ50%程度の理解だと思いますが，それでもすごく時間がかかりました。。。
@@ -1799,7 +1917,7 @@ average_gate_fidelityとprocess_fidelityを使って計算できます！
 なので，正解は[C]となります！
 
 ## Q19.4 シミューレータ
-
+今回はシミュレーションすることはないためskipします。
 
 ## Q19.5 Qiskit API
 [XGate](https://qiskit.org/documentation/stubs/qiskit.circuit.library.XGate.control.html)
@@ -1823,6 +1941,9 @@ $\epsilon$は量子チャネルを表すリニアな写像です。
 例えば，ユニたり変換や測定，ノイズやエラーの効果を表現するために使用されます！
 量子チャネルの理解と分析は，量子情報処理や量子通信などの応用で重要な役割を果たします！
 
+--- 
+
+
 
 # Q20 
 > Given this code fragment, which output fits most closely with the measurement probability distribution?
@@ -1840,10 +1961,7 @@ print(counts)
 [A]  
 {'00': 1000}  
 
-<span class="bg-y txt-g">
 [B]  
-</span>  
-
 {'01': 1000}  
 
 [C]  
@@ -1852,6 +1970,8 @@ print(counts)
 [D]  
 {'11': 1000}
 
+## 答え
+[B]
 
 ## Q20.1 用語
 今回はこれまでの問題の復習のような問題のため，新しい用語は出てきていません！
@@ -1861,13 +1981,12 @@ print(counts)
 今まで19問解いてきているのであれば，この問題は簡単ですね！
 
 
-
 ## Q20.3  選択肢解説
-
 量子ビット２個，古典ビット２個を準備して0番目の量子ビットにNOT Gateをかけます．
 そして，準備した古典ビットで２つの量子ビットをそれぞれ測定しています．
 
 初期状態は 
+
 $$
 \begin{align}
 \ket{\Psi} &= \ket{q_{0}} \ket{q_{1}} \\
@@ -1880,7 +1999,8 @@ $$
 \end{align}
 $$
 
-得られる結果は$\ket{01}$となるため，それ以外の選択肢は不正解です！
+得られる結果は$\ket{01}$となるため，それ以外の選択肢は不正解です🙃
+唯一の正解は[B]となります😋
 
 ## Q20.4 シミューレータ
 今回はシミュレーションはありません！
@@ -1889,13 +2009,12 @@ $$
 APIもこれまで使ったもの以外はありまえん！
 
 ## Q20.6  言い残し
-
 特にありません！
 
 
 
 # 最後に
 最後は総復習のような問題のため，さっぱり終わってしまいました！
-でも，20問解いたあなたはきっと基礎は習得済みでしかくもPathされることと思います！
+でも，20問解いたあなたはきっと基礎は習得済みで試験もPathされることと思います！
 
 今後も量子コンピュータの基礎技術やその実装，サービス展開などの記事を書いていきたいと思います！
